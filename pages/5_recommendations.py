@@ -354,7 +354,7 @@ fig_roadmap.update_layout(
         x=0.5, y=0.96, xanchor="center", yanchor="top"
     ),
     margin=dict(l=260, r=40, t=55, b=50),
-    height=420,
+    height=460,
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
     xaxis=dict(
@@ -368,7 +368,7 @@ fig_roadmap.update_layout(
         linecolor="#CBD5E1",
         linewidth=1.2
     ),
-    yaxis=dict(title="", tickfont=dict(size=11, family="Be Vietnam Pro"), autorange="reversed", showline=True, linecolor="#CBD5E1", linewidth=1.2),
+    yaxis=dict(title="", tickfont=dict(size=12, family="Be Vietnam Pro"), autorange="reversed", showline=True, linecolor="#CBD5E1", linewidth=1.2),
     font=dict(family="Be Vietnam Pro, sans-serif")
 )
 

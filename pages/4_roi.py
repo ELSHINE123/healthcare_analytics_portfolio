@@ -237,22 +237,22 @@ fig_v9a.update_layout(
         text="<b>Preventative Care Sensitivity across 3 Scenarios</b>",
         x=0.5, y=0.96, xanchor="center", yanchor="top"
     ),
-    margin=dict(l=25, r=20, t=50, b=85),
-    height=415,
+    margin=dict(l=25, r=20, t=55, b=85),
+    height=450,
     barmode="group",
-    bargap=0.28,
+    bargap=0.25,
     bargroupgap=0.10,
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
     yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Annual Value ($ Thousands)", range=[-60, 560]),
-    xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=11, family="Be Vietnam Pro"), tickangle=0),
+    xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=12, family="Be Vietnam Pro"), tickangle=0),
     legend=dict(
         orientation="h",
         yanchor="top",
-        y=-0.18,
+        y=-0.16,
         xanchor="center",
         x=0.5,
-        font=dict(family="Be Vietnam Pro", size=11.5)
+        font=dict(family="Be Vietnam Pro", size=12)
     ),
     font=dict(family="Be Vietnam Pro, sans-serif")
 )
@@ -298,12 +298,12 @@ fig_v9b.update_layout(
         text="<b>Base Case Financial Bridge: +$109.9K Net Value</b>",
         x=0.5, y=0.96, xanchor="center", yanchor="top"
     ),
-    margin=dict(l=25, r=20, t=50, b=50),
-    height=415,
+    margin=dict(l=25, r=20, t=55, b=50),
+    height=450,
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
     yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Annual Budget Impact ($ Thousands)", range=[-320, 480]),
-    xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=10.5, family="Be Vietnam Pro"), tickangle=0),
+    xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=12, family="Be Vietnam Pro"), tickangle=0),
     font=dict(family="Be Vietnam Pro, sans-serif")
 )
 st.plotly_chart(fig_v9b, width="stretch")
@@ -350,7 +350,7 @@ fig_heatmap = go.Figure(data=go.Heatmap(
     y=salary_labels,
     text=text_matrix,
     texttemplate="%{text}",
-    textfont=dict(family="Be Vietnam Pro", size=11, color="#0F172A"),
+    textfont=dict(family="Be Vietnam Pro", size=13.5, color="#0F172A"),
     colorscale=[
         [0.0, "#FECACA"],   # Soft Red for negative margin
         [0.2, "#FED7AA"],   # Light Amber
@@ -360,8 +360,8 @@ fig_heatmap = go.Figure(data=go.Heatmap(
     ],
     zmid=0,
     colorbar=dict(
-        title=dict(text="Net Margin ($K)", font=dict(family="Be Vietnam Pro", size=11)),
-        tickfont=dict(family="Be Vietnam Pro", size=10),
+        title=dict(text="Net Margin ($K)", font=dict(family="Be Vietnam Pro", size=12)),
+        tickfont=dict(family="Be Vietnam Pro", size=11),
         len=0.9
     ),
     hovertemplate="<b>Reduction Target:</b> %{x}<br><b>Nurse Compensation:</b> %{y}<br><b>Net Operating Margin:</b> %{text}<extra></extra>"
@@ -372,12 +372,12 @@ fig_heatmap.update_layout(
         text="<b>Preventative Care Breakeven Frontier (2D Sensitivity Matrix)</b>",
         x=0.5, y=0.96, xanchor="center", yanchor="top"
     ),
-    margin=dict(l=40, r=30, t=55, b=45),
-    height=370,
+    margin=dict(l=50, r=40, t=60, b=50),
+    height=480,
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
-    xaxis=dict(title="Preventable Inpatient Admission Reduction Target", tickfont=dict(size=11, family="Be Vietnam Pro")),
-    yaxis=dict(title="Fully Loaded Nurse Compensation", tickfont=dict(size=11, family="Be Vietnam Pro")),
+    xaxis=dict(title="Preventable Inpatient Admission Reduction Target", tickfont=dict(size=12, family="Be Vietnam Pro")),
+    yaxis=dict(title="Fully Loaded Nurse Compensation", tickfont=dict(size=12, family="Be Vietnam Pro")),
     font=dict(family="Be Vietnam Pro, sans-serif")
 )
 
@@ -429,11 +429,11 @@ fig_v10a.update_layout(
         x=0.5, y=0.96, xanchor="center", yanchor="top"
     ),
     margin=dict(l=200, r=60, t=65, b=40),
-    height=390,
+    height=420,
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
     xaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Required Dedicated Nurse Care Managers (FTEs)", range=[0, 8.5]),
-    yaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=11.5, family="Be Vietnam Pro"), autorange="reversed"),
+    yaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=12, family="Be Vietnam Pro"), autorange="reversed"),
     font=dict(family="Be Vietnam Pro, sans-serif")
 )
 st.plotly_chart(fig_v10a, width="stretch")
@@ -466,11 +466,11 @@ fig_v10b = go.Figure()
 fig_v10b.add_trace(go.Bar(
     x=fin_labels,
     y=fin_vals,
-    width=0.42,
+    width=0.45,
     marker=dict(color=fin_colors),
     text=[f"<b>${v:.0f}K</b>" for v in fin_vals],
     textposition="outside",
-    textfont=dict(color="#0F172A", size=12, family="Be Vietnam Pro"),
+    textfont=dict(color="#0F172A", size=12.5, family="Be Vietnam Pro"),
     hovertemplate="<b>%{x}</b><br>Annual Impact: $%{y:.0f}K<extra></extra>"
 ))
 
@@ -482,11 +482,11 @@ fig_v10b.update_layout(
         x=0.5, y=0.96, xanchor="center", yanchor="top"
     ),
     margin=dict(l=40, r=40, t=65, b=40),
-    height=390,
+    height=420,
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
     yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Annual Financial Impact ($ Thousands)", range=[0, max_y]),
-    xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=11.5, family="Be Vietnam Pro")),
+    xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=12, family="Be Vietnam Pro")),
     font=dict(family="Be Vietnam Pro, sans-serif")
 )
 st.plotly_chart(fig_v10b, width="stretch")

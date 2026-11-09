@@ -226,12 +226,12 @@ max_x = max(cost_df["cost_millions"]) * 1.35 if max(cost_df["cost_millions"]) > 
 
 fig_v7a.update_layout(
     title=dict(text="<b>Annual Inpatient Cost Exposure by Acuity Tier</b>", x=0.5, y=0.96, xanchor="center", yanchor="top"),
-    margin=dict(l=125, r=80, t=50, b=40),
-    height=390,
+    margin=dict(l=125, r=80, t=55, b=40),
+    height=420,
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
     xaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Projected Acute Inpatient Exposure ($ Millions)", range=[0, max_x]),
-    yaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=12, family="Be Vietnam Pro")),
+    yaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=12.5, family="Be Vietnam Pro")),
     font=dict(family="Be Vietnam Pro, sans-serif")
 )
 st.plotly_chart(fig_v7a, width="stretch")
@@ -263,27 +263,27 @@ fig_v7b = go.Figure(data=[go.Pie(
     labels=pareto_df["Tier Group"],
     values=pareto_df["Cost"],
     hole=0.55,
-    domain=dict(y=[0.18, 1.0]),
+    domain=dict(y=[0.14, 1.0]),
     marker=dict(colors=["#DC2626", "#3B82F6"]),
     textinfo="percent",
     textposition="inside",
-    insidetextfont=dict(color="#FFFFFF", size=13, family="Be Vietnam Pro"),
+    insidetextfont=dict(color="#FFFFFF", size=13.5, family="Be Vietnam Pro"),
     hovertemplate="<b>%{label}</b><br>Cost Exposure: $%{value:,.0f}<br>Proportion: %{percent}<extra></extra>"
 )])
 
 # Center Text in Donut Hole
 fig_v7b.add_annotation(
-    text=f"<b>${total_financial_exposure / 1e6:.2f}M</b><br><span style='font-size:10px; color:#64748B;'>Total Annual<br>Cost Exposure</span>",
-    x=0.5, y=0.59,
+    text=f"<b>${total_financial_exposure / 1e6:.2f}M</b><br><span style='font-size:11px; color:#64748B;'>Total Annual<br>Cost Exposure</span>",
+    x=0.5, y=0.57,
     showarrow=False,
-    font=dict(size=14, color="#0F172A", family="Be Vietnam Pro")
+    font=dict(size=15, color="#0F172A", family="Be Vietnam Pro")
 )
 
 fig_v7b.update_layout(
     title=dict(text="<b>80/20 Pareto Financial Risk Concentration</b>", x=0.5, y=0.96, xanchor="center", yanchor="top"),
     margin=dict(l=20, r=20, t=50, b=20),
-    legend=dict(orientation="h", yanchor="top", y=0.08, xanchor="center", x=0.5, font=dict(family="Be Vietnam Pro", size=11.5)),
-    height=400,
+    legend=dict(orientation="h", yanchor="top", y=0.06, xanchor="center", x=0.5, font=dict(family="Be Vietnam Pro", size=12)),
+    height=440,
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
     font=dict(family="Be Vietnam Pro, sans-serif")
@@ -492,7 +492,7 @@ fig_v8.update_layout(
         x=0.5, y=0.96, xanchor="center", yanchor="top"
     ),
     margin=dict(l=220, r=30, t=65, b=40),
-    height=400,
+    height=440,
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
     xaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Compliance / Performance Rate (%)", range=[0, 138]),

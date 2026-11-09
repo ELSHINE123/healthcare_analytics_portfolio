@@ -357,19 +357,19 @@ if not df.empty:
 
     fig_v2.update_traces(
         textposition="outside",
-        width=0.22,
+        width=0.24,
         hovertemplate="<b>Condition:</b> %{x}<br><b>Age Bracket:</b> %{fullData.name}<br><b>Unmedicated Patients:</b> %{y}<extra></extra>"
     )
 
     fig_v2.update_layout(
         title=dict(
-            text="<b>Unmedicated Chronic Disease Cohort by Diagnosis & Age Bracket</b><br><span style='font-size:11.5px; color:#64748B; font-weight:500;'>109 Patients with Formal ICD Diagnosis Receiving Zero Pharmacotherapy</span>",
+            text="<b>Unmedicated Chronic Disease Cohort by Diagnosis & Age Bracket</b><br><span style='font-size:12px; color:#64748B; font-weight:500;'>109 Patients with Formal ICD Diagnosis Receiving Zero Pharmacotherapy</span>",
             x=0.5, y=0.97, xanchor="center", yanchor="top"
         ),
-        margin=dict(l=20, r=20, t=65, b=85),
-        height=440,
-        bargap=0.35,
-        bargroupgap=0.15,
+        margin=dict(l=25, r=25, t=65, b=85),
+        height=470,
+        bargap=0.25,
+        bargroupgap=0.12,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Number of Patients", range=[0, 32]),
@@ -381,7 +381,7 @@ if not df.empty:
             xanchor="center",
             x=0.5,
             title="",
-            font=dict(family="Be Vietnam Pro", size=11.5)
+            font=dict(family="Be Vietnam Pro", size=12)
         ),
         font=dict(family="Be Vietnam Pro, sans-serif")
     )
@@ -439,16 +439,16 @@ if not df.empty:
 
     fig_v3.update_traces(
         hovertemplate="<b>Diagnosis:</b> %{y}<br><b>Prescribed Drug:</b> %{x}<br><b>Patient Count:</b> %{z}<extra></extra>",
-        textfont=dict(size=14, family="Be Vietnam Pro")
+        textfont=dict(size=16, family="Be Vietnam Pro", color="#0F172A")
     )
 
     fig_v3.update_layout(
-        margin=dict(l=20, r=20, t=50, b=30),
-        height=420,
+        margin=dict(l=30, r=30, t=60, b=40),
+        height=490,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Active Pharmacotherapy Prescribed", tickfont=dict(size=12, family="Be Vietnam Pro")),
-        yaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Primary Documented Diagnosis", tickfont=dict(size=12, family="Be Vietnam Pro")),
+        xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Active Pharmacotherapy Prescribed", tickfont=dict(size=13, family="Be Vietnam Pro")),
+        yaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Primary Documented Diagnosis", tickfont=dict(size=13, family="Be Vietnam Pro")),
         coloraxis_showscale=False,
         font=dict(family="Be Vietnam Pro, sans-serif")
     )

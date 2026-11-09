@@ -67,18 +67,18 @@ if not df.empty:
         labels=channel_counts["Channel"],
         values=channel_counts["Patients"],
         hole=0.55,
-        domain=dict(y=[0.18, 1.0]),
+        domain=dict(y=[0.14, 1.0]),
         marker=dict(colors=channel_palette),
         textinfo="percent",
         textposition="inside",
-        insidetextfont=dict(color="#FFFFFF", size=13, family="Be Vietnam Pro"),
+        insidetextfont=dict(color="#FFFFFF", size=13.5, family="Be Vietnam Pro"),
         hovertemplate="<b>%{label}</b><br>Patients: %{value:,}<br>Share: %{percent}<extra></extra>"
     )])
     fig_v4a.update_layout(
         title="<b>Population Reach by Contact Channel</b>",
-        margin=dict(l=20, r=20, t=40, b=20),
-        legend=dict(orientation="h", yanchor="top", y=0.08, xanchor="center", x=0.5, font=dict(family="Be Vietnam Pro", size=11.5)),
-        height=400,
+        margin=dict(l=20, r=20, t=50, b=20),
+        legend=dict(orientation="h", yanchor="top", y=0.06, xanchor="center", x=0.5, font=dict(family="Be Vietnam Pro", size=12)),
+        height=440,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         font=dict(family="Be Vietnam Pro, sans-serif")
@@ -109,19 +109,19 @@ if not df.empty:
         y=uncontactable_acuity["Patients"],
         text=uncontactable_acuity["Patients"],
         textposition="outside",
-        width=0.42,
+        width=0.45,
         marker=dict(color=["#DC2626", "#F59E0B", "#3B82F6", "#10B981"]),
         hovertemplate="<b>%{x}</b><br>Uncontactable Patients: %{y:,}<extra></extra>"
     )])
     fig_v4b.update_layout(
         title="<b>Acuity Severity of Uncontactable Cohort (N = 145)</b>",
-        margin=dict(l=20, r=20, t=50, b=40),
-        height=380,
-        bargap=0.45,
+        margin=dict(l=25, r=25, t=55, b=40),
+        height=420,
+        bargap=0.35,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Number of Patients", range=[0, 65]),
-        xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=12, family="Be Vietnam Pro")),
+        xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=12.5, family="Be Vietnam Pro")),
         font=dict(family="Be Vietnam Pro, sans-serif")
     )
     st.plotly_chart(fig_v4b, width="stretch")
@@ -168,15 +168,15 @@ if not df.empty:
     )
     fig_v5a.update_traces(
         hovertemplate="<b>Acuity:</b> %{y}<br><b>Surveillance:</b> %{x}<br><b>Patients:</b> %{z:,}<extra></extra>",
-        textfont=dict(size=14, family="Be Vietnam Pro")
+        textfont=dict(size=18, family="Be Vietnam Pro", color="#0F172A")
     )
     fig_v5a.update_layout(
-        margin=dict(l=20, r=20, t=50, b=30),
-        height=380,
+        margin=dict(l=30, r=30, t=55, b=35),
+        height=470,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=12, family="Be Vietnam Pro")),
-        yaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=12, family="Be Vietnam Pro")),
+        xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=13, family="Be Vietnam Pro")),
+        yaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=13, family="Be Vietnam Pro")),
         coloraxis_showscale=False,
         font=dict(family="Be Vietnam Pro, sans-serif")
     )
@@ -218,14 +218,14 @@ if not df.empty:
         hovertemplate="<b>%{y}</b><br>Overdue Patients: %{x:,}<extra></extra>"
     )
     fig_v5b.update_layout(
-        margin=dict(l=20, r=40, t=50, b=20),
+        margin=dict(l=25, r=40, t=55, b=25),
         showlegend=False,
         coloraxis_showscale=False,
-        height=380,
+        height=420,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         xaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Number of Patients", range=[0, 60]),
-        yaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title=""),
+        yaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=12.5, family="Be Vietnam Pro")),
         font=dict(family="Be Vietnam Pro, sans-serif")
     )
     st.plotly_chart(fig_v5b, width="stretch")
@@ -265,18 +265,18 @@ if not df.empty:
         labels=prov_counts["Provenance"],
         values=prov_counts["Patients"],
         hole=0.55,
-        domain=dict(y=[0.18, 1.0]),
+        domain=dict(y=[0.14, 1.0]),
         marker=dict(colors=prov_palette),
         textinfo="percent",
         textposition="inside",
-        insidetextfont=dict(color="#FFFFFF", size=13, family="Be Vietnam Pro"),
+        insidetextfont=dict(color="#FFFFFF", size=13.5, family="Be Vietnam Pro"),
         hovertemplate="<b>%{label}</b><br>Patients: %{value:,}<br>Share: %{percent}<extra></extra>"
     )])
     fig_v6a.update_layout(
         title=dict(text="<b>Clinical Laboratory Measurement Provenance</b>", x=0.5, y=0.96, xanchor="center", yanchor="top"),
         margin=dict(l=20, r=20, t=50, b=20),
-        legend=dict(orientation="h", yanchor="top", y=0.08, xanchor="center", x=0.5, font=dict(family="Be Vietnam Pro", size=11.5)),
-        height=400,
+        legend=dict(orientation="h", yanchor="top", y=0.06, xanchor="center", x=0.5, font=dict(family="Be Vietnam Pro", size=12)),
+        height=440,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         font=dict(family="Be Vietnam Pro, sans-serif")
@@ -329,15 +329,15 @@ if not df.empty:
     )
     fig_v6b.update_layout(
         title=dict(text="<b>Clinical Acuity: Verified Direct Labs vs. Unverified Records</b>", x=0.5, y=0.96, xanchor="center", yanchor="top"),
-        margin=dict(l=20, r=20, t=55, b=85),
-        height=410,
-        bargap=0.35,
-        bargroupgap=0.15,
+        margin=dict(l=25, r=25, t=60, b=85),
+        height=450,
+        bargap=0.30,
+        bargroupgap=0.12,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Number of Patients", range=[0, 290]),
-        xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=12, family="Be Vietnam Pro")),
-        legend=dict(orientation="h", yanchor="top", y=-0.16, xanchor="center", x=0.5, title="", font=dict(family="Be Vietnam Pro", size=11.5)),
+        xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=12.5, family="Be Vietnam Pro")),
+        legend=dict(orientation="h", yanchor="top", y=-0.16, xanchor="center", x=0.5, title="", font=dict(family="Be Vietnam Pro", size=12)),
         font=dict(family="Be Vietnam Pro, sans-serif")
     )
     st.plotly_chart(fig_v6b, width="stretch")
