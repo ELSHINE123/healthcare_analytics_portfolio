@@ -52,7 +52,27 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
+# HIPAA Compliance & Clinical Data Ethics Banner
+st.markdown(
+    """
+    <div style="background-color: #F8FAFC; border: 1px solid #CBD5E1; border-left: 4px solid #10B981; border-radius: 8px; padding: 14px 18px; margin-top: 14px; margin-bottom: 22px;">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+            <span style="font-size: 16px;">🛡️</span>
+            <strong style="color: #0F172A; font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em;">Clinical Data Governance & HIPAA Safe Harbor Compliance Notice</strong>
+        </div>
+        <p style="color: #334155; font-size: 13px; line-height: 1.6; margin: 0; text-align: justify;">
+            To ensure patient confidentiality and regulatory integrity, all patient records within this application are derived from a 
+            <strong>statistically calibrated synthetic cohort (N = 983)</strong> modeled after national epidemiological benchmarks 
+            (NHANES, AHRQ HCUP, and ACC/AHA registries). This dataset strictly complies with 
+            <strong>HIPAA Safe Harbor De-Identification standards (45 CFR § 164.514(b)(2))</strong>. 
+            Zero Protected Health Information (PHI) is collected, stored, or transmitted, ensuring complete compliance for public portfolio demonstration and technical evaluation.
+        </p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
 
 # ==============================================================================
 # 3. THE STRATEGIC BUSINESS QUESTIONS

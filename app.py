@@ -532,6 +532,33 @@ with st.sidebar:
             unsafe_allow_html=True
         )
 
+    # Lead Data Analyst Professional Badge
+    st.markdown(
+        """
+        <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid #CBD5E1;">
+            <div style="font-family: 'Be Vietnam Pro', sans-serif; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .09em; color: #475569; margin-bottom: 8px;">
+                PROJECT LEAD & ARCHITECT
+            </div>
+            <div style="background-color: #FFFFFF; border: 1px solid #CBD5E1; border-radius: 8px; padding: 12px; box-shadow: 0 1px 3px rgba(15,23,42,0.05);">
+                <div style="font-size: 13.5px; font-weight: 700; color: #0F172A;">Daniel Ademola Dongo</div>
+                <div style="font-size: 11px; color: #2563EB; font-weight: 600; margin-bottom: 4px;">Healthcare Data Analyst & BI Developer</div>
+                <div style="font-size: 11px; color: #475569; line-height: 1.45; margin-bottom: 10px;">
+                    Population Health Analytics &bull; Actuarial Cost Modeling &bull; Executive Decision Support
+                </div>
+                <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                    <a href="https://linkedin.com" target="_blank" style="text-decoration: none; font-size: 11px; font-weight: 600; color: #1D4ED8; background: #EFF6FF; border: 1px solid #BFDBFE; padding: 3px 8px; border-radius: 4px;">
+                        💼 LinkedIn
+                    </a>
+                    <a href="https://github.com" target="_blank" style="text-decoration: none; font-size: 11px; font-weight: 600; color: #334155; background: #F1F5F9; border: 1px solid #CBD5E1; padding: 3px 8px; border-radius: 4px;">
+                        💻 GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
 if st.session_state.get("presentation_mode", False):
     st.markdown("""
     <style>
@@ -611,6 +638,7 @@ pg = st.navigation([
     st.Page("pages/3_financial.py", title="Financial Stakes", icon="💰"),
     st.Page("pages/4_roi.py", title="ROI & Staffing Model", icon="📈"),
     st.Page("pages/5_recommendations.py", title="Strategic Roadmap", icon="🎯"),
+    st.Page("pages/6_glossary.py", title="Terminology Lexicon", icon="📖"),
 ])
 
 pg.run()

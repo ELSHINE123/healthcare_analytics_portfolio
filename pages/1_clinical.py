@@ -612,6 +612,121 @@ if not df.empty:
         }
     )
 
+    # 4b. Micro-Level EHR Patient Clinical Chart Inspector
+    st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
+    with st.expander("📋 Inspect Individual Patient EHR Clinical Snapshot Chart", expanded=False):
+        if not filtered_triage.empty:
+            patient_list = filtered_triage["patient_name"].tolist()
+            selected_pt = st.selectbox(
+                "Select Patient from Worklist to Inspect Clinical Chart:",
+                options=patient_list,
+                key="selected_pt_inspector"
+            )
+            pt_data = filtered_triage[filtered_triage["patient_name"] == selected_pt].iloc[0]
+            
+            # Formatting badges & colors based on patient acuity and hazards
+            acuity_tier = pt_data["clinical_risk_tier"]
+            tier_colors_map = {
+                "Severe Acuity": ("#FEF2F2", "#991B1B", "#DC2626"),
+                "High Acuity": ("#FFFBEB", "#92400E", "#F59E0B"),
+                "Moderate Acuity": ("#EFF6FF", "#1E40AF", "#3B82F6"),
+                "Low Acuity": ("#ECFDF5", "#065F46", "#10B981")
+            }
+            bg_c, text_c, border_c = tier_colors_map.get(acuity_tier, ("#F8FAFC", "#0F172A", "#CBD5E1"))
+            
+            # Clinical safety evaluation
+            is_unmed = pt_data.get("unmedicated_chronic", False)
+            is_disc = pt_data.get("therapeutic_discordance", False)
+            cond = str(pt_data["condition"]).title()
+            med = str(pt_data["medication"]).title()
+            if med == "None":
+                med = "No Active Prescription on Record"
+                
+            if cond == "Asthma" and "Lisinopril" in med:
+                safety_alert = (
+                    "<div style='background-color: #FEF2F2; border-left: 4px solid #DC2626; padding: 10px 14px; border-radius: 4px; margin-top: 10px;'>"
+                    "<strong style='color: #991B1B;'>🚨 CRITICAL PHARMACOLOGIC CONTRAINDICATION:</strong> "
+                    "<span style='color: #7F1D1D;'>Patient has documented Asthma and active Lisinopril prescription. "
+                    "ACE inhibitors inhibit kinase II, precipitating bradykinin accumulation in bronchial tissue and triggering acute bronchospasm. "
+                    "<strong>Immediate Action Mandate:</strong> Discontinue Lisinopril immediately; switch to an ARB or calcium channel blocker.</span></div>"
+                )
+            elif is_unmed:
+                safety_alert = (
+                    f"<div style='background-color: #FFFBEB; border-left: 4px solid #F59E0B; padding: 10px 14px; border-radius: 4px; margin-top: 10px;'>"
+                    f"<strong style='color: #92400E;'>⚠️ UNMEDICATED CARE GAP:</strong> "
+                    f"<span style='color: #78350F;'>Patient carries a formal ICD diagnosis for <strong>{cond}</strong> with zero active pharmacotherapy. "
+                    f"Elevates risk of acute vascular decompensation. <strong>Action Mandate:</strong> Initiate guideline-directed medical therapy.</span></div>"
+                )
+            elif is_disc:
+                safety_alert = (
+                    f"<div style='background-color: #FFFBEB; border-left: 4px solid #F59E0B; padding: 10px 14px; border-radius: 4px; margin-top: 10px;'>"
+                    f"<strong style='color: #92400E;'>⚠️ THERAPEUTIC DISCORDANCE:</strong> "
+                    f"<span style='color: #78350F;'>Active prescription (<strong>{med}</strong>) does not align with primary diagnosis (<strong>{cond}</strong>). "
+                    f"<strong>Action Mandate:</strong> Conduct comprehensive medication reconciliation with primary care physician.</span></div>"
+                )
+            else:
+                safety_alert = (
+                    "<div style='background-color: #ECFDF5; border-left: 4px solid #10B981; padding: 10px 14px; border-radius: 4px; margin-top: 10px;'>"
+                    "<strong style='color: #065F46;'>✅ GUIDELINE-CONCORDANT PHARMACOTHERAPY:</strong> "
+                    "<span style='color: #047857;'>Prescribed regimen aligns with documented chronic disease guidelines. Maintain routine ambulatory surveillance.</span></div>"
+                )
+
+            # SBP and Cholesterol clinical interpretation
+            sbp = pt_data["systolic_bp"]
+            chol = pt_data["cholesterol"]
+            sbp_status = "Stage 2 Hypertension" if sbp >= 140 else ("Stage 1 Hypertension" if sbp >= 130 else ("Elevated" if sbp >= 120 else "Normal"))
+            chol_status = "High Risk" if chol >= 240 else ("Borderline High" if chol >= 200 else "Desirable")
+
+            # Render EHR Patient Card
+            st.markdown(
+                f"""
+                <div style="background-color: #FFFFFF; border: 1.5px solid #CBD5E1; border-radius: 10px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(15,23,42,0.06); margin-top: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; border-bottom: 1px solid #E2E8F0; padding-bottom: 10px;">
+                        <div>
+                            <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #64748B;">EHR AMBULATORY CLINICAL CHART</div>
+                            <div style="font-size: 19px; font-weight: 800; color: #0F172A;">{pt_data['patient_name']}</div>
+                            <div style="font-size: 12.5px; color: #475569;">
+                                Age: <strong>{int(pt_data['age'])} yrs</strong> &bull; Sex: <strong>{pt_data['gender']}</strong> &bull; Primary Registry: <strong style="color: #2563EB;">{cond}</strong>
+                            </div>
+                        </div>
+                        <div style="background-color: {bg_c}; border: 1px solid {border_c}; color: {text_c}; padding: 6px 14px; border-radius: 6px; text-align: right;">
+                            <div style="font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em;">Acuity Stratification</div>
+                            <div style="font-size: 15px; font-weight: 800;">{acuity_tier}</div>
+                            <div style="font-size: 11px; font-weight: 600;">Risk Index: {pt_data['clinical_risk_score']:.2f} / 1.0</div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 14px;">
+                        <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 10px 12px;">
+                            <div style="font-size: 10.5px; font-weight: 700; color: #64748B; text-transform: uppercase;">Blood Pressure (ACC/AHA)</div>
+                            <div style="font-size: 18px; font-weight: 800; color: #0F172A; margin: 2px 0;">{int(sbp)} / {int(pt_data['diastolic_bp'])} <span style="font-size: 11px; font-weight: 500; color: #64748B;">mmHg</span></div>
+                            <div style="font-size: 11.5px; font-weight: 600; color: {'#DC2626' if sbp >= 140 else '#D97706'};">{sbp_status}</div>
+                        </div>
+                        <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 10px 12px;">
+                            <div style="font-size: 10.5px; font-weight: 700; color: #64748B; text-transform: uppercase;">Total Cholesterol (NCEP ATP III)</div>
+                            <div style="font-size: 18px; font-weight: 800; color: #0F172A; margin: 2px 0;">{int(chol)} <span style="font-size: 11px; font-weight: 500; color: #64748B;">mg/dL</span></div>
+                            <div style="font-size: 11.5px; font-weight: 600; color: {'#DC2626' if chol >= 240 else ('#D97706' if chol >= 200 else '#059669')};">{chol_status}</div>
+                        </div>
+                        <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 10px 12px;">
+                            <div style="font-size: 10.5px; font-weight: 700; color: #64748B; text-transform: uppercase;">Active Pharmacotherapy</div>
+                            <div style="font-size: 15px; font-weight: 700; color: {'#DC2626' if med == 'No Active Prescription on Record' else '#2563EB'}; margin: 4px 0;">{med}</div>
+                            <div style="font-size: 11.5px; color: #64748B;">Verified in EHR Pharmacy Dispense</div>
+                        </div>
+                    </div>
+
+                    {safety_alert}
+
+                    <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid #E2E8F0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                        <span style="font-size: 12.5px; color: #334155;"><strong>Assigned Care Pod:</strong> {pt_data['Action Pathway']}</span>
+                        <span style="font-size: 11.5px; color: #64748B; font-weight: 600;">Surveillance Interval: {int(pt_data.get('days_since_visit', 90))} days elapsed</span>
+                    </div>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+        else:
+            st.info("No patients match current filters to display clinical snapshot.")
+
 st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
 
 st.markdown(
