@@ -222,11 +222,11 @@ fig_v7a.add_trace(go.Bar(
     customdata=cost_df[["expected_admissions", "patient_count"]].values
 ))
 
-max_x = max(cost_df["cost_millions"]) * 1.35 if max(cost_df["cost_millions"]) > 0 else 1.0
+max_x = max(cost_df["cost_millions"]) * 1.45 if max(cost_df["cost_millions"]) > 0 else 1.0
 
 fig_v7a.update_layout(
     title=dict(text="<b>Annual Inpatient Cost Exposure by Acuity Tier</b>", x=0.5, y=0.96, xanchor="center", yanchor="top"),
-    margin=dict(l=125, r=80, t=55, b=40),
+    margin=dict(l=125, r=90, t=55, b=40),
     height=420,
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
@@ -491,11 +491,11 @@ fig_v8.update_layout(
         text="<b>National HEDIS Quality Benchmark Audit & Compliance Performance Scorecard</b>",
         x=0.5, y=0.96, xanchor="center", yanchor="top"
     ),
-    margin=dict(l=220, r=30, t=65, b=40),
+    margin=dict(l=220, r=45, t=65, b=40),
     height=440,
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
-    xaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Compliance / Performance Rate (%)", range=[0, 138]),
+    xaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Compliance / Performance Rate (%)", range=[0, 148]),
     yaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=12, family="Be Vietnam Pro"), autorange="reversed"),
     font=dict(family="Be Vietnam Pro, sans-serif")
 )

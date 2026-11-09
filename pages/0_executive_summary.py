@@ -125,7 +125,7 @@ if not df.empty:
         bargap=0.35,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Number of Patients", range=[0, 250]),
+        yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Number of Patients", range=[0, 260]),
         xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=12.5, family="Be Vietnam Pro")),
         font=dict(family="Be Vietnam Pro, sans-serif")
     )
@@ -183,7 +183,7 @@ if not df.empty:
         bargap=0.35,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Number of Patients", range=[0, 850]),
+        yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Number of Patients", range=[0, 900]),
         xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title=""),
         font=dict(family="Be Vietnam Pro, sans-serif")
     )
@@ -273,7 +273,7 @@ fig_fin.update_layout(
     bargap=0.35,
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
-    yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Inpatient Financial Exposure ($ USD)", range=[0, 1420000]),
+    yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Inpatient Financial Exposure ($ USD)", range=[0, 1450000]),
     xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title=""),
     font=dict(family="Be Vietnam Pro, sans-serif")
 )

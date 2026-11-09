@@ -218,13 +218,13 @@ if not df.empty:
         hovertemplate="<b>%{y}</b><br>Overdue Patients: %{x:,}<extra></extra>"
     )
     fig_v5b.update_layout(
-        margin=dict(l=25, r=40, t=55, b=25),
+        margin=dict(l=25, r=45, t=55, b=25),
         showlegend=False,
         coloraxis_showscale=False,
         height=420,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        xaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Number of Patients", range=[0, 60]),
+        xaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Number of Patients", range=[0, 68]),
         yaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=12.5, family="Be Vietnam Pro")),
         font=dict(family="Be Vietnam Pro, sans-serif")
     )
@@ -233,12 +233,12 @@ if not df.empty:
     # Analysis Directly Under Visual 5B
     st.markdown(
         """
-        **Overdue Patients by Disease Registry**: The disease breakdown identifies the clinical registries most heavily impacted by surveillance loss: diabetic patients (48 patients) 
-        and heart disease patients (45 patients) form the bulk of the critically overdue cohort. 
+        **Overdue Patients by Disease Registry**: The disease breakdown identifies the clinical registries most heavily impacted by surveillance loss: heart disease patients (53 patients) 
+        and diabetic patients (43 patients) form the bulk of the critically overdue cohort (along with 40 asthmatics and 31 hypertensives). 
         In diabetic patients, unmonitored glycemic levels lead to silent microvascular neuropathy; in heart disease patients, unmonitored 
         ischemia leads to sudden acute myocardial infarction. 
         
-        **Care Management Priority**: Metropolitan Health's 7.0 RN FTE care coordination unit must immediately triage the **40 Severe Acuity 
+        **Care Management Priority**: Metropolitan Health's 7.0 RN FTE care coordination unit must immediately triage the **41 Severe Acuity 
         overdue patients** for rapid telephonic recall, reserving scheduled in-clinic appointment slots to re-establish clinical surveillance.
         """
     )

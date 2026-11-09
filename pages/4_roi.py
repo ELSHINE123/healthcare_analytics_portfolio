@@ -324,7 +324,7 @@ st.subheader("Actuarial Sensitivity Matrix: Breakeven Frontier")
 st.caption("Net operating margin ($ Thousands) across variable nurse compensation and admission reduction targets (includes CMS Quality Bonus).")
 
 salaries_grid = [75000, 85000, 95000, 105000, 115000, 125000]
-salary_labels = [f"&dollar;{s//1000}K / yr" for s in salaries_grid]
+salary_labels = [f"${s//1000}K / yr" for s in salaries_grid]
 reductions_grid = [10, 15, 20, 25, 30, 35]
 reduction_labels = [f"{r}% Target" for r in reductions_grid]
 
@@ -340,7 +340,7 @@ for s in salaries_grid:
         net_val = (savings_val + quality_bonus_share - cost_val) / 1000.0
         row_z.append(net_val)
         prefix = "+" if net_val >= 0 else ""
-        row_t.append(f"{prefix}&dollar;{net_val:.0f}K")
+        row_t.append(f"{prefix}${net_val:.0f}K")
     z_matrix.append(row_z)
     text_matrix.append(row_t)
 
