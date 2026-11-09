@@ -30,17 +30,6 @@ df = load_data()
 # ==============================================================================
 # 2. EDITORIAL HERO & STRATEGIC CONTEXT
 # ==============================================================================
-if st.session_state.get("presentation_mode", False):
-    st.markdown(
-        """
-        <div style="background: linear-gradient(90deg, #1E3A8A 0%, #2563EB 100%); color: #FFFFFF; padding: 7px 16px; border-radius: 6px; font-size: 12px; font-weight: 700; letter-spacing: 0.05em; display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-            <span>💼 BOARDROOM PRESENTATION MODE &bull; METROPOLITAN HEALTH SYSTEM ACO</span>
-            <span style="background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px; font-size: 11px;">HIGH CONTRAST ACTIVE</span>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
 st.title("Executive Summary: Value-Based Population Health Intelligence")
 st.caption("Enterprise Decision Support & Population Health Briefing")
 
@@ -83,7 +72,7 @@ if not df.empty:
             labels=tier_counts["Tier"],
             values=tier_counts["Patients"],
             hole=0.55,
-            domain=dict(y=[0.22, 1.0]),
+            domain=dict(y=[0.24, 1.0]),
             marker=dict(colors=tier_colors),
             textinfo="percent",
             textposition="inside",
@@ -93,8 +82,8 @@ if not df.empty:
         fig_tier.update_layout(
             title="<b>Population by Clinical Acuity Tier</b>",
             margin=dict(l=10, r=10, t=40, b=10),
-            legend=dict(orientation="h", yanchor="top", y=0.15, xanchor="center", x=0.5, font=dict(family="Be Vietnam Pro", size=11)),
-            height=380,
+            legend=dict(orientation="h", yanchor="top", y=0.12, xanchor="center", x=0.5, font=dict(family="Be Vietnam Pro", size=11.5)),
+            height=390,
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
             font=dict(family="Be Vietnam Pro, sans-serif")
@@ -216,7 +205,7 @@ if not df.empty:
             labels=contact_counts["Channel"],
             values=contact_counts["Patients"],
             hole=0.55,
-            domain=dict(y=[0.22, 1.0]),
+            domain=dict(y=[0.24, 1.0]),
             marker=dict(colors=contact_colors),
             textinfo="percent",
             textposition="inside",
@@ -225,9 +214,9 @@ if not df.empty:
         )])
         fig_contact.update_layout(
             title="<b>Patient Contactability & Recall Reach</b>",
-            legend=dict(orientation="h", yanchor="top", y=0.15, xanchor="center", x=0.5, font=dict(family="Be Vietnam Pro", size=11)),
+            legend=dict(orientation="h", yanchor="top", y=0.12, xanchor="center", x=0.5, font=dict(family="Be Vietnam Pro", size=11.5)),
             margin=dict(l=10, r=10, t=40, b=10),
-            height=380,
+            height=390,
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
             font=dict(family="Be Vietnam Pro, sans-serif")

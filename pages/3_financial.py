@@ -135,17 +135,17 @@ high_severe_cost = cost_df[cost_df["clinical_risk_tier"].isin(["High Acuity", "S
 low_mod_cost = cost_df[cost_df["clinical_risk_tier"].isin(["Low Acuity", "Moderate Acuity"])]["cost_exposure"].sum()
 pareto_share = (high_severe_cost / total_financial_exposure * 100) if total_financial_exposure > 0 else 0.0
 
-# KPI Metric Strip (Clean minimal styling, no box-farms)
+# KPI Metric Strip (Clean responsive scorecard architecture)
 st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
 kpi1, kpi2, kpi3, kpi4 = st.columns(4)
 
 with kpi1:
     st.markdown(
         f"""
-        <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 12px 16px; min-height: 98px; height: 98px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
-            <div style="font-size: 11px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Audited Cohort</div>
-            <div style="font-size: 24px; font-weight: 800; color: #0F172A; line-height: 1.1;">{total_patients:,}</div>
-            <div style="font-size: 12px; color: #64748B; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{selected_service}</div>
+        <div class="kpi-metric-card">
+            <div class="kpi-card-title">Audited Cohort</div>
+            <div class="kpi-card-value" style="color: #0F172A;">{total_patients:,}</div>
+            <div class="kpi-card-subtitle">{selected_service}</div>
         </div>
         """,
         unsafe_allow_html=True
@@ -154,10 +154,10 @@ with kpi1:
 with kpi2:
     st.markdown(
         f"""
-        <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 12px 16px; min-height: 98px; height: 98px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
-            <div style="font-size: 11px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Projected Admissions</div>
-            <div style="font-size: 24px; font-weight: 800; color: #2563EB; line-height: 1.1;">{total_projected_admissions:.1f}</div>
-            <div style="font-size: 12px; color: #64748B; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Annual Inpatient Events</div>
+        <div class="kpi-metric-card">
+            <div class="kpi-card-title">Projected Admissions</div>
+            <div class="kpi-card-value" style="color: #2563EB;">{total_projected_admissions:.1f}</div>
+            <div class="kpi-card-subtitle">Annual Inpatient Events</div>
         </div>
         """,
         unsafe_allow_html=True
@@ -166,10 +166,10 @@ with kpi2:
 with kpi3:
     st.markdown(
         f"""
-        <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 12px 16px; min-height: 98px; height: 98px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
-            <div style="font-size: 11px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Financial Liability</div>
-            <div style="font-size: 24px; font-weight: 800; color: #DC2626; line-height: 1.1;">${total_financial_exposure / 1e6:.2f}M</div>
-            <div style="font-size: 12px; color: #64748B; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">@ ${admission_cost:,} / Stay</div>
+        <div class="kpi-metric-card">
+            <div class="kpi-card-title">Financial Liability</div>
+            <div class="kpi-card-value" style="color: #DC2626;">&dollar;{total_financial_exposure / 1e6:.2f}M</div>
+            <div class="kpi-card-subtitle">@ &dollar;{admission_cost:,} / Stay</div>
         </div>
         """,
         unsafe_allow_html=True
@@ -178,10 +178,10 @@ with kpi3:
 with kpi4:
     st.markdown(
         f"""
-        <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 12px 16px; min-height: 98px; height: 98px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
-            <div style="font-size: 11px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Pareto Concentration</div>
-            <div style="font-size: 24px; font-weight: 800; color: #7C3AED; line-height: 1.1;">{pareto_share:.1f}%</div>
-            <div style="font-size: 12px; color: #64748B; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">High & Severe Tiers</div>
+        <div class="kpi-metric-card">
+            <div class="kpi-card-title">Pareto Concentration</div>
+            <div class="kpi-card-value" style="color: #7C3AED;">{pareto_share:.1f}%</div>
+            <div class="kpi-card-subtitle">High & Severe Tiers</div>
         </div>
         """,
         unsafe_allow_html=True
@@ -239,7 +239,7 @@ with v7_col2:
         labels=pareto_df["Tier Group"],
         values=pareto_df["Cost"],
         hole=0.55,
-        domain=dict(y=[0.22, 1.0]),
+        domain=dict(y=[0.24, 1.0]),
         marker=dict(colors=["#DC2626", "#3B82F6"]),
         textinfo="percent",
         textposition="inside",
@@ -250,15 +250,15 @@ with v7_col2:
     # Center Text in Donut Hole
     fig_v7b.add_annotation(
         text=f"<b>${total_financial_exposure / 1e6:.2f}M</b><br><span style='font-size:10px; color:#64748B;'>Total Annual<br>Cost Exposure</span>",
-        x=0.5, y=0.61,
+        x=0.5, y=0.62,
         showarrow=False,
         font=dict(size=14, color="#0F172A", family="Be Vietnam Pro")
     )
 
     fig_v7b.update_layout(
         title=dict(text="<b>80/20 Pareto Financial Risk Concentration</b>", x=0.5, y=0.96, xanchor="center", yanchor="top"),
-        margin=dict(l=10, r=10, t=50, b=40),
-        legend=dict(orientation="h", yanchor="top", y=0.15, xanchor="center", x=0.5, font=dict(family="Be Vietnam Pro", size=11)),
+        margin=dict(l=10, r=10, t=50, b=10),
+        legend=dict(orientation="h", yanchor="top", y=0.12, xanchor="center", x=0.5, font=dict(family="Be Vietnam Pro", size=11.5)),
         height=390,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",

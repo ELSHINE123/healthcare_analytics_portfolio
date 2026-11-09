@@ -70,7 +70,7 @@ if not df.empty:
             labels=channel_counts["Channel"],
             values=channel_counts["Patients"],
             hole=0.55,
-            domain=dict(y=[0.22, 1.0]),
+            domain=dict(y=[0.24, 1.0]),
             marker=dict(colors=channel_palette),
             textinfo="percent",
             textposition="inside",
@@ -80,8 +80,8 @@ if not df.empty:
         fig_v4a.update_layout(
             title="<b>Population Reach by Contact Channel</b>",
             margin=dict(l=10, r=10, t=40, b=10),
-            legend=dict(orientation="h", yanchor="top", y=0.15, xanchor="center", x=0.5, font=dict(family="Be Vietnam Pro", size=11)),
-            height=380,
+            legend=dict(orientation="h", yanchor="top", y=0.12, xanchor="center", x=0.5, font=dict(family="Be Vietnam Pro", size=11.5)),
+            height=390,
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
             font=dict(family="Be Vietnam Pro, sans-serif")
@@ -268,7 +268,7 @@ if not df.empty:
             labels=prov_counts["Provenance"],
             values=prov_counts["Patients"],
             hole=0.55,
-            domain=dict(y=[0.22, 1.0]),
+            domain=dict(y=[0.24, 1.0]),
             marker=dict(colors=prov_palette),
             textinfo="percent",
             textposition="inside",
@@ -278,7 +278,7 @@ if not df.empty:
         fig_v6a.update_layout(
             title=dict(text="<b>Clinical Laboratory Measurement Provenance</b>", x=0.5, y=0.96, xanchor="center", yanchor="top"),
             margin=dict(l=10, r=10, t=85, b=10),
-            legend=dict(orientation="h", yanchor="top", y=0.15, xanchor="center", x=0.5, font=dict(family="Be Vietnam Pro", size=11)),
+            legend=dict(orientation="h", yanchor="top", y=0.12, xanchor="center", x=0.5, font=dict(family="Be Vietnam Pro", size=11.5)),
             height=390,
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
@@ -319,7 +319,7 @@ if not df.empty:
         )
         fig_v6b.update_layout(
             title=dict(text="<b>Clinical Acuity: Verified Direct Labs vs. Unverified Records</b>", x=0.5, y=0.96, xanchor="center", yanchor="top"),
-            margin=dict(l=20, r=20, t=55, b=75),
+            margin=dict(l=20, r=20, t=55, b=85),
             height=410,
             bargap=0.35,
             bargroupgap=0.15,
@@ -327,7 +327,7 @@ if not df.empty:
             plot_bgcolor="rgba(0,0,0,0)",
             yaxis=dict(showgrid=True, gridcolor="#E2E8F0", title="Number of Patients", range=[0, 290]),
             xaxis=dict(title="", tickfont=dict(size=12, family="Be Vietnam Pro")),
-            legend=dict(orientation="h", yanchor="top", y=-0.20, xanchor="center", x=0.5, title="", font=dict(family="Be Vietnam Pro", size=11)),
+            legend=dict(orientation="h", yanchor="top", y=-0.16, xanchor="center", x=0.5, title="", font=dict(family="Be Vietnam Pro", size=11.5)),
             font=dict(family="Be Vietnam Pro, sans-serif")
         )
         st.plotly_chart(fig_v6b, width="stretch")

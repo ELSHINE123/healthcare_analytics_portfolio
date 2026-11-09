@@ -16,17 +16,6 @@ import streamlit as st
 # ==============================================================================
 # 1. PAGE HEADER & EXECUTIVE METADATA
 # ==============================================================================
-if st.session_state.get("presentation_mode", False):
-    st.markdown(
-        """
-        <div style="background: linear-gradient(90deg, #1E3A8A 0%, #2563EB 100%); color: #FFFFFF; padding: 7px 16px; border-radius: 6px; font-size: 12px; font-weight: 700; letter-spacing: 0.05em; display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-            <span>💼 BOARDROOM PRESENTATION MODE &bull; METROPOLITAN HEALTH SYSTEM ACO</span>
-            <span style="background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px; font-size: 11px;">RECOMMENDED BASELINE LOADED</span>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
 st.title("Preventative Care ROI & Clinical Staffing Model")
 st.caption("Multi-Scenario Preventative Care Economics & Calibrated Nurse Caseload Allocation")
 
@@ -127,17 +116,17 @@ total_value_created = direct_inpatient_savings + quality_bonus_share
 net_operating_margin = total_value_created - total_staffing_cost
 self_funding_ratio = (total_value_created / total_staffing_cost * 100.0) if total_staffing_cost > 0 else 0.0
 
-# KPI Metric Strip (Uniform 98px height, flexbox distribution)
+# KPI Metric Strip (Clean responsive scorecard architecture)
 st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
 kpi1, kpi2, kpi3, kpi4 = st.columns(4)
 
 with kpi1:
     st.markdown(
         f"""
-        <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 12px 16px; min-height: 98px; height: 98px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
-            <div style="font-size: 11px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Target Caseload</div>
-            <div style="font-size: 24px; font-weight: 800; color: #0F172A; line-height: 1.1;">{target_cohort_size:,} Pts</div>
-            <div style="font-size: 12px; color: #64748B; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">High & Severe Tiers</div>
+        <div class="kpi-metric-card">
+            <div class="kpi-card-title">Target Caseload</div>
+            <div class="kpi-card-value" style="color: #0F172A;">{target_cohort_size:,} Pts</div>
+            <div class="kpi-card-subtitle">High & Severe Tiers</div>
         </div>
         """,
         unsafe_allow_html=True
@@ -146,10 +135,10 @@ with kpi1:
 with kpi2:
     st.markdown(
         f"""
-        <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 12px 16px; min-height: 98px; height: 98px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
-            <div style="font-size: 11px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Dedicated Workforce</div>
-            <div style="font-size: 24px; font-weight: 800; color: #2563EB; line-height: 1.1;">{total_fte_rounded}.0 RN FTEs</div>
-            <div style="font-size: 12px; color: #64748B; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">CMSA / NCQA Caseloads</div>
+        <div class="kpi-metric-card">
+            <div class="kpi-card-title">Dedicated Workforce</div>
+            <div class="kpi-card-value" style="color: #2563EB;">{total_fte_rounded}.0 RN FTEs</div>
+            <div class="kpi-card-subtitle">CMSA / NCQA Caseloads</div>
         </div>
         """,
         unsafe_allow_html=True
@@ -158,10 +147,10 @@ with kpi2:
 with kpi3:
     st.markdown(
         f"""
-        <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 12px 16px; min-height: 98px; height: 98px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
-            <div style="font-size: 11px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Staffing Investment</div>
-            <div style="font-size: 24px; font-weight: 800; color: #DC2626; line-height: 1.1;">${total_staffing_cost / 1e3:.0f}K</div>
-            <div style="font-size: 12px; color: #64748B; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">@ ${rn_salary:,} / RN FTE</div>
+        <div class="kpi-metric-card">
+            <div class="kpi-card-title">Staffing Investment</div>
+            <div class="kpi-card-value" style="color: #DC2626;">&dollar;{total_staffing_cost / 1e3:.0f}K</div>
+            <div class="kpi-card-subtitle">@ &dollar;{rn_salary:,} / RN FTE</div>
         </div>
         """,
         unsafe_allow_html=True
@@ -172,10 +161,10 @@ with kpi4:
     sign = "+" if net_operating_margin >= 0 else ""
     st.markdown(
         f"""
-        <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 12px 16px; min-height: 98px; height: 98px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
-            <div style="font-size: 11px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Net Operating Margin</div>
-            <div style="font-size: 24px; font-weight: 800; color: {margin_color}; line-height: 1.1;">{sign}${net_operating_margin / 1e3:.0f}K</div>
-            <div style="font-size: 12px; color: #64748B; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{self_funding_ratio:.0f}% Self-Funded</div>
+        <div class="kpi-metric-card">
+            <div class="kpi-card-title">Net Operating Margin</div>
+            <div class="kpi-card-value" style="color: {margin_color};">{sign}&dollar;{net_operating_margin / 1e3:.0f}K</div>
+            <div class="kpi-card-subtitle">{self_funding_ratio:.0f}% Self-Funded</div>
         </div>
         """,
         unsafe_allow_html=True
@@ -238,8 +227,8 @@ with v9_col1:
             text="<b>Preventative Care Sensitivity across 3 Scenarios</b>",
             x=0.5, y=0.96, xanchor="center", yanchor="top"
         ),
-        margin=dict(l=20, r=20, t=50, b=100),
-        height=410,
+        margin=dict(l=25, r=20, t=50, b=85),
+        height=415,
         barmode="group",
         bargap=0.28,
         bargroupgap=0.10,
@@ -250,10 +239,10 @@ with v9_col1:
         legend=dict(
             orientation="h",
             yanchor="top",
-            y=-0.26,
+            y=-0.18,
             xanchor="center",
             x=0.5,
-            font=dict(family="Be Vietnam Pro", size=10.5)
+            font=dict(family="Be Vietnam Pro", size=11.5)
         ),
         font=dict(family="Be Vietnam Pro, sans-serif")
     )
@@ -284,8 +273,8 @@ with v9_col2:
             text="<b>Base Case Financial Bridge: +$109.9K Net Value</b>",
             x=0.5, y=0.96, xanchor="center", yanchor="top"
         ),
-        margin=dict(l=20, r=20, t=50, b=100),
-        height=410,
+        margin=dict(l=25, r=20, t=50, b=50),
+        height=415,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         yaxis=dict(showgrid=True, gridcolor="#E2E8F0", title="Annual Budget Impact ($ Thousands)", range=[-320, 480]),

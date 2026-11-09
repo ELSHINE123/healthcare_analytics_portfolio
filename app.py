@@ -208,6 +208,49 @@ button[data-testid="stSidebarCollapseButton"]:hover {
   padding-bottom: 2.5rem !important;
   max-width: 1250px !important;
 }
+
+/* 9. Executive KPI Scorecard Architecture */
+.kpi-metric-card {
+  background-color: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 10px !important;
+  padding: 14px 16px !important;
+  min-height: 102px !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+  transition: all 0.2s ease !important;
+}
+
+.kpi-card-title {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  color: #64748B !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  line-height: 1.2 !important;
+}
+
+.kpi-card-value {
+  font-size: 26px !important;
+  font-weight: 800 !important;
+  line-height: 1.15 !important;
+  letter-spacing: -0.02em !important;
+}
+
+.kpi-card-subtitle {
+  font-size: 12px !important;
+  color: #64748B !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  line-height: 1.2 !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -278,8 +321,48 @@ if st.session_state.get("presentation_mode", False):
       font-size: 15px !important;
       line-height: 1.7 !important;
     }
+    /* Boardroom Calibrated KPI Metric Cards */
+    .kpi-metric-card {
+      border: 1.5px solid #CBD5E1 !important;
+      border-radius: 12px !important;
+      padding: 16px 20px !important;
+      min-height: 116px !important;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08) !important;
+    }
+    .kpi-card-title {
+      font-size: 12.5px !important;
+      letter-spacing: 0.06em !important;
+      color: #475569 !important;
+    }
+    .kpi-card-value {
+      font-size: 32px !important;
+      line-height: 1.1 !important;
+    }
+    .kpi-card-subtitle {
+      font-size: 13.5px !important;
+      color: #475569 !important;
+    }
+    /* Boardroom Table Typography */
+    table th {
+      font-size: 12px !important;
+      padding: 12px 16px !important;
+    }
+    table td {
+      font-size: 13.5px !important;
+      padding: 14px 16px !important;
+    }
     </style>
     """, unsafe_allow_html=True)
+    
+    st.markdown(
+        """
+        <div style="background: linear-gradient(90deg, #1E3A8A 0%, #2563EB 100%); color: #FFFFFF; padding: 8px 18px; border-radius: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: 0.05em; display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2);">
+            <span>💼 BOARDROOM PRESENTATION MODE &bull; METROPOLITAN HEALTH SYSTEM ACO</span>
+            <span style="background: rgba(255,255,255,0.22); padding: 3px 10px; border-radius: 4px; font-size: 11px; font-weight: 700;">WIDESCREEN ACTIVE</span>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
 # ==============================================================================
 # MASTER NAVIGATION ROUTING (Punchy Titles that fit the slim rail)

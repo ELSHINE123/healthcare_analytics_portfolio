@@ -48,16 +48,17 @@ st.markdown(
 # ==============================================================================
 # 2. EXECUTIVE SCORECARD / STRATEGIC IMPACT STRIP
 # ==============================================================================
+# KPI Metric Strip (Clean responsive scorecard architecture)
 st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
 kpi1, kpi2, kpi3, kpi4 = st.columns(4)
 
 with kpi1:
     st.markdown(
         """
-        <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 12px 16px; min-height: 98px; height: 98px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
-            <div style="font-size: 11px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Clinical Action</div>
-            <div style="font-size: 24px; font-weight: 800; color: #2563EB; line-height: 1.1;">220 Care Gaps</div>
-            <div style="font-size: 12px; color: #64748B; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Immediate GDMT Titration</div>
+        <div class="kpi-metric-card">
+            <div class="kpi-card-title">Clinical Action</div>
+            <div class="kpi-card-value" style="color: #2563EB;">220 Care Gaps</div>
+            <div class="kpi-card-subtitle">Immediate GDMT Titration</div>
         </div>
         """,
         unsafe_allow_html=True
@@ -66,10 +67,10 @@ with kpi1:
 with kpi2:
     st.markdown(
         """
-        <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 12px 16px; min-height: 98px; height: 98px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
-            <div style="font-size: 11px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Workforce Scale</div>
-            <div style="font-size: 24px; font-weight: 800; color: #7C3AED; line-height: 1.1;">7.0 RN FTEs</div>
-            <div style="font-size: 12px; color: #64748B; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Caseload-Calibrated Unit</div>
+        <div class="kpi-metric-card">
+            <div class="kpi-card-title">Workforce Scale</div>
+            <div class="kpi-card-value" style="color: #7C3AED;">7.0 RN FTEs</div>
+            <div class="kpi-card-subtitle">Caseload-Calibrated Unit</div>
         </div>
         """,
         unsafe_allow_html=True
@@ -78,10 +79,10 @@ with kpi2:
 with kpi3:
     st.markdown(
         """
-        <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 12px 16px; min-height: 98px; height: 98px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
-            <div style="font-size: 11px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Net Economic Return</div>
-            <div style="font-size: 24px; font-weight: 800; color: #10B981; line-height: 1.1;">+$392K / yr</div>
-            <div style="font-size: 12px; color: #64748B; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">159% Self-Funded Model</div>
+        <div class="kpi-metric-card">
+            <div class="kpi-card-title">Net Economic Return</div>
+            <div class="kpi-card-value" style="color: #10B981;">+$392K / yr</div>
+            <div class="kpi-card-subtitle">159% Self-Funded Model</div>
         </div>
         """,
         unsafe_allow_html=True
@@ -90,10 +91,10 @@ with kpi3:
 with kpi4:
     st.markdown(
         """
-        <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 12px 16px; min-height: 98px; height: 98px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
-            <div style="font-size: 11px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Quality Benchmark</div>
-            <div style="font-size: 24px; font-weight: 800; color: #059669; line-height: 1.1;">4.5 Stars</div>
-            <div style="font-size: 12px; color: #64748B; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">CMS Quality Bonus Target</div>
+        <div class="kpi-metric-card">
+            <div class="kpi-card-title">Quality Benchmark</div>
+            <div class="kpi-card-value" style="color: #059669;">4.5 Stars</div>
+            <div class="kpi-card-subtitle">CMS Quality Bonus Target</div>
         </div>
         """,
         unsafe_allow_html=True
@@ -398,7 +399,7 @@ gov_rows_html = """
       <tr style="border-bottom: 1px solid #F1F5F9;">
         <td style="padding: 12px 14px; font-weight: 700; color: #0F172A; vertical-align: top;">Chief Financial Officer (CFO)</td>
         <td style="padding: 12px 14px; font-weight: 600; color: #334155; vertical-align: top;">Budget & Risk Negotiation</td>
-        <td style="padding: 12px 14px; color: #475569; vertical-align: top;">Approve $665,000 annual staffing appropriation for 7.0 RN FTEs; negotiate two-sided risk corridors and shared savings bonuses with payers.</td>
+        <td style="padding: 12px 14px; color: #475569; vertical-align: top;">Approve &dollar;665,000 annual staffing appropriation for 7.0 RN FTEs; negotiate two-sided risk corridors and shared savings bonuses with payers.</td>
         <td style="padding: 12px 14px; vertical-align: top;"><span style="background-color: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0; border-radius: 4px; padding: 4px 8px; font-size: 11px; font-weight: 600; display: inline-block; white-space: nowrap;">ROI Verified (159%)</span></td>
       </tr>
       <tr style="border-bottom: 1px solid #F1F5F9; background-color: #FAFAFA;">

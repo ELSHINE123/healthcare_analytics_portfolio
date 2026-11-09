@@ -64,7 +64,7 @@ def get_clinical_narrative(cond, tier, n, pct, mean_sbp, mean_chol, unmed_count)
             "Under **2017 ACC/AHA guidelines**, normal systolic pressure is `<120 mmHg`, Stage 1 HTN is `130–139 mmHg`, and Stage 2 HTN is `≥140 mmHg`. "
             "Concurrently, **NCEP ATP III guidelines** establish total cholesterol `<200 mg/dL` as desirable and `≥240 mg/dL` as high risk.\n\n"
             "**553 patients (56.3% of the cohort)** sit in High or Severe Acuity tiers. These individuals experience concurrent uncontrolled "
-            "hypertension and dyslipidemia, driving preventable emergency department visits and acute inpatient admissions ($12,500 benchmark). "
+            "hypertension and dyslipidemia, driving preventable emergency department visits and acute inpatient admissions (&dollar;12,500 benchmark). "
             "Select specific disease or acuity filters above to inspect subgroup clinical dynamics."
         )
 
@@ -105,7 +105,7 @@ def get_clinical_narrative(cond, tier, n, pct, mean_sbp, mean_chol, unmed_count)
                 f"Across all disease registries, {n} patients are classified in Severe Acuity (mean SBP {mean_sbp:.1f} mmHg, "
                 f"mean cholesterol {mean_chol:.1f} mg/dL, **{unmed_count} unmedicated**). This high-risk cohort accounts for the vast majority "
                 f"of avoidable acute hospitalizations under AHRQ HCUP benchmarks. **Action Mandate**: Primary caseload target for Metropolitan Health's "
-                f"7.0 RN FTE care coordination unit, where intensive nurse management directly averts $12,500 inpatient stays."
+                f"7.0 RN FTE care coordination unit, where intensive nurse management directly averts &dollar;12,500 inpatient stays."
             )
 
     # Case 3: High Acuity Subgroups
@@ -301,8 +301,8 @@ if not df.empty:
         )
 
         fig_v1.update_layout(
-            margin=dict(l=35, r=20, t=25, b=75),
-            height=475,
+            margin=dict(l=40, r=20, t=15, b=85),
+            height=480,
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
             xaxis=dict(showgrid=True, gridcolor="#E2E8F0", title="Total Cholesterol (mg/dL) — NCEP ATP III", range=[150, 235]),
@@ -310,22 +310,22 @@ if not df.empty:
             legend=dict(
                 orientation="h",
                 yanchor="top",
-                y=-0.20,
+                y=-0.16,
                 xanchor="center",
                 x=0.5,
                 title="",
-                font=dict(family="Be Vietnam Pro", size=11)
+                font=dict(family="Be Vietnam Pro", size=12)
             ),
             font=dict(family="Be Vietnam Pro, sans-serif")
         )
 
         st.markdown(
             f"""
-            <div style="text-align: center; margin-bottom: 4px;">
-                <div style="font-size: 15px; font-weight: 800; color: #0F172A; letter-spacing: -0.01em;">
+            <div style="text-align: center; margin-bottom: 6px; padding: 4px 0;">
+                <div style="font-size: 16px; font-weight: 800; color: #0F172A; letter-spacing: -0.01em;">
                     Bivariate Clinical Acuity Distribution
                 </div>
-                <div style="font-size: 12px; color: #64748B; font-weight: 500;">
+                <div style="font-size: 12.5px; color: #64748B; font-weight: 500;">
                     {len(plot_df):,} Patients Displayed across SBP & Cholesterol
                 </div>
             </div>
@@ -386,7 +386,7 @@ if not df.empty:
             text="<b>Unmedicated Chronic Disease Cohort by Diagnosis & Age Bracket</b><br><span style='font-size:11.5px; color:#64748B; font-weight:500;'>109 Patients with Formal ICD Diagnosis Receiving Zero Pharmacotherapy</span>",
             x=0.5, y=0.97, xanchor="center", yanchor="top"
         ),
-        margin=dict(l=20, r=20, t=65, b=75),
+        margin=dict(l=20, r=20, t=65, b=85),
         height=440,
         bargap=0.35,
         bargroupgap=0.15,
@@ -397,11 +397,11 @@ if not df.empty:
         legend=dict(
             orientation="h",
             yanchor="top",
-            y=-0.18,
+            y=-0.16,
             xanchor="center",
             x=0.5,
             title="",
-            font=dict(family="Be Vietnam Pro", size=11)
+            font=dict(family="Be Vietnam Pro", size=11.5)
         ),
         font=dict(family="Be Vietnam Pro, sans-serif")
     )
