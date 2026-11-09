@@ -441,21 +441,21 @@ proj_root = Path(__file__).resolve().parent.parent
 if str(proj_root) not in sys.path:
     sys.path.insert(0, str(proj_root))
 
-from src.export_engine import generate_board_memorandum, generate_care_gap_roster_csv
+from src.export_engine import generate_board_memorandum_pdf, generate_care_gap_roster_csv
 
-memo_text = generate_board_memorandum(df)
+pdf_bytes = generate_board_memorandum_pdf(df)
 csv_text = generate_care_gap_roster_csv(df)
 
 rec_col1, rec_col2 = st.columns(2, gap="medium")
 
 with rec_col1:
     st.download_button(
-        "📄 Export Board of Directors Memorandum (.md)",
-        data=memo_text,
-        file_name="Metropolitan_Health_Board_Memorandum.md",
-        mime="text/markdown",
+        "📄 Export Board of Directors Memorandum (PDF)",
+        data=pdf_bytes,
+        file_name="Metropolitan_Health_Board_Memorandum.pdf",
+        mime="application/pdf",
         use_container_width=True,
-        help="Export the complete board-certified strategic memorandum."
+        help="Export the complete board-certified strategic memorandum in publication-ready PDF format."
     )
 
 with rec_col2:

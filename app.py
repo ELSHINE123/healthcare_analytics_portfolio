@@ -15,7 +15,7 @@ project_root = Path(__file__).resolve().parent
 if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
-from src.export_engine import generate_board_memorandum, generate_care_gap_roster_csv
+from src.export_engine import generate_board_memorandum_pdf, generate_care_gap_roster_csv
 
 st.set_page_config(
     page_title="Healthcare Intelligence Suite",
@@ -263,12 +263,12 @@ DATA_PATH = Path(__file__).resolve().parent / "data" / "processed" / "healthcare
 def get_export_data():
     if DATA_PATH.exists():
         df_exp = pd.read_csv(DATA_PATH)
-        memo_text = generate_board_memorandum(df_exp)
+        pdf_bytes = generate_board_memorandum_pdf(df_exp)
         csv_text = generate_care_gap_roster_csv(df_exp)
-        return memo_text, csv_text
-    return "", ""
+        return pdf_bytes, csv_text
+    return b"", ""
 
-memo_data, csv_data = get_export_data()
+pdf_data, csv_data = get_export_data()
 
 with st.sidebar:
     st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
@@ -278,7 +278,7 @@ with st.sidebar:
         help="Expands canvas width, scales typography, and increases contrast for boardroom displays."
     )
     
-    if memo_data and csv_data:
+    if pdf_data and csv_data:
         st.markdown(
             """
             <div style="font-family: 'Be Vietnam Pro', sans-serif; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .09em; color: #475569; padding: 12px 0 6px 0;">
@@ -288,12 +288,12 @@ with st.sidebar:
             unsafe_allow_html=True
         )
         st.download_button(
-            "📄 Board Memorandum",
-            data=memo_data,
-            file_name="Metropolitan_Health_Board_Memorandum.md",
-            mime="text/markdown",
+            "📄 Board Memorandum (PDF)",
+            data=pdf_data,
+            file_name="Metropolitan_Health_Board_Memorandum.pdf",
+            mime="application/pdf",
             use_container_width=True,
-            help="Download the complete board-ready executive memorandum in Markdown format."
+            help="Download the certified executive memorandum formatted for boardroom presentation."
         )
         st.download_button(
             "📊 Care Gap Audit Roster",

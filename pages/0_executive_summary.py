@@ -318,8 +318,9 @@ if not df.empty:
     proj_root = Path(__file__).resolve().parent.parent
     if str(proj_root) not in sys.path:
         sys.path.insert(0, str(proj_root))
-    from src.export_engine import generate_board_memorandum, generate_care_gap_roster_csv
+    from src.export_engine import generate_board_memorandum_pdf, generate_board_memorandum, generate_care_gap_roster_csv
     
+    pdf_bytes = generate_board_memorandum_pdf(df)
     memo_text = generate_board_memorandum(df)
     csv_text = generate_care_gap_roster_csv(df)
 
@@ -327,12 +328,12 @@ if not df.empty:
 
     with exp_col1:
         st.download_button(
-            "📄 Download Certified Board Memorandum (.md)",
-            data=memo_text,
-            file_name="Metropolitan_Health_Board_Memorandum.md",
-            mime="text/markdown",
+            "📄 Download Certified Board Memorandum (PDF)",
+            data=pdf_bytes,
+            file_name="Metropolitan_Health_Board_Memorandum.pdf",
+            mime="application/pdf",
             use_container_width=True,
-            help="Download the complete board-ready executive memorandum documenting risk, gaps, and ROI."
+            help="Download the complete certified board memorandum formatted in PDF for boardroom presentation."
         )
 
     with exp_col2:
