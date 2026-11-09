@@ -38,22 +38,18 @@ st.markdown(
 
 st.markdown(
     """
-    ### The Value-Based Paradigm Shift
-    In recent years, Metropolitan Health entered two-sided risk-bearing agreements with federal and commercial payers, 
-    most notably transitioning into an **Accountable Care Organization (ACO)** and accepting capitated **Medicare Advantage** 
-    contracts. 
-    
-    Under these value-based arrangements, the health system's economic incentives inverted overnight:
-    
-    * **Actuarial Risk Transfer**: The health system is no longer reimbursed for avoidable readmissions; instead, it is 
-      held financially liable for inpatient utilization benchmarks. Every preventable hospitalization directly erodes shared 
-      savings margins and triggers risk-corridor penalties.
-    * **Quality Gatekeeping**: Millions of dollars in annual performance payments are tied directly to **NCQA HEDIS quality measures** 
-      and **CMS Five-Star Ratings**, specifically metrics tracking blood pressure control, statin adherence, and chronic disease surveillance.
-    * **The Data Reality**: While the hospital's Electronic Health Record (EHR) contains millions of data points across vitals, 
-      diagnoses, and medications, clinical leadership historically lacked a unified analytics engine capable of translating raw 
-      EHR data into proactive, risk-stratified clinical outreach.
-    """
+    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
+        In recent years, Metropolitan Health entered two-sided risk-bearing agreements with federal and commercial payers, 
+        most notably transitioning into an <strong>Accountable Care Organization (ACO)</strong> and accepting capitated <strong>Medicare Advantage</strong> 
+        contracts. Under these value-based arrangements, the health system's economic incentives inverted overnight:
+    </p>
+    <ul style='margin-top: 8px; margin-bottom: 12px; padding-left: 22px; line-height: 1.65; color: #334155;'>
+        <li style='margin-bottom: 8px;'><strong>Actuarial Risk Transfer</strong>: The health system is no longer reimbursed for avoidable readmissions; instead, it is held financially liable for inpatient utilization benchmarks. Every preventable hospitalization directly erodes shared savings margins and triggers risk-corridor penalties.</li>
+        <li style='margin-bottom: 8px;'><strong>Quality Gatekeeping</strong>: Millions of dollars in annual performance payments are tied directly to <strong>NCQA HEDIS quality measures</strong> and <strong>CMS Five-Star Ratings</strong>, specifically metrics tracking blood pressure control, statin adherence, and chronic disease surveillance.</li>
+        <li style='margin-bottom: 8px;'><strong>The Operational Reality</strong>: While the hospital's Electronic Health Record (EHR) contains extensive data across vitals, diagnoses, and medications, clinical leadership historically lacked a unified analytics engine capable of translating raw records into proactive, risk-stratified clinical outreach.</li>
+    </ul>
+    """,
+    unsafe_allow_html=True
 )
 
 st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
@@ -65,60 +61,62 @@ st.header("Executive Decision Framework & Study Objectives")
 
 st.markdown(
     """
-    To navigate this transition and safeguard both patient health and operating margins, 
-    executive leadership commissioned an in-depth audit of a **983-patient chronic disease cohort**. 
-    This analytics study was formulated to evaluate core priorities spanning clinical risk, 
-    operational feasibility, financial exposure, and care management economics:
-    """
+    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
+        To navigate this transition and safeguard both patient health and operating margins, 
+        executive leadership commissioned an in-depth audit of a <strong>983-patient chronic disease cohort</strong>. 
+        This analytics study evaluates core priorities spanning clinical risk, operational feasibility, 
+        financial exposure, and care management economics:
+    </p>
+    """,
+    unsafe_allow_html=True
 )
 
 st.subheader("1. Clinical Acuity & Pharmacotherapy Care Gaps")
 st.markdown(
     """
-    * **Vascular & Metabolic Staging**: When evaluated against standardized medical guidelines (**2017 ACC/AHA High Blood Pressure 
-      Guidelines** and **NCEP ATP III Cholesterol Cutoffs**), what proportion of our chronic disease panel is uncontrolled, 
-      and how is clinical risk distributed across age groups and disease categories?
-    * **Therapeutic Discordance**: How many chronic disease patients are currently unmedicated or receiving pharmacotherapy that 
-      fails to address their documented diagnosis (such as diabetic patients without glycemic control or hypertensive patients without anti-hypertensives)?
-    * **Polypharmacy & Compounding Acuity**: Which high-acuity patients are exposed to compounding clinical risk due to multi-morbidity 
-      and uncoordinated prescribing patterns across disconnected ambulatory care settings?
-    """
+    <ul style='margin-top: 6px; margin-bottom: 12px; padding-left: 22px; line-height: 1.65; color: #334155;'>
+        <li style='margin-bottom: 8px;'><strong>Vascular & Metabolic Staging</strong>: When evaluated against standardized medical guidelines (<strong>2017 ACC/AHA High Blood Pressure Guidelines</strong> and <strong>NCEP ATP III Cholesterol Cutoffs</strong>), what proportion of our chronic disease panel is uncontrolled, and how is clinical risk distributed across age groups and disease categories?</li>
+        <li style='margin-bottom: 8px;'><strong>Therapeutic Discordance</strong>: How many chronic disease patients are currently unmedicated or receiving pharmacotherapy that fails to address their documented diagnosis (such as diabetic patients without glycemic control or hypertensive patients without anti-hypertensives)?</li>
+        <li style='margin-bottom: 8px;'><strong>Polypharmacy & Compounding Acuity</strong>: Which high-acuity patients are exposed to compounding clinical risk due to multi-morbidity and uncoordinated prescribing patterns across disconnected ambulatory care settings?</li>
+    </ul>
+    """,
+    unsafe_allow_html=True
 )
 
 st.subheader("2. Operational Outreach, Contactability & Data Integrity")
 st.markdown(
     """
-    * **Patient Contactability Funnel**: When clinical care coordinators prepare recall and adherence campaigns, what percentage 
-      of the vulnerable cohort is genuinely reachable via verified electronic channels (phone, email, or both)?
-    * **Operational Blind Spots**: How many patients represent complete operational dead ends—lacking both a working phone number 
-      and email address—and how severe is their underlying clinical risk compared to reachable cohorts?
-    * **Surveillance Delays & Recall Velocity**: How long has it been since our highest-risk patients last completed an in-person or 
-      telehealth consultation, and where are the greatest drop-offs in routine chronic monitoring?
-    * **EHR Imputation Exposure**: When missing vitals (blood pressure and cholesterol) are imputed using statistical medians, how much 
-      clinical distortion and diagnostic misclassification is introduced into population risk tiers?
-    """
+    <ul style='margin-top: 6px; margin-bottom: 12px; padding-left: 22px; line-height: 1.65; color: #334155;'>
+        <li style='margin-bottom: 8px;'><strong>Patient Contactability Funnel</strong>: When clinical care coordinators prepare recall and adherence campaigns, what percentage of the vulnerable cohort is genuinely reachable via verified electronic channels (phone, email, or both)?</li>
+        <li style='margin-bottom: 8px;'><strong>Operational Blind Spots</strong>: How many patients represent complete operational dead ends—lacking both a working phone number and email address—and how severe is their underlying clinical risk compared to reachable cohorts?</li>
+        <li style='margin-bottom: 8px;'><strong>Surveillance Delays & Recall Velocity</strong>: How long has it been since our highest-risk patients last completed an in-person or telehealth consultation, and where are the greatest drop-offs in routine chronic monitoring?</li>
+        <li style='margin-bottom: 8px;'><strong>Laboratory Provenance & Vital Sign Integrity</strong>: When missing biometric measurements (blood pressure and cholesterol) rely on estimated values rather than direct laboratory draws, how much clinical misclassification is introduced into population risk tiers?</li>
+    </ul>
+    """,
+    unsafe_allow_html=True
 )
 
 st.subheader("3. Financial Exposure & Quality Incentive Stakes")
 st.markdown(
     """
-    * **Avoidable Inpatient Cost Exposure**: Under national **AHRQ HCUP benchmarks** (&dollar;12,500 average cost per acute chronic admission), 
-      what is the hospital's gross financial liability across our uncontrolled patient panel?
-    * **High-Cost Outlier Concentration**: Does our inpatient risk follow a Pareto distribution, with a small fraction (e.g., top 10–20%) 
-      of multi-morbid patients driving the vast majority of anticipated hospitalizations and financial liability?
-    * **HEDIS Star Rating Financial Upside**: What is the quantifiable revenue opportunity of closing blood pressure and statin adherence 
-      gaps to achieve 4-star and 5-star performance thresholds under CMS Medicare Advantage incentive contracts?
-    """
+    <ul style='margin-top: 6px; margin-bottom: 12px; padding-left: 22px; line-height: 1.65; color: #334155;'>
+        <li style='margin-bottom: 8px;'><strong>Avoidable Inpatient Cost Exposure</strong>: Under national <strong>AHRQ HCUP benchmarks</strong> (&dollar;12,500 average cost per acute chronic admission), what is the hospital's gross financial liability across our uncontrolled patient panel?</li>
+        <li style='margin-bottom: 8px;'><strong>High-Cost Outlier Concentration</strong>: Does our inpatient risk follow a Pareto distribution, with a small fraction (e.g., top 10–20%) of multi-morbid patients driving the vast majority of anticipated hospitalizations and financial liability?</li>
+        <li style='margin-bottom: 8px;'><strong>HEDIS Star Rating Financial Upside</strong>: What is the quantifiable revenue opportunity of closing blood pressure and statin adherence gaps to achieve 4-star and 5-star performance thresholds under CMS Medicare Advantage incentive contracts?</li>
+    </ul>
+    """,
+    unsafe_allow_html=True
 )
 
 st.subheader("4. Care Management ROI & Clinical Staffing Feasibility")
 st.markdown(
     """
-    * **The Self-Funding Care Coordination Model**: Can an investment in a dedicated ambulatory nurse care management team 
-      (projected at **7.0 Registered Nurse FTEs**) pay for itself strictly through shared-savings revenue generated by averted hospitalizations?
-    * **Break-Even & Payback Velocity**: Exactly how many acute inpatient admissions must the nurse care coordination team prevent each year 
-      to break even on operational payroll and benefits, and what is the projected net return under conservative, expected, and aggressive clinical scenarios?
-    """
+    <ul style='margin-top: 6px; margin-bottom: 12px; padding-left: 22px; line-height: 1.65; color: #334155;'>
+        <li style='margin-bottom: 8px;'><strong>The Self-Funding Care Coordination Model</strong>: Can an investment in a dedicated ambulatory nurse care management team (projected at <strong>7.0 Registered Nurse FTEs</strong>) pay for itself strictly through shared-savings revenue generated by averted hospitalizations?</li>
+        <li style='margin-bottom: 8px;'><strong>Break-Even & Payback Velocity</strong>: Exactly how many acute inpatient admissions must the nurse care coordination team prevent each year to break even on operational payroll and benefits, and what is the projected net return under conservative, expected, and aggressive clinical scenarios?</li>
+    </ul>
+    """,
+    unsafe_allow_html=True
 )
 
 st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)

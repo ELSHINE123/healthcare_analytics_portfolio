@@ -291,22 +291,22 @@ st.plotly_chart(fig_fin, width="stretch")
 # Narrative Directly Under Visual Set 3
 st.markdown(
     """
-    **The Economic Mandate**: Applying national **AHRQ HCUP benchmarks** (&dollar;12,500 average cost per acute avoidable chronic admission), 
-    Metropolitan Health System faces over **&dollar;1.25M in gross financial liability** across its uncontrolled chronic panel. 
-    Under legacy fee-for-service, this inpatient utilization was billed and collected; under capitation and ACO shared savings, 
-    every unmanaged admission is deducted dollar-for-dollar from the health system's annual bonus pool.
-    
-    The economic analysis proves that **preventive care coordination is entirely self-funding**:
-    
-    * **Dedicated Staffing Allocation**: Deploying a dedicated team of **7.0 Registered Nurse (RN) FTEs** 
-      (at an annual investment of approximately &dollar;490,000) provides sufficient caseload capacity (1:140 ratio) 
-      to continuously monitor the 553 high-acuity patients and close the 220 identified care gaps.
-    * **The Break-Even Threshold**: The entire 7.0 RN FTE unit breaks even by preventing just **39 acute hospitalizations per year** 
-      (less than 3.3 admissions averted per month across the entire health system).
-    * **Net Shared Savings**: Under the expected 25% admission reduction scenario, the health system saves **&dollar;312,500 gross**, 
-      unlocking substantial net financial margin while simultaneously capturing **CMS Five-Star Quality bonus payments** 
-      on NCQA HEDIS blood pressure and statin adherence measures.
-    """
+    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
+        <strong>The Economic Mandate</strong>: Applying national <strong>AHRQ HCUP benchmarks</strong> (&dollar;12,500 average cost per acute avoidable chronic admission), 
+        Metropolitan Health System faces over <strong>&dollar;1.25M in gross financial liability</strong> across its uncontrolled chronic panel. 
+        Under legacy fee-for-service, this inpatient utilization was billed and collected; under capitation and ACO shared savings, 
+        every unmanaged admission is deducted dollar-for-dollar from the health system's annual bonus pool.
+    </p>
+    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; margin-top: 6px;'>
+        The economic analysis proves that <strong>preventive care coordination is entirely self-funding</strong>:
+    </p>
+    <ul style='margin-top: 6px; margin-bottom: 12px; padding-left: 22px; line-height: 1.65; color: #334155;'>
+        <li style='margin-bottom: 8px;'><strong>Dedicated Staffing Allocation</strong>: Deploying a dedicated team of <strong>7.0 Registered Nurse (RN) FTEs</strong> (at an annual investment of approximately &dollar;490,000) provides sufficient caseload capacity (1:140 ratio) to continuously monitor the 553 high-acuity patients and close the 220 identified care gaps.</li>
+        <li style='margin-bottom: 8px;'><strong>The Break-Even Threshold</strong>: The entire 7.0 RN FTE unit breaks even by preventing just <strong>39 acute hospitalizations per year</strong> (less than 3.3 admissions averted per month across the entire health system).</li>
+        <li style='margin-bottom: 8px;'><strong>Net Shared Savings</strong>: Under the expected 25% admission reduction scenario, the health system saves <strong>&dollar;312,500 gross</strong>, unlocking substantial net financial margin while simultaneously capturing <strong>CMS Five-Star Quality bonus payments</strong> on NCQA HEDIS blood pressure and statin adherence measures.</li>
+    </ul>
+    """,
+    unsafe_allow_html=True
 )
 
 st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)

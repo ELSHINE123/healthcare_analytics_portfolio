@@ -335,23 +335,19 @@ if not df.empty:
 # Narrative Directly Under Visual 6
 st.markdown(
     """
-    **Laboratory Data Quality & Regulatory Audit Risks**: In healthcare analytics, handling missing biometric data with statistical 
-    median imputation is a widespread machine learning convention. However, when applied to clinical decision support and regulatory 
-    auditing, **unverified or modeled lab records introduce significant clinical distortion**:
-    
-    * **Cohort Exposure**: Across Metropolitan Health's 983 audited patients, **344 records (35.0%) contain at least one unverified vital sign**: 
-      191 patients have modeled cholesterol, 125 have modeled blood pressure, and 28 have both vitals modeled. Only 639 patients (65.0%) 
-      possess complete, verified direct laboratory measurements.
-    * **The Median Imputation Fallacy**: Imputing missing blood pressure or cholesterol with median values artificially compresses biological 
-      variance. Patients with unrecorded, dangerously elevated systolic pressure (e.g. 160+ mmHg) or severe familial hypercholesterolemia 
-      are pulled down to the cohort median (125 mmHg and 190 mg/dL), causing them to be falsely classified as Moderate or Low Acuity.
-    * **Regulatory Audit Risk**: Under federal CMS Medicare Advantage Risk Adjustment Data Validation (RADV) audits, imputed vitals cannot 
-      be submitted for clinical risk adjustment or HEDIS quality bonus claims. If an ACO relies on unverified vitals to calculate shared-savings 
-      benchmarks, it faces severe financial clawbacks during retrospective audits.
-    * **Clinical Governance Mandate**: Metropolitan Health System must enforce strict **data provenance tracking** in its EHR analytics 
-      pipeline. Care management algorithms must tag unverified records with a low-confidence flag, directing nursing staff to order physical lab 
-      panels and biometric vitals re-testing before finalizing clinical risk scores.
-    """
+    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
+        <strong>Laboratory Data Quality & Regulatory Audit Risks</strong>: In healthcare analytics, handling missing biometric data with statistical 
+        estimation is a common data convention. However, when applied to clinical decision support and regulatory 
+        auditing, <strong>unverified or modeled lab records introduce significant clinical distortion</strong>:
+    </p>
+    <ul style='margin-top: 6px; margin-bottom: 12px; padding-left: 22px; line-height: 1.65; color: #334155;'>
+        <li style='margin-bottom: 8px;'><strong>Cohort Exposure</strong>: Across Metropolitan Health's 983 audited patients, <strong>344 records (35.0%) contain at least one unverified vital sign</strong>: 191 patients have estimated cholesterol, 125 have estimated blood pressure, and 28 have both vitals estimated. Only 639 patients (65.0%) possess complete, verified direct laboratory measurements.</li>
+        <li style='margin-bottom: 8px;'><strong>The Estimation Fallacy</strong>: Approximating missing blood pressure or cholesterol with group averages artificially compresses biological variance. Patients with unrecorded, dangerously elevated systolic pressure (e.g. 160+ mmHg) or severe familial hypercholesterolemia are pulled down to cohort averages (125 mmHg and 190 mg/dL), causing them to be falsely classified as Moderate or Low Acuity.</li>
+        <li style='margin-bottom: 8px;'><strong>Regulatory Audit Risk</strong>: Under federal CMS Medicare Advantage Risk Adjustment Data Validation (RADV) audits, estimated vitals cannot be submitted for clinical risk adjustment or HEDIS quality bonus claims. If an ACO relies on unverified vitals to calculate shared-savings benchmarks, it faces severe financial clawbacks during retrospective audits.</li>
+        <li style='margin-bottom: 8px;'><strong>Clinical Governance Mandate</strong>: Metropolitan Health System must enforce strict <strong>data provenance tracking</strong> in its clinical workflows. Care management systems must tag unverified records with a confirmatory draw order, directing nursing staff to collect physical lab panels and in-person biometric vitals before finalizing clinical risk tiers.</li>
+    </ul>
+    """,
+    unsafe_allow_html=True
 )
 
 st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)

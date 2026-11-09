@@ -271,20 +271,22 @@ severe_cost = cost_df.loc[cost_df['clinical_risk_tier'] == 'Severe Acuity', 'cos
 
 st.markdown(
     f"""
-    **Actuarial Inpatient Risk Assessment**: In value-based ACO contracts, acute inpatient admissions represent the single largest 
-    source of avoidable medical expense. Applying national **AHRQ HCUP benchmarks** (&dollar;{admission_cost:,} average cost per acute chronic stay) 
-    against actuarial admission probabilities (5% for Low Acuity, 15% for Moderate, 35% for High, and 65% for Severe), 
-    Metropolitan Health System faces a baseline inpatient exposure of **&dollar;{total_financial_exposure / 1e6:.2f}M across {total_projected_admissions:.1f} projected admissions** 
-    in this cohort alone.
-    
-    The Pareto decomposition on the right illustrates the classic **80/20 risk asymmetry of population health**:
-    * **The Critical Driver**: The High and Severe Acuity tiers account for **&dollar;{high_severe_cost / 1e6:.2f}M ({pareto_share:.1f}%)** of the entire 
-      health system's financial liability. Specifically, the 204 Severe Acuity patients (mean SBP ≥140 mmHg or total cholesterol ≥240 mg/dL) 
-      generate **&dollar;{severe_cost / 1e6:.2f}M** in exposure alone, with a staggering 65% annual admission probability.
-    * **Strategic ROI Focus**: Traditional disease management programs dilute resources by broadcasting educational materials across the entire panel. 
-      These actuarial figures prove that care management resources must be intensely concentrated: deploying nurse navigators to stabilize 
-      the top two acuity tiers controls over four-fifths of the system's total balance sheet exposure.
-    """
+    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
+        <strong>Actuarial Inpatient Risk Assessment</strong>: In value-based ACO contracts, acute inpatient admissions represent the single largest 
+        source of avoidable medical expense. Applying national <strong>AHRQ HCUP benchmarks</strong> (&dollar;{admission_cost:,} average cost per acute chronic stay) 
+        against actuarial admission probabilities (5% for Low Acuity, 15% for Moderate, 35% for High, and 65% for Severe), 
+        Metropolitan Health System faces a baseline inpatient exposure of <strong>&dollar;{total_financial_exposure / 1e6:.2f}M across {total_projected_admissions:.1f} projected admissions</strong> 
+        in this cohort alone.
+    </p>
+    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; margin-top: 6px;'>
+        The Pareto decomposition on the right illustrates the classic <strong>80/20 risk asymmetry of population health</strong>:
+    </p>
+    <ul style='margin-top: 6px; margin-bottom: 12px; padding-left: 22px; line-height: 1.65; color: #334155;'>
+        <li style='margin-bottom: 8px;'><strong>The Critical Driver</strong>: The High and Severe Acuity tiers account for <strong>&dollar;{high_severe_cost / 1e6:.2f}M ({pareto_share:.1f}%)</strong> of the entire health system's financial liability. Specifically, the 204 Severe Acuity patients (mean SBP ≥140 mmHg or total cholesterol ≥240 mg/dL) generate <strong>&dollar;{severe_cost / 1e6:.2f}M</strong> in exposure alone, with a significant 65% annual admission probability.</li>
+        <li style='margin-bottom: 8px;'><strong>Strategic ROI Focus</strong>: Traditional disease management programs dilute resources by broadcasting educational materials across the entire panel. These actuarial figures prove that care management resources must be intensely concentrated: deploying nurse navigators to stabilize the top two acuity tiers controls over four-fifths of the system's total balance sheet exposure.</li>
+    </ul>
+    """,
+    unsafe_allow_html=True
 )
 
 st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
@@ -489,20 +491,21 @@ st.plotly_chart(fig_v8, width="stretch")
 # Narrative Directly Under Visual 8
 st.markdown(
     """
-    **Quality Governance & CMS Star Rating Assessment**: Under federal CMS Medicare Advantage Star Ratings, health systems are scored on a 1-to-5 star scale. 
-    Achieving a 4.0 or 5.0 Star Rating unlocks substantial annual Quality Bonus Payments (typically 5% bonus on Medicare benchmark payments), 
-    while falling below 3.5 stars results in marketing restrictions, loss of auto-enrollment, and severe financial penalties.
-    
-    The audit above reveals a profound clinical paradox:
-    * **Clinical Success in Hypertension (HEDIS CBP)**: Metropolitan Health achieves a **76.5% compliance rate** on Controlling High Blood Pressure 
-      (`<140/90 mmHg`), outperforming the national 72.0% benchmark by **+4.5%**. This reflects sound primary care physician practices during clinic visits.
-    * **Severe Regulatory Deficits in Statin Therapy (HEDIS SPC & SUPD)**: In stark contrast, only **26.6% of heart disease patients** (against an 80.0% benchmark) 
-      and **19.6% of diabetic patients** (against a 78.0% benchmark) are actively prescribed guideline-directed statin therapy (`Atorvastatin`). 
-      These double-digit deficits (**-53.4%** and **-58.4%**) drag Metropolitan Health's Star Rating directly into 1-star penalty territory on cardiovascular measures.
-    * **The Interactive Simulation**: Dragging the remediation slider above illustrates the operational solution. Closing just **50% of statin gaps** 
-      moves diabetic adherence to ~60% and cardiac adherence to ~63%, immediately lifting Metropolitan Health out of severe penalty bands and recovering 
-      millions of dollars in at-risk Medicare Advantage quality incentives.
-    """
+    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
+        <strong>Quality Governance & CMS Star Rating Assessment</strong>: Under federal CMS Medicare Advantage Star Ratings, health systems are scored on a 1-to-5 star scale. 
+        Achieving a 4.0 or 5.0 Star Rating unlocks substantial annual Quality Bonus Payments (typically 5% bonus on Medicare benchmark payments), 
+        while falling below 3.5 stars results in marketing restrictions, loss of auto-enrollment, and severe financial penalties.
+    </p>
+    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; margin-top: 6px;'>
+        The audit above reveals a profound clinical paradox:
+    </p>
+    <ul style='margin-top: 6px; margin-bottom: 12px; padding-left: 22px; line-height: 1.65; color: #334155;'>
+        <li style='margin-bottom: 8px;'><strong>Clinical Success in Hypertension (HEDIS CBP)</strong>: Metropolitan Health achieves a <strong>76.5% compliance rate</strong> on Controlling High Blood Pressure (&lt;140/90 mmHg), outperforming the national 72.0% benchmark by <strong>+4.5%</strong>. This reflects sound primary care physician practices during clinic visits.</li>
+        <li style='margin-bottom: 8px;'><strong>Severe Regulatory Deficits in Statin Therapy (HEDIS SPC & SUPD)</strong>: In stark contrast, only <strong>26.6% of heart disease patients</strong> (against an 80.0% benchmark) and <strong>19.6% of diabetic patients</strong> (against a 78.0% benchmark) are actively prescribed guideline-directed statin therapy (Atorvastatin). These double-digit deficits (<strong>-53.4%</strong> and <strong>-58.4%</strong>) drag Metropolitan Health's Star Rating directly into 1-star penalty territory on cardiovascular measures.</li>
+        <li style='margin-bottom: 8px;'><strong>The Interactive Simulation</strong>: Dragging the remediation slider above illustrates the operational solution. Closing just <strong>50% of statin gaps</strong> moves diabetic adherence to ~60% and cardiac adherence to ~63%, immediately lifting Metropolitan Health out of severe penalty bands and recovering millions of dollars in at-risk Medicare Advantage quality incentives.</li>
+    </ul>
+    """,
+    unsafe_allow_html=True
 )
 
 st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)

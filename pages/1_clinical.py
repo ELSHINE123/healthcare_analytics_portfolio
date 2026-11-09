@@ -401,20 +401,21 @@ if not df.empty:
 # Narrative Directly Under Visual 2
 st.markdown(
     """
-    **Clinical Acuity Findings & Senior Cohort Vulnerabilities**: In a well-managed healthcare network, patients carrying formal ICD-coded diagnoses 
-    for chronic vascular or endocrine disease must receive guideline-directed medical therapy. The grouped analysis above isolates the 
-    **109 patients who have documented chronic disease but zero prescribed medication** (`medication == 'none'`).
-    
-    The demographic stratification reveals an alarming clinical vulnerability:
-    * **The Senior Liability (Ages 60–74)**: The deep navy bars demonstrate that senior patients constitute the largest single 
-      demographic segment among unmedicated heart disease and diabetes cohorts. In elderly patients, unmedicated coronary artery disease 
-      or uncontrolled hyperglycemia accelerates atherosclerosis, precipitating acute myocardial infarction and hyperosmolar hyperglycemic state.
-    * **The Working-Age Blind Spot (Ages 30–44)**: A substantial volume of unmedicated hypertensive and diabetic patients sit in the 
-      30–44 age bracket. These individuals frequently underutilize primary care due to employment conflicts, experiencing silent organ damage 
-      that surfaces years later as premature renal failure or early heart failure.
-    * **Care Management Priority**: Closing these 109 unmedicated care gaps represents the single most actionable clinical objective 
-      for the ambulatory nurse outreach unit, offering immediate risk mitigation with standardized first-line pharmacotherapy.
-    """
+    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
+        <strong>Clinical Acuity Findings & Senior Cohort Vulnerabilities</strong>: In a well-managed healthcare network, patients carrying formal ICD-coded diagnoses 
+        for chronic vascular or endocrine disease must receive guideline-directed medical therapy. The grouped analysis above isolates the 
+        <strong>109 patients who have documented chronic disease but zero prescribed medication</strong> (patients with no active prescription on record).
+    </p>
+    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; margin-top: 6px;'>
+        The demographic stratification reveals an alarming clinical vulnerability:
+    </p>
+    <ul style='margin-top: 6px; margin-bottom: 12px; padding-left: 22px; line-height: 1.65; color: #334155;'>
+        <li style='margin-bottom: 8px;'><strong>The Senior Liability (Ages 60–74)</strong>: The deep navy bars demonstrate that senior patients constitute the largest single demographic segment among unmedicated heart disease and diabetes cohorts. In elderly patients, unmedicated coronary artery disease or uncontrolled hyperglycemia accelerates atherosclerosis, precipitating acute myocardial infarction and hyperosmolar hyperglycemic state.</li>
+        <li style='margin-bottom: 8px;'><strong>The Working-Age Blind Spot (Ages 30–44)</strong>: A substantial volume of unmedicated hypertensive and diabetic patients sit in the 30–44 age bracket. These individuals frequently underutilize primary care due to employment conflicts, experiencing silent organ damage that surfaces years later as premature renal failure or early heart failure.</li>
+        <li style='margin-bottom: 8px;'><strong>Care Management Priority</strong>: Closing these 109 unmedicated care gaps represents the single most actionable clinical objective for the ambulatory nurse outreach unit, offering immediate risk mitigation with standardized first-line pharmacotherapy.</li>
+    </ul>
+    """,
+    unsafe_allow_html=True
 )
 
 st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
@@ -467,23 +468,20 @@ if not df.empty:
 # Narrative Directly Under Visual 3
 st.markdown(
     """
-    **Pharmacotherapy Discordance & Contraindication Analysis**: The cross-tabulation matrix above reveals profound pharmacotherapeutic discordance 
-    and contraindication risk across the health system's ambulatory network. While diagonal alignment indicates guideline-concordant 
-    care (e.g., diabetics on metformin, hypertensives on lisinopril, hyperlipidemic patients on atorvastatin), the off-diagonal cells 
-    surface critical prescribing errors:
-    
-    * **Severe Contraindication — Asthmatics on Lisinopril (41 Patients)**: ACE inhibitors like Lisinopril inhibit kinase II, 
-      causing bradykinin accumulation in respiratory tissue. In asthmatic patients, this triggers severe persistent bronchospasm, 
-      intractable cough, and acute airway reactivity that mimics treatment-resistant asthma, driving avoidable Emergency Department visits.
-    * **Therapeutic Discordance — Diabetics on Albuterol Alone (40 Patients)**: 40 patients carrying an isolated diagnosis of diabetes 
-      are prescribed Albuterol (a short-acting beta-2 agonist) without any documented glycemic control agent. Beta-agonists stimulate 
-      glycogenolysis and lipolysis, worsening insulin resistance and exacerbating chronic hyperglycemia.
-    * **Unmanaged Vascular Risk — Hypertensives on Albuterol Alone (30 Patients)**: 30 hypertensive patients receive bronchodilator 
-      therapy with zero anti-hypertensive medication. Beta-2 stimulation can induce tachycardia and mild inotropic spikes, further 
-      elevating vascular strain in unmedicated hypertensive patients.
-    * **Actionable Clinical Governance**: Standardizing electronic health record clinical decision support (CDS) alerts and deploying 
-      nurse care managers to reconcile these **111 discordant prescriptions** eliminates iatrogenic harm and closes critical HEDIS quality gaps.
-    """
+    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
+        <strong>Pharmacotherapy Discordance & Contraindication Analysis</strong>: The cross-tabulation matrix above reveals profound pharmacotherapeutic discordance 
+        and contraindication risk across the health system's ambulatory network. While diagonal alignment indicates guideline-concordant 
+        care (e.g., diabetics on metformin, hypertensives on lisinopril, hyperlipidemic patients on atorvastatin), the off-diagonal cells 
+        surface critical prescribing errors:
+    </p>
+    <ul style='margin-top: 6px; margin-bottom: 12px; padding-left: 22px; line-height: 1.65; color: #334155;'>
+        <li style='margin-bottom: 8px;'><strong>Severe Contraindication — Asthmatics on Lisinopril (41 Patients)</strong>: ACE inhibitors like Lisinopril inhibit kinase II, causing bradykinin accumulation in respiratory tissue. In asthmatic patients, this triggers severe persistent bronchospasm, intractable cough, and acute airway reactivity that mimics treatment-resistant asthma, driving avoidable Emergency Department visits.</li>
+        <li style='margin-bottom: 8px;'><strong>Therapeutic Discordance — Diabetics on Albuterol Alone (40 Patients)</strong>: 40 patients carrying an isolated diagnosis of diabetes are prescribed Albuterol (a short-acting beta-2 agonist) without any documented glycemic control agent. Beta-agonists stimulate glycogenolysis and lipolysis, worsening insulin resistance and exacerbating chronic hyperglycemia.</li>
+        <li style='margin-bottom: 8px;'><strong>Unmanaged Vascular Risk — Hypertensives on Albuterol Alone (30 Patients)</strong>: 30 hypertensive patients receive bronchodilator therapy with zero anti-hypertensive medication. Beta-2 stimulation can induce tachycardia and mild inotropic spikes, further elevating vascular strain in unmedicated hypertensive patients.</li>
+        <li style='margin-bottom: 8px;'><strong>Actionable Clinical Governance</strong>: Standardizing electronic health record clinical decision support (CDS) alerts and deploying nurse care managers to reconcile these <strong>111 discordant prescriptions</strong> eliminates iatrogenic harm and closes critical HEDIS quality gaps.</li>
+    </ul>
+    """,
+    unsafe_allow_html=True
 )
 
 st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)

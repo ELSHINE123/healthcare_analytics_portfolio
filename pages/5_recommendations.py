@@ -167,57 +167,58 @@ with pillar_tab1:
     st.subheader("Pillar 1: Guideline-Directed Medical Therapy (GDMT) & Protocolization")
     st.markdown(
         """
-        * **Automated EHR Clinical Decision Support (CDS)**: Configure real-time best-practice alerts in the EHR that trigger 
-          whenever a diabetic patient (N = 204) or coronary heart disease patient (N = 207) presents without an active statin prescription, 
-          directly addressing the severe HEDIS deficits (**19.6%** in diabetes and **26.6%** in cardiac disease).
-        * **Nurse-Led Titration Standing Orders**: Empower the care coordination unit under Chief Medical Officer approved protocols 
-          to initiate and titrate guideline-concordant therapies (e.g., Atorvastatin 20–80 mg, ACE inhibitors, ARBs) without requiring a separate 
-          physician visit for each dosage step.
-        * **Eliminate Therapeutic Discordance**: Systematically review the 111 patients on discordant medications to ensure secondary prevention 
-          targets (SBP <130 mmHg, LDL-C <70 mg/dL) are aggressively pursued.
-        """
+        <ul style='margin-top: 8px; margin-bottom: 12px; padding-left: 22px; line-height: 1.65; color: #334155;'>
+            <li style='margin-bottom: 8px;'><strong>Automated EHR Clinical Decision Support (CDS)</strong>: Configure real-time best-practice alerts in the EHR that trigger whenever a diabetic patient (N = 204) or coronary heart disease patient (N = 207) presents without an active statin prescription, directly addressing the severe HEDIS deficits (<strong>19.6%</strong> in diabetes and <strong>26.6%</strong> in cardiac disease).</li>
+            <li style='margin-bottom: 8px;'><strong>Nurse-Led Titration Standing Orders</strong>: Empower the care coordination unit under Chief Medical Officer approved protocols to initiate and titrate guideline-concordant therapies (e.g., Atorvastatin 20–80 mg, ACE inhibitors, ARBs) without requiring a separate physician visit for each dosage step.</li>
+            <li style='margin-bottom: 8px;'><strong>Eliminate Therapeutic Discordance</strong>: Systematically review the 111 patients on discordant medications to ensure secondary prevention targets (SBP &lt;130 mmHg, LDL-C &lt;70 mg/dL) are aggressively pursued.</li>
+        </ul>
+        """,
+        unsafe_allow_html=True
     )
 
 with pillar_tab2:
     st.subheader("Pillar 2: Eradicating Operational Blind Spots & Surveillance Lags")
     st.markdown(
         """
-        * **Front-Desk Intake Demographic Verification**: Institute mandatory phone and email verification workflows at clinic check-in 
-          to systematically eliminate the **145 digital blind spots** (14.8% of panel). Front-line registrars will receive weekly compliance scorecards.
-        * **Community Health Worker (CHW) Field Engagement**: Deploy mobile community navigators to perform in-person welfare visits and 
-          portal onboarding for the 145 uncontactable patients who cannot be reached via SMS or telephonic outreach.
-        * **Automated Surveillance Recall**: Connect the EHR database to an automated recall engine that flags patients exceeding 180 days 
-          since their last clinical encounter, triaging the **462 overdue patients** before decompensation triggers emergency room utilization.
-        * **Laboratory Data Provenance Assurance**: Partner with commercial lab vendors to replace simulated/unimputed lab values with 
-          automated bidirectional HL7/FHIR feeds and point-of-care lipid/A1c testing at all primary care clinics.
-        """
+        <ul style='margin-top: 8px; margin-bottom: 12px; padding-left: 22px; line-height: 1.65; color: #334155;'>
+            <li style='margin-bottom: 8px;'><strong>Front-Desk Intake Demographic Verification</strong>: Institute mandatory phone and email verification workflows at clinic check-in to systematically eliminate the <strong>145 digital blind spots</strong> (14.8% of panel). Front-line registrars will receive weekly compliance scorecards.</li>
+            <li style='margin-bottom: 8px;'><strong>Community Health Worker (CHW) Field Engagement</strong>: Deploy mobile community navigators to perform in-person welfare visits and portal onboarding for the 145 uncontactable patients who cannot be reached via SMS or telephonic outreach.</li>
+            <li style='margin-bottom: 8px;'><strong>Automated Surveillance Recall</strong>: Connect the EHR database to an automated recall engine that flags patients exceeding 180 days since their last clinical encounter, triaging the <strong>462 overdue patients</strong> before decompensation triggers emergency room utilization.</li>
+            <li style='margin-bottom: 8px;'><strong>Laboratory Data Provenance Assurance</strong>: Partner with commercial lab vendors to replace unverified laboratory estimates with automated bidirectional direct lab feeds and point-of-care lipid/A1c testing at all primary care clinics.</li>
+        </ul>
+        """,
+        unsafe_allow_html=True
     )
 
 with pillar_tab3:
     st.subheader("Pillar 3: High-Risk Workforce Calibration & Pod-Based Staffing")
     st.markdown(
         """
-        * **Formalize the 7.0 RN FTE Care Management Unit**: Finance and deploy 7 full-time dedicated Registered Nurse Care Managers 
-          calibrated strictly to national **Case Management Society of America (CMSA)** caseload standards.
-        * **Acuity-Stratified Panel Distribution**:
-          * **3.4 FTEs dedicated to 204 Severe Acuity Patients (1:60 ratio)**: Weekly biometric check-ins, medication reconciliation, and in-person navigation.
-          * **3.5 FTEs dedicated to 349 High Acuity Patients (1:100 ratio)**: Bi-weekly surveillance, remote monitoring oversight, and appointment adherence.
-        * **Zero Dilution Policy**: Prohibit care managers from carrying Low or Moderate Acuity panels. Preserving the 80/20 Pareto principle 
-          concentrates 100% of nurse capacity on the top two tiers that account for **83.2% of the health system's financial liability**.
-        """
+        <ul style='margin-top: 8px; margin-bottom: 12px; padding-left: 22px; line-height: 1.65; color: #334155;'>
+            <li style='margin-bottom: 8px;'><strong>Formalize the 7.0 RN FTE Care Management Unit</strong>: Finance and deploy 7 full-time dedicated Registered Nurse Care Managers calibrated strictly to national <strong>Case Management Society of America (CMSA)</strong> caseload standards.</li>
+            <li style='margin-bottom: 8px;'><strong>Acuity-Stratified Panel Distribution</strong>:
+                <ul style='margin-top: 4px; padding-left: 20px; line-height: 1.6;'>
+                    <li style='margin-bottom: 4px;'><strong>3.4 FTEs dedicated to 204 Severe Acuity Patients (1:60 ratio)</strong>: Weekly biometric check-ins, medication reconciliation, and in-person navigation.</li>
+                    <li style='margin-bottom: 4px;'><strong>3.5 FTEs dedicated to 349 High Acuity Patients (1:100 ratio)</strong>: Bi-weekly surveillance, remote monitoring oversight, and appointment adherence.</li>
+                </ul>
+            </li>
+            <li style='margin-bottom: 8px;'><strong>Zero Dilution Policy</strong>: Prohibit care managers from carrying Low or Moderate Acuity panels. Preserving the 80/20 Pareto principle concentrates 100% of nurse capacity on the top two tiers that account for <strong>83.2% of the health system's financial liability</strong>.</li>
+        </ul>
+        """,
+        unsafe_allow_html=True
     )
 
 with pillar_tab4:
     st.subheader("Pillar 4: Value-Based Financial Governance & Risk Optimization")
     st.markdown(
         """
-        * **Reinvest Operating Margin into Remote Monitoring (RPM)**: Channel a portion of the projected **&dollar;392.5K annual net operating margin** 
-          into cellular-connected blood pressure cuffs and continuous glucose monitors for the 204 Severe Acuity patients.
-        * **Real-Time Admission Discharge Transfer (ADT) Feeds**: Integrate regional health information exchange (HIE) feeds to alert nurse 
-          care managers within 60 minutes of any panel patient presenting to an acute emergency department, capturing patients before inpatient admission.
-        * **Transition to Higher-Reward Two-Sided Risk Contracts**: Leverage demonstrated quality benchmark superiority (HEDIS CBP >76%, 
-          remediated statin adherence >60%) to negotiate larger shared-savings percentages (from 50% to 75%) with commercial Medicare Advantage payers.
-        """
+        <ul style='margin-top: 8px; margin-bottom: 12px; padding-left: 22px; line-height: 1.65; color: #334155;'>
+            <li style='margin-bottom: 8px;'><strong>Reinvest Operating Margin into Remote Monitoring (RPM)</strong>: Channel a portion of the projected <strong>&dollar;392.5K annual net operating margin</strong> into cellular-connected blood pressure cuffs and continuous glucose monitors for the 204 Severe Acuity patients.</li>
+            <li style='margin-bottom: 8px;'><strong>Real-Time Admission Discharge Transfer (ADT) Feeds</strong>: Integrate regional health information exchange (HIE) feeds to alert nurse care managers within 60 minutes of any panel patient presenting to an acute emergency department, capturing patients before inpatient admission.</li>
+            <li style='margin-bottom: 8px;'><strong>Transition to Higher-Reward Two-Sided Risk Contracts</strong>: Leverage demonstrated quality benchmark superiority (HEDIS CBP &gt;76%, remediated statin adherence &gt;60%) to negotiate larger shared-savings percentages (from 50% to 75%) with commercial Medicare Advantage payers.</li>
+        </ul>
+        """,
+        unsafe_allow_html=True
     )
 
 st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)

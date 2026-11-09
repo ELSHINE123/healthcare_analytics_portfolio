@@ -61,7 +61,7 @@ Metropolitan Health System has audited **{total_pts:,} chronic disease patients*
 The audit identified systemic clinical quality and pharmacotherapeutic gaps across the ambulatory network:
 
 1. **Unmedicated Chronic Disease Cohort (N = {unmed})**:
-   * {unmed} patients possess formal ICD diagnoses for heart disease, diabetes, or hypertension but receive zero prescribed pharmacotherapy (`medication == 'none'`).
+   * {unmed} patients possess formal ICD diagnoses for heart disease, diabetes, or hypertension but receive zero prescribed pharmacotherapy (no active prescription on file).
    * Senior patients (ages 60–74) represent the largest single unmedicated demographic segment, facing acute myocardial infarction and hyperosmolar diabetic crisis risks.
 2. **Therapeutic Discordance & Contraindications (N = {discordant})**:
    * **41 Asthmatics prescribed Lisinopril** (ACE inhibitor), triggering severe bradykinin-mediated bronchospasm, chronic cough, and avoidable ED visits.
@@ -79,7 +79,7 @@ Ambulatory reach and surveillance metrics indicate significant operational blind
 
 * **Digital Blind Spots (14.8% of Panel)**: **{uncontactable} patients** lack valid telephone numbers or email addresses, rendering digital SMS recalls ineffective.
 * **Surveillance Lags (47.0% of Panel)**: **{overdue} patients** have not completed an in-person or telehealth clinical encounter within the mandated 180-day window.
-* **Laboratory Provenance Auditing**: **{imputed_labs} records (35.0%)** rely on modeled/imputed biometric measurements rather than verified direct laboratory draws, creating regulatory audit vulnerabilities under CMS data validation audits.
+* **Laboratory Provenance Auditing**: **{imputed_labs} records (35.0%)** rely on estimated biometric measurements rather than verified direct laboratory draws, creating regulatory audit vulnerabilities under CMS data validation audits.
 
 ---
 
