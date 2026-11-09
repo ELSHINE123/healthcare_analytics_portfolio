@@ -9,8 +9,18 @@ Narrative Flow Style: Interactive Visuals with Integrated Narrative Storytelling
 import streamlit as st
 import pandas as pd
 from pathlib import Path
+import sys
 import plotly.express as px
 import plotly.graph_objects as go
+
+# Ensure project root is in sys.path
+project_root = Path(__file__).resolve().parent.parent
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
+
+from src.styles import inject_chart_card_css
+
+inject_chart_card_css()
 
 # ==============================================================================
 # 1. DATA REPOSITORY & PIPELINE RECOVERY
@@ -69,7 +79,7 @@ if not df.empty:
         labels=tier_counts["Tier"],
         values=tier_counts["Patients"],
         hole=0.55,
-        domain=dict(y=[0.14, 1.0]),
+        domain=dict(y=[0.20, 1.0]),
         marker=dict(colors=tier_colors),
         textinfo="percent",
         textposition="inside",
@@ -78,9 +88,9 @@ if not df.empty:
     )])
     fig_tier.update_layout(
         title="<b>Population by Clinical Acuity Tier</b>",
-        margin=dict(l=20, r=20, t=50, b=20),
-        legend=dict(orientation="h", yanchor="top", y=0.06, xanchor="center", x=0.5, font=dict(family="Be Vietnam Pro", size=12)),
-        height=440,
+        margin=dict(l=20, r=20, t=50, b=55),
+        legend=dict(orientation="h", yanchor="top", y=0.10, xanchor="center", x=0.5, font=dict(family="Be Vietnam Pro", size=12)),
+        height=460,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         font=dict(family="Be Vietnam Pro, sans-serif")
@@ -214,7 +224,7 @@ if not df.empty:
         labels=contact_counts["Channel"],
         values=contact_counts["Patients"],
         hole=0.55,
-        domain=dict(y=[0.14, 1.0]),
+        domain=dict(y=[0.22, 1.0]),
         marker=dict(colors=contact_colors),
         textinfo="percent",
         textposition="inside",
@@ -223,9 +233,9 @@ if not df.empty:
     )])
     fig_contact.update_layout(
         title="<b>Patient Contactability & Recall Reach</b>",
-        legend=dict(orientation="h", yanchor="top", y=0.06, xanchor="center", x=0.5, font=dict(family="Be Vietnam Pro", size=12)),
-        margin=dict(l=20, r=20, t=50, b=20),
-        height=440,
+        legend=dict(orientation="h", yanchor="top", y=0.12, xanchor="center", x=0.5, font=dict(family="Be Vietnam Pro", size=12)),
+        margin=dict(l=20, r=20, t=50, b=60),
+        height=470,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         font=dict(family="Be Vietnam Pro, sans-serif")

@@ -10,8 +10,18 @@ Answers Questions 2, 3, and 8
 import streamlit as st
 import pandas as pd
 from pathlib import Path
+import sys
 import plotly.express as px
 import plotly.graph_objects as go
+
+# Ensure project root is in sys.path
+project_root = Path(__file__).resolve().parent.parent
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
+
+from src.styles import inject_chart_card_css
+
+inject_chart_card_css()
 
 # ==============================================================================
 # 1. DATA REPOSITORY & PIPELINE RECOVERY
@@ -67,7 +77,7 @@ if not df.empty:
         labels=channel_counts["Channel"],
         values=channel_counts["Patients"],
         hole=0.55,
-        domain=dict(y=[0.14, 1.0]),
+        domain=dict(y=[0.22, 1.0]),
         marker=dict(colors=channel_palette),
         textinfo="percent",
         textposition="inside",
@@ -76,9 +86,9 @@ if not df.empty:
     )])
     fig_v4a.update_layout(
         title="<b>Population Reach by Contact Channel</b>",
-        margin=dict(l=20, r=20, t=50, b=20),
-        legend=dict(orientation="h", yanchor="top", y=0.06, xanchor="center", x=0.5, font=dict(family="Be Vietnam Pro", size=12)),
-        height=440,
+        margin=dict(l=20, r=20, t=50, b=60),
+        legend=dict(orientation="h", yanchor="top", y=0.12, xanchor="center", x=0.5, font=dict(family="Be Vietnam Pro", size=12)),
+        height=470,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         font=dict(family="Be Vietnam Pro, sans-serif")
@@ -265,7 +275,7 @@ if not df.empty:
         labels=prov_counts["Provenance"],
         values=prov_counts["Patients"],
         hole=0.55,
-        domain=dict(y=[0.14, 1.0]),
+        domain=dict(y=[0.22, 1.0]),
         marker=dict(colors=prov_palette),
         textinfo="percent",
         textposition="inside",
@@ -274,9 +284,9 @@ if not df.empty:
     )])
     fig_v6a.update_layout(
         title=dict(text="<b>Clinical Laboratory Measurement Provenance</b>", x=0.5, y=0.96, xanchor="center", yanchor="top"),
-        margin=dict(l=20, r=20, t=50, b=20),
-        legend=dict(orientation="h", yanchor="top", y=0.06, xanchor="center", x=0.5, font=dict(family="Be Vietnam Pro", size=12)),
-        height=440,
+        margin=dict(l=20, r=20, t=50, b=60),
+        legend=dict(orientation="h", yanchor="top", y=0.12, xanchor="center", x=0.5, font=dict(family="Be Vietnam Pro", size=12)),
+        height=470,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         font=dict(family="Be Vietnam Pro, sans-serif")
@@ -329,15 +339,15 @@ if not df.empty:
     )
     fig_v6b.update_layout(
         title=dict(text="<b>Clinical Acuity: Verified Direct Labs vs. Unverified Records</b>", x=0.5, y=0.96, xanchor="center", yanchor="top"),
-        margin=dict(l=25, r=25, t=60, b=85),
-        height=450,
+        margin=dict(l=35, r=25, t=60, b=110),
+        height=480,
         bargap=0.30,
         bargroupgap=0.12,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Number of Patients", range=[0, 290]),
         xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=12.5, family="Be Vietnam Pro")),
-        legend=dict(orientation="h", yanchor="top", y=-0.16, xanchor="center", x=0.5, title="", font=dict(family="Be Vietnam Pro", size=12)),
+        legend=dict(orientation="h", yanchor="top", y=-0.17, xanchor="center", x=0.5, title="", font=dict(family="Be Vietnam Pro", size=12)),
         font=dict(family="Be Vietnam Pro, sans-serif")
     )
     st.plotly_chart(fig_v6b, width="stretch")

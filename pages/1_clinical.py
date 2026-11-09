@@ -11,8 +11,18 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from pathlib import Path
+import sys
 import plotly.express as px
 import plotly.graph_objects as go
+
+# Ensure project root is in sys.path
+project_root = Path(__file__).resolve().parent.parent
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
+
+from src.styles import inject_chart_card_css
+
+inject_chart_card_css()
 
 # ==============================================================================
 # 1. DATA REPOSITORY & PIPELINE RECOVERY
@@ -274,8 +284,8 @@ if not df.empty:
             text="<b>Bivariate Clinical Acuity Distribution</b><br><span style='font-size:11.5px; color:#64748B; font-weight:500;'>983 Patients Displayed across SBP & Cholesterol</span>",
             x=0.5, y=0.97, xanchor="center", yanchor="top"
         ),
-        margin=dict(l=40, r=20, t=55, b=85),
-        height=490,
+        margin=dict(l=45, r=25, t=55, b=110),
+        height=510,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         xaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Total Cholesterol (mg/dL) — NCEP ATP III", range=[150, 235]),
@@ -283,7 +293,7 @@ if not df.empty:
         legend=dict(
             orientation="h",
             yanchor="top",
-            y=-0.16,
+            y=-0.17,
             xanchor="center",
             x=0.5,
             title="",
@@ -366,8 +376,8 @@ if not df.empty:
             text="<b>Unmedicated Chronic Disease Cohort by Diagnosis & Age Bracket</b><br><span style='font-size:12px; color:#64748B; font-weight:500;'>109 Patients with Formal ICD Diagnosis Receiving Zero Pharmacotherapy</span>",
             x=0.5, y=0.97, xanchor="center", yanchor="top"
         ),
-        margin=dict(l=25, r=25, t=65, b=85),
-        height=470,
+        margin=dict(l=35, r=25, t=65, b=110),
+        height=490,
         bargap=0.25,
         bargroupgap=0.12,
         paper_bgcolor="rgba(0,0,0,0)",
@@ -377,7 +387,7 @@ if not df.empty:
         legend=dict(
             orientation="h",
             yanchor="top",
-            y=-0.16,
+            y=-0.17,
             xanchor="center",
             x=0.5,
             title="",

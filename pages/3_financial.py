@@ -7,11 +7,21 @@ Answers Strategic Questions 7 and 10
 """
 
 from pathlib import Path
+import sys
 import numpy as np
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
+
+# Ensure project root is in sys.path
+project_root = Path(__file__).resolve().parent.parent
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
+
+from src.styles import inject_chart_card_css
+
+inject_chart_card_css()
 
 # ==============================================================================
 # 1. PAGE HEADER & EXECUTIVE METADATA
@@ -263,7 +273,7 @@ fig_v7b = go.Figure(data=[go.Pie(
     labels=pareto_df["Tier Group"],
     values=pareto_df["Cost"],
     hole=0.55,
-    domain=dict(y=[0.14, 1.0]),
+    domain=dict(y=[0.20, 1.0]),
     marker=dict(colors=["#DC2626", "#3B82F6"]),
     textinfo="percent",
     textposition="inside",
@@ -274,16 +284,16 @@ fig_v7b = go.Figure(data=[go.Pie(
 # Center Text in Donut Hole
 fig_v7b.add_annotation(
     text=f"<b>${total_financial_exposure / 1e6:.2f}M</b><br><span style='font-size:11px; color:#64748B;'>Total Annual<br>Cost Exposure</span>",
-    x=0.5, y=0.57,
+    x=0.5, y=0.60,
     showarrow=False,
     font=dict(size=15, color="#0F172A", family="Be Vietnam Pro")
 )
 
 fig_v7b.update_layout(
     title=dict(text="<b>80/20 Pareto Financial Risk Concentration</b>", x=0.5, y=0.96, xanchor="center", yanchor="top"),
-    margin=dict(l=20, r=20, t=50, b=20),
-    legend=dict(orientation="h", yanchor="top", y=0.06, xanchor="center", x=0.5, font=dict(family="Be Vietnam Pro", size=12)),
-    height=440,
+    margin=dict(l=20, r=20, t=50, b=55),
+    legend=dict(orientation="h", yanchor="top", y=0.10, xanchor="center", x=0.5, font=dict(family="Be Vietnam Pro", size=12)),
+    height=460,
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
     font=dict(family="Be Vietnam Pro, sans-serif")

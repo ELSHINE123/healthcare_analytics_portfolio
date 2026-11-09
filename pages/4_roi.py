@@ -7,11 +7,21 @@ Answers Strategic Questions 9 and 9b
 """
 
 from pathlib import Path
+import sys
 import numpy as np
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
+
+# Ensure project root is in sys.path
+project_root = Path(__file__).resolve().parent.parent
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
+
+from src.styles import inject_chart_card_css
+
+inject_chart_card_css()
 
 # ==============================================================================
 # 1. PAGE HEADER & EXECUTIVE METADATA
@@ -237,8 +247,8 @@ fig_v9a.update_layout(
         text="<b>Preventative Care Sensitivity across 3 Scenarios</b>",
         x=0.5, y=0.96, xanchor="center", yanchor="top"
     ),
-    margin=dict(l=25, r=20, t=55, b=85),
-    height=450,
+    margin=dict(l=35, r=20, t=55, b=110),
+    height=480,
     barmode="group",
     bargap=0.25,
     bargroupgap=0.10,
@@ -249,7 +259,7 @@ fig_v9a.update_layout(
     legend=dict(
         orientation="h",
         yanchor="top",
-        y=-0.16,
+        y=-0.17,
         xanchor="center",
         x=0.5,
         font=dict(family="Be Vietnam Pro", size=12)
