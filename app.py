@@ -333,36 +333,17 @@ button[data-testid="stBaseButton-tab"] {
   line-height: 1.3 !important;
 }
 
-/* 13. Executive Visual Card & Unified Panel Architecture */
-div[class*="st-key-visual_panel"],
-div[data-testid="stVerticalBlock"]:has(> div[data-testid="stHorizontalBlock"]),
-div[data-testid="stVerticalBlockBorderWrapper"] {
-  background-color: #FFFFFF !important;
-  border: 1px solid #E2E8F0 !important;
-  border-radius: 12px !important;
-  padding: 16px 18px 10px 18px !important;
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
-  margin-bottom: 14px !important;
-}
-
-div[class*="st-key-visual_panel"]:hover,
-div[data-testid="stVerticalBlock"]:has(> div[data-testid="stHorizontalBlock"]):hover,
-div[data-testid="stVerticalBlockBorderWrapper"]:hover {
-  border-color: #CBD5E1 !important;
-  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.07) !important;
-}
-
-/* Standalone Visual Cards (when not inside columns or a unified panel) */
+/* 13. Executive Visual Card Architecture (Standalone Dashboards) */
 div[data-testid="stPlotlyChart"] {
   background-color: #FFFFFF !important;
   border: 1px solid #E2E8F0 !important;
   border-radius: 12px !important;
-  padding: 12px 14px 8px 14px !important;
+  padding: 16px 20px 12px 20px !important;
   box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
   transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
   box-sizing: border-box !important;
-  margin-bottom: 8px !important;
+  margin-top: 8px !important;
+  margin-bottom: 18px !important;
 }
 
 div[data-testid="stPlotlyChart"]:hover {
@@ -370,16 +351,9 @@ div[data-testid="stPlotlyChart"]:hover {
   box-shadow: 0 4px 14px rgba(15, 23, 42, 0.07) !important;
 }
 
-/* Strip individual chart card borders when inside unified visual panels or columns so both charts share the single container */
-div[class*="st-key-visual_panel"] div[data-testid="stPlotlyChart"],
-div[data-testid="stVerticalBlock"]:has(> div[data-testid="stHorizontalBlock"]) div[data-testid="stPlotlyChart"],
-div[data-testid="stVerticalBlockBorderWrapper"] div[data-testid="stPlotlyChart"],
-div[data-testid="stHorizontalBlock"] div[data-testid="stPlotlyChart"] {
-  border: none !important;
-  box-shadow: none !important;
-  padding: 0px 4px !important;
-  background-color: transparent !important;
-  margin-bottom: 0px !important;
+/* Ensure Plotly canvas does not overflow its card */
+div[data-testid="stPlotlyChart"] > div {
+  border-radius: 10px !important;
 }
 
 /* Ensure Plotly canvas does not overflow its card */
@@ -543,28 +517,13 @@ if st.session_state.get("presentation_mode", False):
       font-size: 13.5px !important;
       color: #475569 !important;
     }
-    /* Boardroom Calibrated Visual Cards & Unified Panels */
-    div[class*="st-key-visual_panel"],
-    div[data-testid="stVerticalBlock"]:has(> div[data-testid="stHorizontalBlock"]),
-    div[data-testid="stVerticalBlockBorderWrapper"] {
-      border: 1.5px solid #CBD5E1 !important;
-      border-radius: 14px !important;
-      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08) !important;
-      padding: 20px 22px 14px 22px !important;
-    }
+    /* Boardroom Calibrated Standalone Visual Cards */
     div[data-testid="stPlotlyChart"] {
       border: 1.5px solid #CBD5E1 !important;
       border-radius: 14px !important;
       box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08) !important;
-      padding: 16px 18px 12px 18px !important;
-    }
-    div[class*="st-key-visual_panel"] div[data-testid="stPlotlyChart"],
-    div[data-testid="stVerticalBlock"]:has(> div[data-testid="stHorizontalBlock"]) div[data-testid="stPlotlyChart"],
-    div[data-testid="stVerticalBlockBorderWrapper"] div[data-testid="stPlotlyChart"],
-    div[data-testid="stHorizontalBlock"] div[data-testid="stPlotlyChart"] {
-      border: none !important;
-      box-shadow: none !important;
-      padding: 0px 4px !important;
+      padding: 20px 24px 16px 24px !important;
+      margin-bottom: 22px !important;
     }
     /* Boardroom Table Typography */
     table th {

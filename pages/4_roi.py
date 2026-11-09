@@ -186,116 +186,111 @@ with kpi4:
 st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
 
 # ==============================================================================
-# 4. PREVENTATIVE CARE MANAGEMENT ROI SIMULATION (SIDE-BY-SIDE)
+# 4. PREVENTATIVE CARE MANAGEMENT ROI SIMULATION (STANDALONE VISUALS)
 # ==============================================================================
 st.header("2. Preventative Care Management ROI & Breakeven Simulation")
 
-with st.container(border=True, key="visual_panel_roi_1"):
-    v9_col1, v9_col2 = st.columns(2, gap="large")
+# Visual 9A: Multi-Scenario Sensitivity Analysis (Grouped Bar Chart - Standalone Full Width)
+scenarios = ["Conservative<br>(15% Target)", "Base Case<br>(20% Target)", "Optimistic<br>(30% Target)"]
+costs_k = [276.5, 276.5, 276.5]            # $500/pt annual care management cost
+savings_k = [238.8, 318.4, 477.7]          # Cost avoidance from admission reduction
+bonuses_k = [0.0, 68.0, 136.0]             # CMS 4-Star Quality Incentive Bonus
+net_k = [savings_k[i] + bonuses_k[i] - costs_k[i] for i in range(3)]
 
-    with v9_col1:
-        # Visual 9A: Multi-Scenario Sensitivity Analysis (Grouped Bar Chart)
-        scenarios = ["Conservative<br>(15% Target)", "Base Case<br>(20% Target)", "Optimistic<br>(30% Target)"]
-        costs_k = [276.5, 276.5, 276.5]            # $500/pt annual care management cost
-        savings_k = [238.8, 318.4, 477.7]          # Cost avoidance from admission reduction
-        bonuses_k = [0.0, 68.0, 136.0]             # CMS 4-Star Quality Incentive Bonus
-        net_k = [savings_k[i] + bonuses_k[i] - costs_k[i] for i in range(3)]
+fig_v9a = go.Figure()
 
-        fig_v9a = go.Figure()
+fig_v9a.add_trace(go.Bar(
+    name="Program Cost",
+    x=scenarios,
+    y=costs_k,
+    marker=dict(color="#64748B"),
+    width=0.24,
+    text=[f"${c:.0f}K" for c in costs_k],
+    textposition="outside",
+    hovertemplate="<b>%{x}</b><br>Program Investment: $%{y:.1f}K<extra></extra>"
+))
 
-        fig_v9a.add_trace(go.Bar(
-            name="Program Cost",
-            x=scenarios,
-            y=costs_k,
-            marker=dict(color="#64748B"),
-            width=0.24,
-            text=[f"${c:.0f}K" for c in costs_k],
-            textposition="outside",
-            hovertemplate="<b>%{x}</b><br>Program Investment: $%{y:.1f}K<extra></extra>"
-        ))
+fig_v9a.add_trace(go.Bar(
+    name="Inpatient Savings",
+    x=scenarios,
+    y=savings_k,
+    marker=dict(color="#3B82F6"),
+    width=0.24,
+    text=[f"${s:.0f}K" for s in savings_k],
+    textposition="outside",
+    hovertemplate="<b>%{x}</b><br>Inpatient Cost Avoidance: $%{y:.1f}K<extra></extra>"
+))
 
-        fig_v9a.add_trace(go.Bar(
-            name="Inpatient Savings",
-            x=scenarios,
-            y=savings_k,
-            marker=dict(color="#3B82F6"),
-            width=0.24,
-            text=[f"${s:.0f}K" for s in savings_k],
-            textposition="outside",
-            hovertemplate="<b>%{x}</b><br>Inpatient Cost Avoidance: $%{y:.1f}K<extra></extra>"
-        ))
+fig_v9a.add_trace(go.Bar(
+    name="Net Value",
+    x=scenarios,
+    y=net_k,
+    marker=dict(color=["#F59E0B", "#10B981", "#059669"]),
+    width=0.24,
+    text=[f"+${n:.0f}K" if n >= 0 else f"-${abs(n):.0f}K" for n in net_k],
+    textposition="outside",
+    hovertemplate="<b>%{x}</b><br>Net Value: $%{y:.1f}K<extra></extra>"
+))
 
-        fig_v9a.add_trace(go.Bar(
-            name="Net Value",
-            x=scenarios,
-            y=net_k,
-            marker=dict(color=["#F59E0B", "#10B981", "#059669"]),
-            width=0.24,
-            text=[f"+${n:.0f}K" if n >= 0 else f"-${abs(n):.0f}K" for n in net_k],
-            textposition="outside",
-            hovertemplate="<b>%{x}</b><br>Net Value: $%{y:.1f}K<extra></extra>"
-        ))
+fig_v9a.update_layout(
+    title=dict(
+        text="<b>Preventative Care Sensitivity across 3 Scenarios</b>",
+        x=0.5, y=0.96, xanchor="center", yanchor="top"
+    ),
+    margin=dict(l=25, r=20, t=50, b=85),
+    height=415,
+    barmode="group",
+    bargap=0.28,
+    bargroupgap=0.10,
+    paper_bgcolor="rgba(0,0,0,0)",
+    plot_bgcolor="rgba(0,0,0,0)",
+    yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Annual Value ($ Thousands)", range=[-60, 560]),
+    xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=11, family="Be Vietnam Pro"), tickangle=0),
+    legend=dict(
+        orientation="h",
+        yanchor="top",
+        y=-0.18,
+        xanchor="center",
+        x=0.5,
+        font=dict(family="Be Vietnam Pro", size=11.5)
+    ),
+    font=dict(family="Be Vietnam Pro, sans-serif")
+)
+st.plotly_chart(fig_v9a, width="stretch")
 
-        fig_v9a.update_layout(
-            title=dict(
-                text="<b>Preventative Care Sensitivity across 3 Scenarios</b>",
-                x=0.5, y=0.96, xanchor="center", yanchor="top"
-            ),
-            margin=dict(l=25, r=20, t=50, b=85),
-            height=415,
-            barmode="group",
-            bargap=0.28,
-            bargroupgap=0.10,
-            paper_bgcolor="rgba(0,0,0,0)",
-            plot_bgcolor="rgba(0,0,0,0)",
-            yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Annual Value ($ Thousands)", range=[-60, 560]),
-            xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=11, family="Be Vietnam Pro"), tickangle=0),
-            legend=dict(
-                orientation="h",
-                yanchor="top",
-                y=-0.18,
-                xanchor="center",
-                x=0.5,
-                font=dict(family="Be Vietnam Pro", size=11.5)
-            ),
-            font=dict(family="Be Vietnam Pro, sans-serif")
-        )
-        st.plotly_chart(fig_v9a, width="stretch")
+# Visual 9B: Base Case Net Financial Bridge (Waterfall Chart - Standalone Full Width)
+steps = ["Program<br>Investment", "Inpatient<br>Savings", "Quality<br>Bonus", "Net Economic<br>Value"]
+measure_types = ["relative", "relative", "relative", "total"]
+waterfall_vals = [-276.5, 318.4, 68.0, 0]  # Total computes net sum automatically
 
-    with v9_col2:
-        # Visual 9B: Base Case Net Financial Bridge (Waterfall Chart)
-        steps = ["Program<br>Investment", "Inpatient<br>Savings", "Quality<br>Bonus", "Net Economic<br>Value"]
-        measure_types = ["relative", "relative", "relative", "total"]
-        waterfall_vals = [-276.5, 318.4, 68.0, 0]  # Total computes net sum automatically
+fig_v9b = go.Figure(go.Waterfall(
+    name="Financial Bridge",
+    orientation="v",
+    measure=measure_types,
+    x=steps,
+    textposition="outside",
+    text=["-$276.5K", "+$318.4K", "+$68.0K", "<b>+$109.9K</b><br><span style='font-size:10.5px; color:#059669;'>140% ROI</span>"],
+    y=[-276.5, 318.4, 68.0, 0],
+    connector={"line": {"color": "#94A3B8", "width": 1.5}},
+    decreasing={"marker": {"color": "#DC2626"}},
+    increasing={"marker": {"color": "#3B82F6"}},
+    totals={"marker": {"color": "#10B981"}}
+))
 
-        fig_v9b = go.Figure(go.Waterfall(
-            name="Financial Bridge",
-            orientation="v",
-            measure=measure_types,
-            x=steps,
-            textposition="outside",
-            text=["-$276.5K", "+$318.4K", "+$68.0K", "<b>+$109.9K</b><br><span style='font-size:10.5px; color:#059669;'>140% ROI</span>"],
-            y=[-276.5, 318.4, 68.0, 0],
-            connector={"line": {"color": "#94A3B8", "width": 1.5}},
-            decreasing={"marker": {"color": "#DC2626"}},
-            increasing={"marker": {"color": "#3B82F6"}},
-            totals={"marker": {"color": "#10B981"}}
-        ))
-
-        fig_v9b.update_layout(
-            title=dict(
-                text="<b>Base Case Financial Bridge: +$109.9K Net Value</b>",
-                x=0.5, y=0.96, xanchor="center", yanchor="top"
-            ),
-            margin=dict(l=25, r=20, t=50, b=50),
-            height=415,
-            paper_bgcolor="rgba(0,0,0,0)",
-            plot_bgcolor="rgba(0,0,0,0)",
-            yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Annual Budget Impact ($ Thousands)", range=[-320, 480]),
-            xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=10.5, family="Be Vietnam Pro"), tickangle=0),
-            font=dict(family="Be Vietnam Pro, sans-serif")
-        )
-        st.plotly_chart(fig_v9b, width="stretch")
+fig_v9b.update_layout(
+    title=dict(
+        text="<b>Base Case Financial Bridge: +$109.9K Net Value</b>",
+        x=0.5, y=0.96, xanchor="center", yanchor="top"
+    ),
+    margin=dict(l=25, r=20, t=50, b=50),
+    height=415,
+    paper_bgcolor="rgba(0,0,0,0)",
+    plot_bgcolor="rgba(0,0,0,0)",
+    yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Annual Budget Impact ($ Thousands)", range=[-320, 480]),
+    xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=10.5, family="Be Vietnam Pro"), tickangle=0),
+    font=dict(family="Be Vietnam Pro, sans-serif")
+)
+st.plotly_chart(fig_v9b, width="stretch")
 
 # Narrative Directly Under Visual 9
 st.markdown(
@@ -383,85 +378,80 @@ st.plotly_chart(fig_heatmap, width="stretch")
 st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
 
 # ==============================================================================
-# 5. CARE MANAGER STAFFING OPTIMIZATION & FTE MODEL (SIDE-BY-SIDE)
+# 5. CARE MANAGER STAFFING OPTIMIZATION & FTE MODEL (STANDALONE VISUALS)
 # ==============================================================================
 st.header("3. Clinical Care Manager Workforce Allocation & Self-Funding Model")
 
-with st.container(border=True, key="visual_panel_roi_2"):
-    v10_col1, v10_col2 = st.columns(2, gap="large")
+# Visual 10A: Nurse FTE Allocation by Acuity Tier (Horizontal Bar Chart - Standalone Full Width)
+fte_df = pd.DataFrame({
+    "Tier": ["Severe Acuity (1:60 Ratio)", "High Acuity (1:100 Ratio)", "Total Required Workforce"],
+    "FTEs": [severe_fte, high_fte, total_fte_exact],
+    "Color": ["#DC2626", "#F59E0B", "#1E293B"]
+})
 
-    with v10_col1:
-        # Visual 10A: Nurse FTE Allocation by Acuity Tier (Horizontal Bar Chart)
-        fte_df = pd.DataFrame({
-            "Tier": ["Severe Acuity (1:60 Ratio)", "High Acuity (1:100 Ratio)", "Total Required Workforce"],
-            "FTEs": [severe_fte, high_fte, total_fte_exact],
-            "Color": ["#DC2626", "#F59E0B", "#1E293B"]
-        })
+fig_v10a = go.Figure()
 
-        fig_v10a = go.Figure()
+fig_v10a.add_trace(go.Bar(
+    y=fte_df["Tier"],
+    x=fte_df["FTEs"],
+    orientation="h",
+    width=0.42,
+    marker=dict(color=fte_df["Color"]),
+    text=[f"<b>{v:.1f} FTEs</b>" for v in fte_df["FTEs"]],
+    textposition="outside",
+    textfont=dict(color="#0F172A", size=11.5, family="Be Vietnam Pro"),
+    hovertemplate="<b>%{y}</b><br>Dedicated Workforce: %{x:.2f} FTEs<extra></extra>"
+))
 
-        fig_v10a.add_trace(go.Bar(
-            y=fte_df["Tier"],
-            x=fte_df["FTEs"],
-            orientation="h",
-            width=0.42,
-            marker=dict(color=fte_df["Color"]),
-            text=[f"<b>{v:.1f} FTEs</b>" for v in fte_df["FTEs"]],
-            textposition="outside",
-            textfont=dict(color="#0F172A", size=11.5, family="Be Vietnam Pro"),
-            hovertemplate="<b>%{y}</b><br>Dedicated Workforce: %{x:.2f} FTEs<extra></extra>"
-        ))
+fig_v10a.update_layout(
+    title=dict(
+        text="<b>Care Management Caseload Staffing Model</b>",
+        x=0.5, y=0.96, xanchor="center", yanchor="top"
+    ),
+    margin=dict(l=200, r=60, t=65, b=40),
+    height=390,
+    paper_bgcolor="rgba(0,0,0,0)",
+    plot_bgcolor="rgba(0,0,0,0)",
+    xaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Required Dedicated Nurse Care Managers (FTEs)", range=[0, 8.5]),
+    yaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=11.5, family="Be Vietnam Pro"), autorange="reversed"),
+    font=dict(family="Be Vietnam Pro, sans-serif")
+)
+st.plotly_chart(fig_v10a, width="stretch")
 
-        fig_v10a.update_layout(
-            title=dict(
-                text="<b>Care Management Caseload Staffing Model</b>",
-                x=0.5, y=0.96, xanchor="center", yanchor="top"
-            ),
-            margin=dict(l=180, r=40, t=65, b=40),
-            height=390,
-            paper_bgcolor="rgba(0,0,0,0)",
-            plot_bgcolor="rgba(0,0,0,0)",
-            xaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Required Dedicated Nurse Care Managers (FTEs)", range=[0, 8.5]),
-            yaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=11.5, family="Be Vietnam Pro"), autorange="reversed"),
-            font=dict(family="Be Vietnam Pro, sans-serif")
-        )
-        st.plotly_chart(fig_v10a, width="stretch")
+# Visual 10B: Self-Funding Economic Coverage Model (Standalone Full Width)
+fin_labels = ["Total Staffing Cost", "Total Value Created", "Net Operating Margin"]
+fin_vals = [total_staffing_cost / 1e3, total_value_created / 1e3, net_operating_margin / 1e3]
+fin_colors = ["#DC2626", "#3B82F6", "#10B981" if net_operating_margin >= 0 else "#DC2626"]
 
-    with v10_col2:
-        # Visual 10B: Self-Funding Economic Coverage Model
-        fin_labels = ["Total Staffing Cost", "Total Value Created", "Net Operating Margin"]
-        fin_vals = [total_staffing_cost / 1e3, total_value_created / 1e3, net_operating_margin / 1e3]
-        fin_colors = ["#DC2626", "#3B82F6", "#10B981" if net_operating_margin >= 0 else "#DC2626"]
+fig_v10b = go.Figure()
 
-        fig_v10b = go.Figure()
+fig_v10b.add_trace(go.Bar(
+    x=fin_labels,
+    y=fin_vals,
+    width=0.42,
+    marker=dict(color=fin_colors),
+    text=[f"<b>${v:.0f}K</b>" for v in fin_vals],
+    textposition="outside",
+    textfont=dict(color="#0F172A", size=12, family="Be Vietnam Pro"),
+    hovertemplate="<b>%{x}</b><br>Annual Impact: $%{y:.0f}K<extra></extra>"
+))
 
-        fig_v10b.add_trace(go.Bar(
-            x=fin_labels,
-            y=fin_vals,
-            width=0.42,
-            marker=dict(color=fin_colors),
-            text=[f"<b>${v:.0f}K</b>" for v in fin_vals],
-            textposition="outside",
-            textfont=dict(color="#0F172A", size=12, family="Be Vietnam Pro"),
-            hovertemplate="<b>%{x}</b><br>Annual Impact: $%{y:.0f}K<extra></extra>"
-        ))
+max_y = max(fin_vals) * 1.25 if max(fin_vals) > 0 else 500
 
-        max_y = max(fin_vals) * 1.25 if max(fin_vals) > 0 else 500
-
-        fig_v10b.update_layout(
-            title=dict(
-                text=f"<b>Self-Funding ROI Feasibility Model</b><br><span style='font-size:12px; color:#047857; font-weight:700;'>● {self_funding_ratio:.0f}% Self-Funded ({sign}${net_operating_margin / 1e3:.0f}K Net Operating Margin)</span>",
-                x=0.5, y=0.96, xanchor="center", yanchor="top"
-            ),
-            margin=dict(l=20, r=20, t=65, b=40),
-            height=390,
-            paper_bgcolor="rgba(0,0,0,0)",
-            plot_bgcolor="rgba(0,0,0,0)",
-            yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Annual Financial Impact ($ Thousands)", range=[0, max_y]),
-            xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=11.5, family="Be Vietnam Pro")),
-            font=dict(family="Be Vietnam Pro, sans-serif")
-        )
-        st.plotly_chart(fig_v10b, width="stretch")
+fig_v10b.update_layout(
+    title=dict(
+        text=f"<b>Self-Funding ROI Feasibility Model</b><br><span style='font-size:12px; color:#047857; font-weight:700;'>● {self_funding_ratio:.0f}% Self-Funded ({sign}${net_operating_margin / 1e3:.0f}K Net Operating Margin)</span>",
+        x=0.5, y=0.96, xanchor="center", yanchor="top"
+    ),
+    margin=dict(l=40, r=40, t=65, b=40),
+    height=390,
+    paper_bgcolor="rgba(0,0,0,0)",
+    plot_bgcolor="rgba(0,0,0,0)",
+    yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Annual Financial Impact ($ Thousands)", range=[0, max_y]),
+    xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=11.5, family="Be Vietnam Pro")),
+    font=dict(family="Be Vietnam Pro, sans-serif")
+)
+st.plotly_chart(fig_v10b, width="stretch")
 
 # Narrative Directly Under Visual 10
 st.markdown(
