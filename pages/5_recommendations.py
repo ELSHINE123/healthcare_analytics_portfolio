@@ -58,7 +58,10 @@ with kpi1:
         <div class="kpi-metric-card">
             <div class="kpi-card-title">Clinical Action</div>
             <div class="kpi-card-value" style="color: #2563EB;">220 Care Gaps</div>
-            <div class="kpi-card-subtitle">Immediate GDMT Titration</div>
+            <div class="kpi-card-subtitle">
+                <span>Immediate GDMT</span>
+                <span class="kpi-badge kpi-badge-amber">Titration</span>
+            </div>
         </div>
         """,
         unsafe_allow_html=True
@@ -70,7 +73,10 @@ with kpi2:
         <div class="kpi-metric-card">
             <div class="kpi-card-title">Workforce Scale</div>
             <div class="kpi-card-value" style="color: #7C3AED;">7.0 RN FTEs</div>
-            <div class="kpi-card-subtitle">Caseload-Calibrated Unit</div>
+            <div class="kpi-card-subtitle">
+                <span>Caseload Pods</span>
+                <span class="kpi-badge kpi-badge-blue">1:60 &bull; 1:100</span>
+            </div>
         </div>
         """,
         unsafe_allow_html=True
@@ -82,7 +88,10 @@ with kpi3:
         <div class="kpi-metric-card">
             <div class="kpi-card-title">Net Economic Return</div>
             <div class="kpi-card-value" style="color: #10B981;">+$392K / yr</div>
-            <div class="kpi-card-subtitle">159% Self-Funded Model</div>
+            <div class="kpi-card-subtitle">
+                <span>Self-Funded</span>
+                <span class="kpi-badge kpi-badge-green">▲ 159% ROI</span>
+            </div>
         </div>
         """,
         unsafe_allow_html=True
@@ -94,7 +103,10 @@ with kpi4:
         <div class="kpi-metric-card">
             <div class="kpi-card-title">Quality Benchmark</div>
             <div class="kpi-card-value" style="color: #059669;">4.5 Stars</div>
-            <div class="kpi-card-subtitle">CMS Quality Bonus Target</div>
+            <div class="kpi-card-subtitle">
+                <span>CMS Incentive</span>
+                <span class="kpi-badge kpi-badge-green">★ 4.5 Target</span>
+            </div>
         </div>
         """,
         unsafe_allow_html=True
@@ -467,4 +479,38 @@ with rec_col2:
         use_container_width=True,
         help="Download the actionable 553 high-risk patient roster for care management."
     )
+
+st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
+st.markdown("---")
+
+# Executive Tour Completion Card
+tour_col1, tour_col2 = st.columns([2.4, 1.2], gap="medium")
+with tour_col1:
+    st.markdown(
+        """
+        <div style="padding: 2px 0;">
+            <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #059669; margin-bottom: 2px;">
+                EXECUTIVE TOUR &bull; BRIEFING COMPLETE
+            </div>
+            <div style="font-size: 15px; font-weight: 700; color: #0F172A;">
+                Audit Concluded: 180-Day Transformation Blueprint
+            </div>
+            <div style="font-size: 12.5px; color: #64748B;">
+                Download certified board deliverables above or return to the Executive Summary.
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+with tour_col2:
+    try:
+        st.page_link(
+            "pages/0_executive_summary.py",
+            label="Return to Summary ↺",
+            icon="📊",
+            use_container_width=True
+        )
+    except Exception:
+        if st.button("Return to Summary ↺", key="tour_rec_btn", use_container_width=True):
+            st.switch_page("pages/0_executive_summary.py")
 

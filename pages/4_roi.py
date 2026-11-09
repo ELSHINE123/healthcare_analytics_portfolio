@@ -126,7 +126,10 @@ with kpi1:
         <div class="kpi-metric-card">
             <div class="kpi-card-title">Target Caseload</div>
             <div class="kpi-card-value" style="color: #0F172A;">{target_cohort_size:,} Pts</div>
-            <div class="kpi-card-subtitle">High & Severe Tiers</div>
+            <div class="kpi-card-subtitle">
+                <span>High & Severe Tiers</span>
+                <span class="kpi-badge kpi-badge-blue">56.3% Panel</span>
+            </div>
         </div>
         """,
         unsafe_allow_html=True
@@ -138,7 +141,10 @@ with kpi2:
         <div class="kpi-metric-card">
             <div class="kpi-card-title">Dedicated Workforce</div>
             <div class="kpi-card-value" style="color: #2563EB;">{total_fte_rounded}.0 RN FTEs</div>
-            <div class="kpi-card-subtitle">CMSA / NCQA Caseloads</div>
+            <div class="kpi-card-subtitle">
+                <span>CMSA Standards</span>
+                <span class="kpi-badge kpi-badge-blue">1:60 &bull; 1:100</span>
+            </div>
         </div>
         """,
         unsafe_allow_html=True
@@ -150,7 +156,10 @@ with kpi3:
         <div class="kpi-metric-card">
             <div class="kpi-card-title">Staffing Investment</div>
             <div class="kpi-card-value" style="color: #DC2626;">&dollar;{total_staffing_cost / 1e3:.0f}K</div>
-            <div class="kpi-card-subtitle">@ &dollar;{rn_salary:,} / RN FTE</div>
+            <div class="kpi-card-subtitle">
+                <span>@ &dollar;{rn_salary:,}/RN</span>
+                <span class="kpi-badge kpi-badge-amber">Fully Loaded</span>
+            </div>
         </div>
         """,
         unsafe_allow_html=True
@@ -159,12 +168,16 @@ with kpi3:
 with kpi4:
     margin_color = "#10B981" if net_operating_margin >= 0 else "#DC2626"
     sign = "+" if net_operating_margin >= 0 else ""
+    badge_style = "kpi-badge-green" if net_operating_margin >= 0 else "kpi-badge-red"
     st.markdown(
         f"""
         <div class="kpi-metric-card">
             <div class="kpi-card-title">Net Operating Margin</div>
             <div class="kpi-card-value" style="color: {margin_color};">{sign}&dollar;{net_operating_margin / 1e3:.0f}K</div>
-            <div class="kpi-card-subtitle">{self_funding_ratio:.0f}% Self-Funded</div>
+            <div class="kpi-card-subtitle">
+                <span>Self-Funded Model</span>
+                <span class="kpi-badge {badge_style}">▲ {self_funding_ratio:.0f}%</span>
+            </div>
         </div>
         """,
         unsafe_allow_html=True
@@ -300,6 +313,72 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+
+# 2D Breakeven Sensitivity Matrix
+st.subheader("Actuarial Sensitivity Matrix: Breakeven Frontier")
+st.caption("Net operating margin ($ Thousands) across variable nurse compensation and admission reduction targets (includes CMS Quality Bonus).")
+
+salaries_grid = [75000, 85000, 95000, 105000, 115000, 125000]
+salary_labels = [f"&dollar;{s//1000}K / yr" for s in salaries_grid]
+reductions_grid = [10, 15, 20, 25, 30, 35]
+reduction_labels = [f"{r}% Target" for r in reductions_grid]
+
+z_matrix = []
+text_matrix = []
+
+for s in salaries_grid:
+    row_z = []
+    row_t = []
+    cost_val = total_fte_rounded * s
+    for r in reductions_grid:
+        savings_val = base_admissions_target * (r / 100.0) * ADMISSION_BENCHMARK
+        net_val = (savings_val + quality_bonus_share - cost_val) / 1000.0
+        row_z.append(net_val)
+        prefix = "+" if net_val >= 0 else ""
+        row_t.append(f"{prefix}&dollar;{net_val:.0f}K")
+    z_matrix.append(row_z)
+    text_matrix.append(row_t)
+
+fig_heatmap = go.Figure(data=go.Heatmap(
+    z=z_matrix,
+    x=reduction_labels,
+    y=salary_labels,
+    text=text_matrix,
+    texttemplate="%{text}",
+    textfont=dict(family="Be Vietnam Pro", size=11, color="#0F172A"),
+    colorscale=[
+        [0.0, "#FECACA"],   # Soft Red for negative margin
+        [0.2, "#FED7AA"],   # Light Amber
+        [0.35, "#FEF3C7"],  # Warm Yellow near breakeven
+        [0.55, "#D1FAE5"],  # Mint Green
+        [1.0, "#6EE7B7"]    # Emerald Green for high margin
+    ],
+    zmid=0,
+    colorbar=dict(
+        title=dict(text="Net Margin ($K)", font=dict(family="Be Vietnam Pro", size=11)),
+        tickfont=dict(family="Be Vietnam Pro", size=10),
+        len=0.9
+    ),
+    hovertemplate="<b>Reduction Target:</b> %{x}<br><b>Nurse Compensation:</b> %{y}<br><b>Net Operating Margin:</b> %{text}<extra></extra>"
+))
+
+fig_heatmap.update_layout(
+    title=dict(
+        text="<b>Preventative Care Breakeven Frontier (2D Sensitivity Matrix)</b>",
+        x=0.5, y=0.96, xanchor="center", yanchor="top"
+    ),
+    margin=dict(l=40, r=30, t=55, b=45),
+    height=370,
+    paper_bgcolor="rgba(0,0,0,0)",
+    plot_bgcolor="rgba(0,0,0,0)",
+    xaxis=dict(title="Preventable Inpatient Admission Reduction Target", tickfont=dict(size=11, family="Be Vietnam Pro")),
+    yaxis=dict(title="Fully Loaded Nurse Compensation", tickfont=dict(size=11, family="Be Vietnam Pro")),
+    font=dict(family="Be Vietnam Pro, sans-serif")
+)
+
+st.plotly_chart(fig_heatmap, width="stretch")
+
 st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
 
 # ==============================================================================
@@ -417,4 +496,38 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
+st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
+st.markdown("---")
+
+# Executive Tour Progression Card
+tour_col1, tour_col2 = st.columns([2.4, 1.2], gap="medium")
+with tour_col1:
+    st.markdown(
+        """
+        <div style="padding: 2px 0;">
+            <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #2563EB; margin-bottom: 2px;">
+                EXECUTIVE TOUR &bull; FINAL STRATEGIC BLUEPRINT
+            </div>
+            <div style="font-size: 15px; font-weight: 700; color: #0F172A;">
+                Strategic Roadmap & Executive Governance
+            </div>
+            <div style="font-size: 12.5px; color: #64748B;">
+                Review the 4 core pillars, 180-day transformation Gantt chart, and C-suite decision matrix.
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+with tour_col2:
+    try:
+        st.page_link(
+            "pages/5_recommendations.py",
+            label="Proceed to Roadmap →",
+            icon="🎯",
+            use_container_width=True
+        )
+    except Exception:
+        if st.button("Proceed to Roadmap →", key="tour_roi_btn", use_container_width=True):
+            st.switch_page("pages/5_recommendations.py")
 

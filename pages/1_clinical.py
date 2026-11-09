@@ -496,6 +496,134 @@ st.markdown(
 
 st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
 
+# ==============================================================================
+# 7. ACTIONABLE CARE GAP WORKLIST & CLINICAL TRIAGE EXPLORER
+# ==============================================================================
+st.header("4. Actionable Care Gap Worklist & Clinical Triage Explorer")
+
+st.markdown(
+    """
+    To transition from macro-level population analytics to micro-level clinical execution, ambulatory care coordinators 
+    can filter, inspect, and prioritize individual patient care gaps across disease registries, acuity tiers, and prescribing risks:
+    """
+)
+
+if not df.empty:
+    triage_df = df.copy()
+    
+    # Assign actionable clinical pathway
+    def get_triage_pathway(row):
+        if row.get("unmedicated_chronic", False):
+            return f"URGENT: Initiate GDMT ({str(row['condition']).title()})"
+        elif row.get("therapeutic_discordance", False):
+            return f"SAFETY ALERT: Reconcile ({str(row['medication']).title()})"
+        elif row.get("uncontactable", False):
+            return "CHW OUTREACH: Resolve Missing Contact"
+        elif row.get("days_since_visit", 0) > 180:
+            return "SURVEILLANCE: Recall Patient (>180d)"
+        else:
+            return "ROUTINE: Active Nurse Pod Monitoring"
+
+    triage_df["Action Pathway"] = triage_df.apply(get_triage_pathway, axis=1)
+    triage_df["condition_clean"] = triage_df["condition"].astype(str).str.title()
+    triage_df["medication_clean"] = triage_df["medication"].astype(str).str.title()
+    triage_df["medication_clean"] = triage_df["medication_clean"].replace({"None": "No Active Rx"})
+
+    f_col1, f_col2, f_col3 = st.columns([1.2, 1.2, 1.4], gap="medium")
+    with f_col1:
+        reg_options = ["All Registries"] + sorted([c for c in triage_df["condition_clean"].unique() if c != "Unknown"])
+        sel_reg = st.selectbox("Registry Filter:", reg_options, key="triage_reg")
+    with f_col2:
+        acuity_options = ["All Acuity Tiers", "Severe Acuity", "High Acuity", "Moderate Acuity", "Low Acuity"]
+        sel_acuity = st.selectbox("Acuity Filter:", acuity_options, key="triage_acuity")
+    with f_col3:
+        gap_options = [
+            "All Patients",
+            "Actionable Care Gaps Only (N=220)",
+            "Unmedicated Chronic Cohort (N=109)",
+            "Therapeutic Discordances (N=111)",
+            "Digital Blind Spots (N=145)"
+        ]
+        sel_gap = st.selectbox("Clinical Priority / Gap Type:", gap_options, key="triage_gap")
+
+    # Apply filters
+    filtered_triage = triage_df.copy()
+    if sel_reg != "All Registries":
+        filtered_triage = filtered_triage[filtered_triage["condition_clean"] == sel_reg]
+    if sel_acuity != "All Acuity Tiers":
+        filtered_triage = filtered_triage[filtered_triage["clinical_risk_tier"] == sel_acuity]
+    
+    if sel_gap == "Actionable Care Gaps Only (N=220)":
+        filtered_triage = filtered_triage[(filtered_triage["unmedicated_chronic"] == True) | (filtered_triage["therapeutic_discordance"] == True)]
+    elif sel_gap == "Unmedicated Chronic Cohort (N=109)":
+        filtered_triage = filtered_triage[filtered_triage["unmedicated_chronic"] == True]
+    elif sel_gap == "Therapeutic Discordances (N=111)":
+        filtered_triage = filtered_triage[filtered_triage["therapeutic_discordance"] == True]
+    elif sel_gap == "Digital Blind Spots (N=145)":
+        filtered_triage = filtered_triage[filtered_triage["uncontactable"] == True]
+
+    # Search bar
+    search_query = st.text_input("🔍 Search Worklist by Patient Name:", placeholder="Type a patient name...", key="triage_search")
+    if search_query:
+        filtered_triage = filtered_triage[filtered_triage["patient_name"].str.contains(search_query, case=False, na=False)]
+
+    # Metrics pill row
+    sub_count = len(filtered_triage)
+    unmed_sub = int(filtered_triage["unmedicated_chronic"].sum()) if "unmedicated_chronic" in filtered_triage.columns else 0
+    disc_sub = int(filtered_triage["therapeutic_discordance"].sum()) if "therapeutic_discordance" in filtered_triage.columns else 0
+    severe_sub = int((filtered_triage["clinical_risk_tier"] == "Severe Acuity").sum())
+
+    st.markdown(
+        f"""
+        <div style="background-color: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 10px 16px; margin-top: 8px; margin-bottom: 12px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+            <span style="font-size: 12.5px; font-weight: 700; color: #0F172A;">Worklist Summary:</span>
+            <span class="kpi-badge kpi-badge-blue">👥 {sub_count:,} Patients Filtered</span>
+            <span class="kpi-badge kpi-badge-red">🚨 {severe_sub} Severe Acuity</span>
+            <span class="kpi-badge kpi-badge-amber">💊 {unmed_sub} Unmedicated</span>
+            <span class="kpi-badge kpi-badge-amber">⚠️ {disc_sub} Discordant Rx</span>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Column configuration for st.dataframe
+    display_df = filtered_triage[[
+        "patient_name", "age", "gender", "condition_clean", "medication_clean",
+        "clinical_risk_tier", "clinical_risk_score", "systolic_bp", "cholesterol",
+        "Action Pathway"
+    ]].rename(columns={
+        "patient_name": "Patient Name",
+        "age": "Age",
+        "gender": "Sex",
+        "condition_clean": "Condition",
+        "medication_clean": "Prescribed Medication",
+        "clinical_risk_tier": "Acuity Tier",
+        "clinical_risk_score": "Risk Score",
+        "systolic_bp": "Systolic BP",
+        "cholesterol": "Cholesterol",
+        "Action Pathway": "Clinical Action Pathway"
+    })
+
+    st.dataframe(
+        display_df,
+        width="stretch",
+        hide_index=True,
+        column_config={
+            "Patient Name": st.column_config.TextColumn("Patient Name", width="medium"),
+            "Age": st.column_config.NumberColumn("Age", format="%d yrs", width="small"),
+            "Sex": st.column_config.TextColumn("Sex", width="small"),
+            "Condition": st.column_config.TextColumn("Chronic Disease", width="medium"),
+            "Prescribed Medication": st.column_config.TextColumn("Current Pharmacotherapy", width="medium"),
+            "Acuity Tier": st.column_config.TextColumn("Clinical Acuity", width="medium"),
+            "Risk Score": st.column_config.ProgressColumn("Risk Index", min_value=0.0, max_value=1.0, format="%.2f", width="small"),
+            "Systolic BP": st.column_config.NumberColumn("SBP (mmHg)", format="%d", width="small"),
+            "Cholesterol": st.column_config.NumberColumn("Chol (mg/dL)", format="%d", width="small"),
+            "Clinical Action Pathway": st.column_config.TextColumn("Recommended Action Pathway", width="large")
+        }
+    )
+
+st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
+
 st.markdown(
     """
     <p style='color: #64748B; font-size: 13px; line-height: 1.6;'>
@@ -505,3 +633,37 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
+st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
+st.markdown("---")
+
+# Executive Tour Progression Card
+tour_col1, tour_col2 = st.columns([2.4, 1.2], gap="medium")
+with tour_col1:
+    st.markdown(
+        """
+        <div style="padding: 2px 0;">
+            <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #2563EB; margin-bottom: 2px;">
+                EXECUTIVE TOUR &bull; ACT 2 OF 4
+            </div>
+            <div style="font-size: 15px; font-weight: 700; color: #0F172A;">
+                Operations & Reach: Contactability, Surveillance & Data Quality
+            </div>
+            <div style="font-size: 12.5px; color: #64748B;">
+                Audit digital blind spots, 180-day surveillance decay, and laboratory data provenance.
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+with tour_col2:
+    try:
+        st.page_link(
+            "pages/2_operations.py",
+            label="Proceed to Operations →",
+            icon="⚙️",
+            use_container_width=True
+        )
+    except Exception:
+        if st.button("Proceed to Operations →", key="tour_clin_btn", use_container_width=True):
+            st.switch_page("pages/2_operations.py")

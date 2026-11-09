@@ -250,6 +250,70 @@ button[data-testid="stSidebarCollapseButton"]:hover {
   overflow: hidden !important;
   text-overflow: ellipsis !important;
   line-height: 1.2 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+/* 10. Contextual Trend Pills & Benchmark Micro-Badges */
+.kpi-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 3px !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  padding: 1.5px 6px !important;
+  border-radius: 4px !important;
+  letter-spacing: 0.02em !important;
+  white-space: nowrap !important;
+  line-height: 1.2 !important;
+}
+.kpi-badge-green {
+  background-color: #ECFDF5 !important;
+  color: #065F46 !important;
+  border: 1px solid #A7F3D0 !important;
+}
+.kpi-badge-blue {
+  background-color: #EFF6FF !important;
+  color: #1E40AF !important;
+  border: 1px solid #BFDBFE !important;
+}
+.kpi-badge-amber {
+  background-color: #FEF3C7 !important;
+  color: #92400E !important;
+  border: 1px solid #FDE68A !important;
+}
+.kpi-badge-red {
+  background-color: #FEF2F2 !important;
+  color: #991B1B !important;
+  border: 1px solid #FECACA !important;
+}
+
+/* 11. Narrative Tour Progression Card */
+.nav-progression-card {
+  background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%) !important;
+  border: 1px solid #CBD5E1 !important;
+  border-radius: 12px !important;
+  padding: 16px 20px !important;
+  margin-top: 24px !important;
+  margin-bottom: 12px !important;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04) !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
+.nav-progression-title {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  color: #2563EB !important;
+  margin-bottom: 3px !important;
+}
+.nav-progression-desc {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #0F172A !important;
 }
 </style>
 """, unsafe_allow_html=True)

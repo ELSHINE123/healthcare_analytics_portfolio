@@ -362,3 +362,37 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
+st.markdown("---")
+
+# Executive Tour Progression Card
+tour_col1, tour_col2 = st.columns([2.4, 1.2], gap="medium")
+with tour_col1:
+    st.markdown(
+        """
+        <div style="padding: 2px 0;">
+            <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #2563EB; margin-bottom: 2px;">
+                EXECUTIVE TOUR &bull; ACT 3 OF 4
+            </div>
+            <div style="font-size: 15px; font-weight: 700; color: #0F172A;">
+                Financial Stakes: Inpatient Liability & Quality Bonuses
+            </div>
+            <div style="font-size: 12.5px; color: #64748B;">
+                Simulate avoidable inpatient expenses, 80/20 Pareto exposure, and CMS HEDIS Star Rating bonuses.
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+with tour_col2:
+    try:
+        st.page_link(
+            "pages/3_financial.py",
+            label="Proceed to Financial Stakes →",
+            icon="💰",
+            use_container_width=True
+        )
+    except Exception:
+        if st.button("Proceed to Financial Stakes →", key="tour_ops_btn", use_container_width=True):
+            st.switch_page("pages/3_financial.py")
+

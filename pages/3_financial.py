@@ -145,7 +145,10 @@ with kpi1:
         <div class="kpi-metric-card">
             <div class="kpi-card-title">Audited Cohort</div>
             <div class="kpi-card-value" style="color: #0F172A;">{total_patients:,}</div>
-            <div class="kpi-card-subtitle">{selected_service}</div>
+            <div class="kpi-card-subtitle">
+                <span>{selected_service}</span>
+                <span class="kpi-badge kpi-badge-blue">Audited</span>
+            </div>
         </div>
         """,
         unsafe_allow_html=True
@@ -157,7 +160,10 @@ with kpi2:
         <div class="kpi-metric-card">
             <div class="kpi-card-title">Projected Admissions</div>
             <div class="kpi-card-value" style="color: #2563EB;">{total_projected_admissions:.1f}</div>
-            <div class="kpi-card-subtitle">Annual Inpatient Events</div>
+            <div class="kpi-card-subtitle">
+                <span>Annual Inpatient</span>
+                <span class="kpi-badge kpi-badge-amber">At Risk</span>
+            </div>
         </div>
         """,
         unsafe_allow_html=True
@@ -169,7 +175,10 @@ with kpi3:
         <div class="kpi-metric-card">
             <div class="kpi-card-title">Financial Liability</div>
             <div class="kpi-card-value" style="color: #DC2626;">&dollar;{total_financial_exposure / 1e6:.2f}M</div>
-            <div class="kpi-card-subtitle">@ &dollar;{admission_cost:,} / Stay</div>
+            <div class="kpi-card-subtitle">
+                <span>@ &dollar;{admission_cost:,}/Stay</span>
+                <span class="kpi-badge kpi-badge-red">HCUP Benchmark</span>
+            </div>
         </div>
         """,
         unsafe_allow_html=True
@@ -181,7 +190,10 @@ with kpi4:
         <div class="kpi-metric-card">
             <div class="kpi-card-title">Pareto Concentration</div>
             <div class="kpi-card-value" style="color: #7C3AED;">{pareto_share:.1f}%</div>
-            <div class="kpi-card-subtitle">High & Severe Tiers</div>
+            <div class="kpi-card-subtitle">
+                <span>High & Severe</span>
+                <span class="kpi-badge kpi-badge-red">Top 20% Panel</span>
+            </div>
         </div>
         """,
         unsafe_allow_html=True
@@ -510,6 +522,62 @@ st.markdown(
 
 st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
 
+# ==============================================================================
+# 6. INTERACTIVE CMS STAR RATING & QUALITY BONUS CALCULATOR
+# ==============================================================================
+st.subheader("Interactive CMS Star Rating & Quality Revenue Simulation")
+
+st.markdown(
+    """
+    Under Medicare Advantage two-sided risk contracts, achieving a 4.0+ Star Rating unlocks annual 
+    Quality Bonus Payments (QBP). Test different Star Rating tiers below to evaluate the gross revenue capture 
+    associated with closing Metropolitan Health's blood pressure and statin care gaps:
+    """
+)
+
+star_col1, star_col2 = st.columns([1.1, 1.4], gap="medium")
+
+with star_col1:
+    star_target = st.select_slider(
+        "Simulated CMS Star Rating Performance Target:",
+        options=[3.0, 3.5, 4.0, 4.5, 5.0],
+        value=4.0,
+        format_func=lambda x: f"★ {x:.1f} Stars" + (" (Current Baseline)" if x == 3.0 else (" (Target)" if x == 4.0 else "")),
+        help="Simulate the top-line quality revenue unlocked by remediating HEDIS statin and hypertension gaps."
+    )
+
+star_bonus_map = {
+    3.0: 0,
+    3.5: 150000,
+    4.0: 420000,
+    4.5: 630000,
+    5.0: 900000
+}
+unlocked_bonus = star_bonus_map[star_target]
+status_tag = "Baseline / Penalty Band" if star_target == 3.0 else ("Quality Shared Savings Unlocked" if star_target < 4.5 else "5% Full CMS Quality Bonus Unlocked")
+badge_class = "kpi-badge-red" if star_target == 3.0 else ("kpi-badge-amber" if star_target == 3.5 else "kpi-badge-green")
+
+with star_col2:
+    st.markdown(
+        f"""
+        <div style="background-color: #FFFFFF; border: 1px solid #CBD5E1; border-radius: 10px; padding: 14px 18px; box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <span style="font-size: 11px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.06em;">CMS Quality Revenue Unlocked</span>
+                <span class="kpi-badge {badge_class}">{status_tag}</span>
+            </div>
+            <div style="font-size: 28px; font-weight: 800; color: #059669; line-height: 1.1; margin-bottom: 4px;">
+                +&dollar;{unlocked_bonus:,.0f} / yr
+            </div>
+            <div style="font-size: 12.5px; color: #475569; line-height: 1.4;">
+                Simulated for <strong>★ {star_target:.1f} Stars</strong> across the 983-patient chronic disease panel.
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
+
 st.markdown(
     """
     <p style='color: #64748B; font-size: 13px; line-height: 1.6;'>
@@ -519,4 +587,38 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
+st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
+st.markdown("---")
+
+# Executive Tour Progression Card
+tour_col1, tour_col2 = st.columns([2.4, 1.2], gap="medium")
+with tour_col1:
+    st.markdown(
+        """
+        <div style="padding: 2px 0;">
+            <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #2563EB; margin-bottom: 2px;">
+                EXECUTIVE TOUR &bull; ACT 4 OF 4
+            </div>
+            <div style="font-size: 15px; font-weight: 700; color: #0F172A;">
+                ROI & Preventative Care Staffing Model
+            </div>
+            <div style="font-size: 12.5px; color: #64748B;">
+                Simulate 7.0 RN FTE caseload calibration, admission reduction sensitivities, and the 159% self-funding model.
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+with tour_col2:
+    try:
+        st.page_link(
+            "pages/4_roi.py",
+            label="Proceed to ROI Model →",
+            icon="📈",
+            use_container_width=True
+        )
+    except Exception:
+        if st.button("Proceed to ROI Model →", key="tour_fin_btn", use_container_width=True):
+            st.switch_page("pages/4_roi.py")
 
