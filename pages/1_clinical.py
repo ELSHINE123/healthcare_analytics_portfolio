@@ -672,58 +672,64 @@ if not df.empty:
                 )
 
             # SBP and Cholesterol clinical interpretation
-            sbp = pt_data["systolic_bp"]
-            chol = pt_data["cholesterol"]
+            sbp = int(pt_data["systolic_bp"])
+            dbp = int(pt_data["diastolic_bp"])
+            chol = int(pt_data["cholesterol"])
+            pt_name = str(pt_data["patient_name"]).title()
+            pt_sex = str(pt_data["gender"]).title()
+            pt_age = int(pt_data["age"])
+            risk_score = int(pt_data["clinical_risk_score"])
+            surv_days = int(pt_data.get("days_since_visit", 90))
+            pathway = pt_data["Action Pathway"]
+
             sbp_status = "Stage 2 Hypertension" if sbp >= 140 else ("Stage 1 Hypertension" if sbp >= 130 else ("Elevated" if sbp >= 120 else "Normal"))
             chol_status = "High Risk" if chol >= 240 else ("Borderline High" if chol >= 200 else "Desirable")
+            sbp_color = "#DC2626" if sbp >= 140 else "#D97706"
+            chol_color = "#DC2626" if chol >= 240 else ("#D97706" if chol >= 200 else "#059669")
+            med_color = "#DC2626" if med == "No Active Prescription on Record" else "#2563EB"
 
-            # Render EHR Patient Card
-            st.markdown(
-                f"""
-                <div style="background-color: #FFFFFF; border: 1.5px solid #CBD5E1; border-radius: 10px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(15,23,42,0.06); margin-top: 8px;">
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; border-bottom: 1px solid #E2E8F0; padding-bottom: 10px;">
-                        <div>
-                            <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #64748B;">EHR AMBULATORY CLINICAL CHART</div>
-                            <div style="font-size: 19px; font-weight: 800; color: #0F172A;">{pt_data['patient_name']}</div>
-                            <div style="font-size: 12.5px; color: #475569;">
-                                Age: <strong>{int(pt_data['age'])} yrs</strong> &bull; Sex: <strong>{pt_data['gender']}</strong> &bull; Primary Registry: <strong style="color: #2563EB;">{cond}</strong>
-                            </div>
-                        </div>
-                        <div style="background-color: {bg_c}; border: 1px solid {border_c}; color: {text_c}; padding: 6px 14px; border-radius: 6px; text-align: right;">
-                            <div style="font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em;">Acuity Stratification</div>
-                            <div style="font-size: 15px; font-weight: 800;">{acuity_tier}</div>
-                            <div style="font-size: 11px; font-weight: 600;">Risk Index: {pt_data['clinical_risk_score']:.2f} / 1.0</div>
-                        </div>
-                    </div>
-                    
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 14px;">
-                        <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 10px 12px;">
-                            <div style="font-size: 10.5px; font-weight: 700; color: #64748B; text-transform: uppercase;">Blood Pressure (ACC/AHA)</div>
-                            <div style="font-size: 18px; font-weight: 800; color: #0F172A; margin: 2px 0;">{int(sbp)} / {int(pt_data['diastolic_bp'])} <span style="font-size: 11px; font-weight: 500; color: #64748B;">mmHg</span></div>
-                            <div style="font-size: 11.5px; font-weight: 600; color: {'#DC2626' if sbp >= 140 else '#D97706'};">{sbp_status}</div>
-                        </div>
-                        <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 10px 12px;">
-                            <div style="font-size: 10.5px; font-weight: 700; color: #64748B; text-transform: uppercase;">Total Cholesterol (NCEP ATP III)</div>
-                            <div style="font-size: 18px; font-weight: 800; color: #0F172A; margin: 2px 0;">{int(chol)} <span style="font-size: 11px; font-weight: 500; color: #64748B;">mg/dL</span></div>
-                            <div style="font-size: 11.5px; font-weight: 600; color: {'#DC2626' if chol >= 240 else ('#D97706' if chol >= 200 else '#059669')};">{chol_status}</div>
-                        </div>
-                        <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 10px 12px;">
-                            <div style="font-size: 10.5px; font-weight: 700; color: #64748B; text-transform: uppercase;">Active Pharmacotherapy</div>
-                            <div style="font-size: 15px; font-weight: 700; color: {'#DC2626' if med == 'No Active Prescription on Record' else '#2563EB'}; margin: 4px 0;">{med}</div>
-                            <div style="font-size: 11.5px; color: #64748B;">Verified in EHR Pharmacy Dispense</div>
-                        </div>
-                    </div>
-
-                    {safety_alert}
-
-                    <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid #E2E8F0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
-                        <span style="font-size: 12.5px; color: #334155;"><strong>Assigned Care Pod:</strong> {pt_data['Action Pathway']}</span>
-                        <span style="font-size: 11.5px; color: #64748B; font-weight: 600;">Surveillance Interval: {int(pt_data.get('days_since_visit', 90))} days elapsed</span>
-                    </div>
-                </div>
-                """,
-                unsafe_allow_html=True
+            # Render EHR Patient Card (zero leading whitespace to prevent Markdown code block interpretation)
+            card_html = (
+                f'<div style="background-color: #FFFFFF; border: 1.5px solid #CBD5E1; border-radius: 10px; padding: 18px 22px; box-shadow: 0 2px 8px rgba(15,23,42,0.06); margin-top: 8px;">'
+                f'<div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; border-bottom: 1px solid #E2E8F0; padding-bottom: 12px;">'
+                f'<div>'
+                f'<div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #64748B;">EHR AMBULATORY CLINICAL CHART</div>'
+                f'<div style="font-size: 20px; font-weight: 800; color: #0F172A; margin: 2px 0;">{pt_name}</div>'
+                f'<div style="font-size: 13px; color: #475569;">'
+                f'Age: <strong>{pt_age} yrs</strong> &bull; Sex: <strong>{pt_sex}</strong> &bull; Primary Registry: <strong style="color: #2563EB;">{cond}</strong>'
+                f'</div>'
+                f'</div>'
+                f'<div style="background-color: {bg_c}; border: 1px solid {border_c}; color: {text_c}; padding: 6px 14px; border-radius: 6px; text-align: right;">'
+                f'<div style="font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em;">Acuity Stratification</div>'
+                f'<div style="font-size: 15px; font-weight: 800;">{acuity_tier}</div>'
+                f'<div style="font-size: 11px; font-weight: 600;">Risk Score: {risk_score} / 100</div>'
+                f'</div>'
+                f'</div>'
+                f'<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 14px;">'
+                f'<div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 10px 12px;">'
+                f'<div style="font-size: 10.5px; font-weight: 700; color: #64748B; text-transform: uppercase;">Blood Pressure (ACC/AHA)</div>'
+                f'<div style="font-size: 18px; font-weight: 800; color: #0F172A; margin: 2px 0;">{sbp} / {dbp} <span style="font-size: 11px; font-weight: 500; color: #64748B;">mmHg</span></div>'
+                f'<div style="font-size: 11.5px; font-weight: 600; color: {sbp_color};">{sbp_status}</div>'
+                f'</div>'
+                f'<div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 10px 12px;">'
+                f'<div style="font-size: 10.5px; font-weight: 700; color: #64748B; text-transform: uppercase;">Total Cholesterol (NCEP ATP III)</div>'
+                f'<div style="font-size: 18px; font-weight: 800; color: #0F172A; margin: 2px 0;">{chol} <span style="font-size: 11px; font-weight: 500; color: #64748B;">mg/dL</span></div>'
+                f'<div style="font-size: 11.5px; font-weight: 600; color: {chol_color};">{chol_status}</div>'
+                f'</div>'
+                f'<div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 10px 12px;">'
+                f'<div style="font-size: 10.5px; font-weight: 700; color: #64748B; text-transform: uppercase;">Active Pharmacotherapy</div>'
+                f'<div style="font-size: 15px; font-weight: 700; color: {med_color}; margin: 4px 0;">{med}</div>'
+                f'<div style="font-size: 11.5px; color: #64748B;">Verified in EHR Pharmacy Dispense</div>'
+                f'</div>'
+                f'</div>'
+                f'{safety_alert}'
+                f'<div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid #E2E8F0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">'
+                f'<span style="font-size: 12.5px; color: #334155;"><strong>Assigned Care Pod:</strong> {pathway}</span>'
+                f'<span style="font-size: 11.5px; color: #64748B; font-weight: 600;">Surveillance Interval: {surv_days} days elapsed</span>'
+                f'</div>'
+                f'</div>'
             )
+            st.markdown(card_html, unsafe_allow_html=True)
         else:
             st.info("No patients match current filters to display clinical snapshot.")
 
