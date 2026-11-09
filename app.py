@@ -333,7 +333,29 @@ button[data-testid="stBaseButton-tab"] {
   line-height: 1.3 !important;
 }
 
-/* 13. Mobile & Tablet Responsiveness */
+/* 13. Executive Visual Card Container Architecture */
+div[data-testid="stPlotlyChart"] {
+  background-color: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  padding: 12px 14px 8px 14px !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+  box-sizing: border-box !important;
+  margin-bottom: 8px !important;
+}
+
+div[data-testid="stPlotlyChart"]:hover {
+  border-color: #CBD5E1 !important;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.07) !important;
+}
+
+/* Ensure Plotly canvas does not overflow its card */
+div[data-testid="stPlotlyChart"] > div {
+  border-radius: 10px !important;
+}
+
+/* 14. Mobile & Tablet Responsiveness */
 @media (max-width: 768px) {
   /* Dynamic Mobile Sidebar Drawer */
   section[data-testid="stSidebar"]:not([aria-expanded="false"]) {
@@ -488,6 +510,13 @@ if st.session_state.get("presentation_mode", False):
     .kpi-card-subtitle {
       font-size: 13.5px !important;
       color: #475569 !important;
+    }
+    /* Boardroom Calibrated Visual Cards */
+    div[data-testid="stPlotlyChart"] {
+      border: 1.5px solid #CBD5E1 !important;
+      border-radius: 14px !important;
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08) !important;
+      padding: 16px 18px 12px 18px !important;
     }
     /* Boardroom Table Typography */
     table th {

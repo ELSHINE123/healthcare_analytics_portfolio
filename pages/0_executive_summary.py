@@ -118,8 +118,8 @@ if not df.empty:
             bargap=0.45,
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
-            yaxis=dict(showgrid=True, gridcolor="#E2E8F0", title="Number of Patients", range=[0, 250]),
-            xaxis=dict(title="", tickfont=dict(size=12, family="Be Vietnam Pro")),
+            yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Number of Patients", range=[0, 250]),
+            xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=12, family="Be Vietnam Pro")),
             font=dict(family="Be Vietnam Pro, sans-serif")
         )
         st.plotly_chart(fig_cond, width="stretch")
@@ -185,8 +185,8 @@ if not df.empty:
             bargap=0.45,
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
-            yaxis=dict(showgrid=True, gridcolor="#E2E8F0", title="Number of Patients", range=[0, 850]),
-            xaxis=dict(title=""),
+            yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Number of Patients", range=[0, 850]),
+            xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title=""),
             font=dict(family="Be Vietnam Pro, sans-serif")
         )
         st.plotly_chart(fig_gaps, width="stretch")
@@ -270,8 +270,8 @@ fig_fin.update_layout(
     bargap=0.45,
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
-    yaxis=dict(showgrid=True, gridcolor="#E2E8F0", title="Inpatient Financial Exposure ($ USD)", range=[0, 1420000]),
-    xaxis=dict(title=""),
+    yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Inpatient Financial Exposure ($ USD)", range=[0, 1420000]),
+    xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title=""),
     font=dict(family="Be Vietnam Pro, sans-serif")
 )
 

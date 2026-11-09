@@ -363,9 +363,12 @@ fig_roadmap.update_layout(
         tickvals=[1, 30, 60, 90, 120, 150, 180],
         ticktext=["Day 1", "Day 30", "Day 60", "Day 90", "Day 120", "Day 150", "Day 180"],
         showgrid=True,
-        gridcolor="#E2E8F0"
+        gridcolor="#E2E8F0",
+        showline=True,
+        linecolor="#CBD5E1",
+        linewidth=1.2
     ),
-    yaxis=dict(title="", tickfont=dict(size=11, family="Be Vietnam Pro"), autorange="reversed"),
+    yaxis=dict(title="", tickfont=dict(size=11, family="Be Vietnam Pro"), autorange="reversed", showline=True, linecolor="#CBD5E1", linewidth=1.2),
     font=dict(family="Be Vietnam Pro, sans-serif")
 )
 

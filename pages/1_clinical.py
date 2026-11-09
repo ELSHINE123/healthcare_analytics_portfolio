@@ -301,12 +301,16 @@ if not df.empty:
         )
 
         fig_v1.update_layout(
-            margin=dict(l=40, r=20, t=15, b=85),
-            height=480,
+            title=dict(
+                text="<b>Bivariate Clinical Acuity Distribution</b><br><span style='font-size:11.5px; color:#64748B; font-weight:500;'>983 Patients Displayed across SBP & Cholesterol</span>",
+                x=0.5, y=0.97, xanchor="center", yanchor="top"
+            ),
+            margin=dict(l=40, r=20, t=55, b=85),
+            height=490,
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
-            xaxis=dict(showgrid=True, gridcolor="#E2E8F0", title="Total Cholesterol (mg/dL) — NCEP ATP III", range=[150, 235]),
-            yaxis=dict(showgrid=True, gridcolor="#E2E8F0", title="Systolic BP (mmHg) — 2017 ACC/AHA", range=[102, 148]),
+            xaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Total Cholesterol (mg/dL) — NCEP ATP III", range=[150, 235]),
+            yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Systolic BP (mmHg) — 2017 ACC/AHA", range=[102, 148]),
             legend=dict(
                 orientation="h",
                 yanchor="top",
@@ -317,20 +321,6 @@ if not df.empty:
                 font=dict(family="Be Vietnam Pro", size=12)
             ),
             font=dict(family="Be Vietnam Pro, sans-serif")
-        )
-
-        st.markdown(
-            f"""
-            <div style="text-align: center; margin-bottom: 6px; padding: 4px 0;">
-                <div style="font-size: 16px; font-weight: 800; color: #0F172A; letter-spacing: -0.01em;">
-                    Bivariate Clinical Acuity Distribution
-                </div>
-                <div style="font-size: 12.5px; color: #64748B; font-weight: 500;">
-                    {len(plot_df):,} Patients Displayed across SBP & Cholesterol
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True
         )
 
         st.plotly_chart(fig_v1, width="stretch")
@@ -392,8 +382,8 @@ if not df.empty:
         bargroupgap=0.15,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        yaxis=dict(showgrid=True, gridcolor="#E2E8F0", title="Number of Patients", range=[0, 32]),
-        xaxis=dict(title="", tickfont=dict(size=13, family="Be Vietnam Pro")),
+        yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Number of Patients", range=[0, 32]),
+        xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=13, family="Be Vietnam Pro")),
         legend=dict(
             orientation="h",
             yanchor="top",
@@ -467,8 +457,8 @@ if not df.empty:
         height=420,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        xaxis=dict(title="Active Pharmacotherapy Prescribed", tickfont=dict(size=12, family="Be Vietnam Pro")),
-        yaxis=dict(title="Primary Documented Diagnosis", tickfont=dict(size=12, family="Be Vietnam Pro")),
+        xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Active Pharmacotherapy Prescribed", tickfont=dict(size=12, family="Be Vietnam Pro")),
+        yaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Primary Documented Diagnosis", tickfont=dict(size=12, family="Be Vietnam Pro")),
         coloraxis_showscale=False,
         font=dict(family="Be Vietnam Pro, sans-serif")
     )

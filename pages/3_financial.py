@@ -233,8 +233,8 @@ with v7_col1:
         height=390,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        xaxis=dict(showgrid=True, gridcolor="#E2E8F0", title="Projected Acute Inpatient Exposure ($ Millions)", range=[0, max_x]),
-        yaxis=dict(title="", tickfont=dict(size=12, family="Be Vietnam Pro")),
+        xaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Projected Acute Inpatient Exposure ($ Millions)", range=[0, max_x]),
+        yaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=12, family="Be Vietnam Pro")),
         font=dict(family="Be Vietnam Pro, sans-serif")
     )
     st.plotly_chart(fig_v7a, width="stretch")
@@ -493,8 +493,8 @@ fig_v8.update_layout(
     height=400,
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
-    xaxis=dict(showgrid=True, gridcolor="#E2E8F0", title="Compliance / Performance Rate (%)", range=[0, 138]),
-    yaxis=dict(title="", tickfont=dict(size=12, family="Be Vietnam Pro"), autorange="reversed"),
+    xaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Compliance / Performance Rate (%)", range=[0, 138]),
+    yaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=12, family="Be Vietnam Pro"), autorange="reversed"),
     font=dict(family="Be Vietnam Pro, sans-serif")
 )
 

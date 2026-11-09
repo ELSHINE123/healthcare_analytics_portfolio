@@ -112,8 +112,8 @@ if not df.empty:
             bargap=0.45,
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
-            yaxis=dict(showgrid=True, gridcolor="#E2E8F0", title="Number of Patients", range=[0, 65]),
-            xaxis=dict(title="", tickfont=dict(size=12, family="Be Vietnam Pro")),
+            yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Number of Patients", range=[0, 65]),
+            xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=12, family="Be Vietnam Pro")),
             font=dict(family="Be Vietnam Pro, sans-serif")
         )
         st.plotly_chart(fig_v4b, width="stretch")
@@ -178,8 +178,8 @@ if not df.empty:
             height=370,
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
-            xaxis=dict(title="", tickfont=dict(size=12, family="Be Vietnam Pro")),
-            yaxis=dict(title="", tickfont=dict(size=12, family="Be Vietnam Pro")),
+            xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=12, family="Be Vietnam Pro")),
+            yaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=12, family="Be Vietnam Pro")),
             coloraxis_showscale=False,
             font=dict(family="Be Vietnam Pro, sans-serif")
         )
@@ -214,8 +214,8 @@ if not df.empty:
             height=370,
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
-            xaxis=dict(showgrid=True, gridcolor="#E2E8F0", title="Number of Patients", range=[0, 60]),
-            yaxis=dict(title=""),
+            xaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Number of Patients", range=[0, 60]),
+            yaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title=""),
             font=dict(family="Be Vietnam Pro, sans-serif")
         )
         st.plotly_chart(fig_v5b, width="stretch")
@@ -325,8 +325,8 @@ if not df.empty:
             bargroupgap=0.15,
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
-            yaxis=dict(showgrid=True, gridcolor="#E2E8F0", title="Number of Patients", range=[0, 290]),
-            xaxis=dict(title="", tickfont=dict(size=12, family="Be Vietnam Pro")),
+            yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Number of Patients", range=[0, 290]),
+            xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=12, family="Be Vietnam Pro")),
             legend=dict(orientation="h", yanchor="top", y=-0.16, xanchor="center", x=0.5, title="", font=dict(family="Be Vietnam Pro", size=11.5)),
             font=dict(family="Be Vietnam Pro, sans-serif")
         )

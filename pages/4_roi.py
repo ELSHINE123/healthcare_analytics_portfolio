@@ -247,8 +247,8 @@ with v9_col1:
         bargroupgap=0.10,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        yaxis=dict(showgrid=True, gridcolor="#E2E8F0", title="Annual Value ($ Thousands)", range=[-60, 560]),
-        xaxis=dict(title="", tickfont=dict(size=11, family="Be Vietnam Pro"), tickangle=0),
+        yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Annual Value ($ Thousands)", range=[-60, 560]),
+        xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=11, family="Be Vietnam Pro"), tickangle=0),
         legend=dict(
             orientation="h",
             yanchor="top",
@@ -290,8 +290,8 @@ with v9_col2:
         height=415,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        yaxis=dict(showgrid=True, gridcolor="#E2E8F0", title="Annual Budget Impact ($ Thousands)", range=[-320, 480]),
-        xaxis=dict(title="", tickfont=dict(size=10.5, family="Be Vietnam Pro"), tickangle=0),
+        yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Annual Budget Impact ($ Thousands)", range=[-320, 480]),
+        xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=10.5, family="Be Vietnam Pro"), tickangle=0),
         font=dict(family="Be Vietnam Pro, sans-serif")
     )
     st.plotly_chart(fig_v9b, width="stretch")
@@ -419,8 +419,8 @@ with v10_col1:
         height=390,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        xaxis=dict(showgrid=True, gridcolor="#E2E8F0", title="Required Dedicated Nurse Care Managers (FTEs)", range=[0, 8.5]),
-        yaxis=dict(title="", tickfont=dict(size=11.5, family="Be Vietnam Pro"), autorange="reversed"),
+        xaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Required Dedicated Nurse Care Managers (FTEs)", range=[0, 8.5]),
+        yaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=11.5, family="Be Vietnam Pro"), autorange="reversed"),
         font=dict(family="Be Vietnam Pro, sans-serif")
     )
     st.plotly_chart(fig_v10a, width="stretch")
@@ -455,8 +455,8 @@ with v10_col2:
         height=390,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        yaxis=dict(showgrid=True, gridcolor="#E2E8F0", title="Annual Financial Impact ($ Thousands)", range=[0, max_y]),
-        xaxis=dict(title="", tickfont=dict(size=11.5, family="Be Vietnam Pro")),
+        yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Annual Financial Impact ($ Thousands)", range=[0, max_y]),
+        xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=11.5, family="Be Vietnam Pro")),
         font=dict(family="Be Vietnam Pro, sans-serif")
     )
     st.plotly_chart(fig_v10b, width="stretch")
