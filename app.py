@@ -1,0 +1,297 @@
+# app.py
+"""
+Clinical EHR Analytics & Value-Based Healthcare Intelligence
+Author: Daniel Ademola Dongo
+Master Application Entrypoint (Defined Steel-Slate Rail with Definite Contrast & White Canvas)
+"""
+
+import sys
+from pathlib import Path
+import pandas as pd
+import streamlit as st
+
+# Ensure project root is in sys.path
+project_root = Path(__file__).resolve().parent
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
+
+from src.export_engine import generate_board_memorandum, generate_care_gap_roster_csv
+
+st.set_page_config(
+    page_title="Healthcare Intelligence Suite",
+    page_icon="🩺",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+# ==============================================================================
+# DEFINED CONTRAST LIGHT RAIL + ELEVATION SHADOW + CRISP WHITE CANVAS
+# ==============================================================================
+st.markdown("""
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* 1. Global Typography & Refined Scale */
+html, body, .stMarkdown, .stText, h1, h2, h3, h4, h5, h6, p, label {
+  font-family: "Be Vietnam Pro", -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+h1 {
+  font-size: 26px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.25 !important;
+  color: #0F172A !important;
+  margin-bottom: 4px !important;
+}
+
+h2 {
+  font-size: 20px !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.3 !important;
+  color: #0F172A !important;
+  margin-top: 20px !important;
+  margin-bottom: 8px !important;
+}
+
+h3 {
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  line-height: 1.35 !important;
+  color: #1E293B !important;
+  margin-top: 14px !important;
+  margin-bottom: 6px !important;
+}
+
+h4 {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #334155 !important;
+  margin-top: 10px !important;
+  margin-bottom: 4px !important;
+}
+
+p, li {
+  font-size: 14.5px !important;
+  line-height: 1.65 !important;
+  color: #334155 !important;
+  text-align: justify !important;
+  text-justify: inter-word !important;
+}
+
+/* Inspector Side-Panel Text (Refined, Compact Scale) */
+.inspector-text, .inspector-text p, .inspector-text div {
+  font-size: 13px !important;
+  line-height: 1.6 !important;
+  color: #334155 !important;
+  text-align: justify !important;
+  text-justify: inter-word !important;
+}
+
+/* 2. Protect Icon Fonts */
+[data-testid*="Icon"],
+[class*="material-symbols"],
+[class*="material-icons"],
+button[data-testid="stSidebarCollapseButton"] span,
+button[data-testid="stSidebarCollapseButton"] i,
+div[data-testid="collapsedControl"] span {
+  font-family: "Material Symbols Rounded", "Material Icons", sans-serif !important;
+}
+
+/* 3. Main Canvas (Micro-Dot Tech Grid) */
+.stApp {
+  background-color: #F8FAFC !important;
+  background-image: radial-gradient(#CBD5E1 1.1px, transparent 1.1px) !important;
+  background-size: 24px 24px !important;
+  color: #0F172A !important;
+}
+
+/* 3b. Frosted Glass Top Header for Smooth Scroll Transition */
+header[data-testid="stHeader"] {
+  background: rgba(248, 250, 252, 0.8) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.7) !important;
+}
+
+/* 4. Distinct Steel-Slate Sidebar (Noticeably Defined, Not Heavy or Dark) */
+section[data-testid="stSidebar"]:not([aria-expanded="false"]) {
+  width: 235px !important;
+  min-width: 235px !important;
+}
+
+section[data-testid="stSidebar"] {
+  background-color: #E2E8F0 !important; /* Defined Cool Slate */
+  border-right: 1px solid #CBD5E1 !important; /* Firm boundary line */
+  box-shadow: 6px 0 24px -2px rgba(15, 23, 42, 0.09) !important; /* Prominent elevation shadow */
+  padding-top: 12px !important;
+}
+
+section[data-testid="stSidebar"] h1,
+section[data-testid="stSidebar"] h2,
+section[data-testid="stSidebar"] h3,
+section[data-testid="stSidebar"] p,
+section[data-testid="stSidebar"] label {
+  color: #0F172A !important;
+}
+
+/* 5. Minimalist Category Label */
+section[data-testid="stSidebar"] div[data-testid="stSidebarNav"]::before {
+  content: "ANALYTICS SUITE";
+  display: block;
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .09em;
+  color: #475569;
+  padding: 8px 12px 6px 12px;
+}
+
+/* 6. Navigation Link Rows (Proportioned for 235px) */
+section[data-testid="stSidebar"] div[data-testid="stSidebarNav"] li div a {
+  min-height: 36px !important;
+  padding: 0 10px !important;
+  border-radius: 7px !important;
+  margin: 2px 4px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  color: #334155 !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+  border: 1px solid transparent !important;
+  transition: background-color 0.15s ease, color 0.15s ease !important;
+}
+
+/* Stationary Hover */
+section[data-testid="stSidebar"] div[data-testid="stSidebarNav"] li div a:hover {
+  background-color: #CBD5E1 !important;
+  color: #0F172A !important;
+}
+
+/* Active Page State: Floating White Card on Slate */
+section[data-testid="stSidebar"] div[data-testid="stSidebarNav"] li div a[aria-current="page"] {
+  background-color: #FFFFFF !important; /* Crisp White Floating Pill */
+  color: #1D4ED8 !important;            /* Royal Blue Text */
+  font-weight: 700 !important;
+  border-left: 3px solid #2563EB !important;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08) !important;
+}
+
+/* 7. Refined Sidebar Collapse Button */
+button[data-testid="stSidebarCollapseButton"] {
+  background-color: transparent !important;
+  color: #475569 !important;
+  border-radius: 6px !important;
+}
+button[data-testid="stSidebarCollapseButton"]:hover {
+  background-color: #CBD5E1 !important;
+  color: #0F172A !important;
+}
+
+/* 8. Crisp Cards on Canvas */
+[data-testid="stVerticalBlockBorderWrapper"] {
+  background-color: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.04) !important;
+}
+
+.block-container {
+  padding-top: 1.8rem !important;
+  padding-bottom: 2.5rem !important;
+  max-width: 1250px !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# ==============================================================================
+# BOARDROOM PRESENTATION MODE & EXECUTIVE ACTION CENTER
+# ==============================================================================
+DATA_PATH = Path(__file__).resolve().parent / "data" / "processed" / "healthcare_analytics_enriched.csv"
+
+@st.cache_data
+def get_export_data():
+    if DATA_PATH.exists():
+        df_exp = pd.read_csv(DATA_PATH)
+        memo_text = generate_board_memorandum(df_exp)
+        csv_text = generate_care_gap_roster_csv(df_exp)
+        return memo_text, csv_text
+    return "", ""
+
+memo_data, csv_data = get_export_data()
+
+with st.sidebar:
+    st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
+    pres_mode = st.toggle(
+        "💼 Boardroom Mode",
+        key="presentation_mode",
+        help="Expands canvas width, scales typography, and increases contrast for boardroom displays."
+    )
+    
+    if memo_data and csv_data:
+        st.markdown(
+            """
+            <div style="font-family: 'Be Vietnam Pro', sans-serif; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .09em; color: #475569; padding: 12px 0 6px 0;">
+                EXECUTIVE EXPORTS
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+        st.download_button(
+            "📄 Board Memorandum",
+            data=memo_data,
+            file_name="Metropolitan_Health_Board_Memorandum.md",
+            mime="text/markdown",
+            use_container_width=True,
+            help="Download the complete board-ready executive memorandum in Markdown format."
+        )
+        st.download_button(
+            "📊 Care Gap Audit Roster",
+            data=csv_data,
+            file_name="Metropolitan_Health_Care_Gap_Registry.csv",
+            mime="text/csv",
+            use_container_width=True,
+            help="Export the 553 high/severe acuity patient roster with care gaps."
+        )
+
+if st.session_state.get("presentation_mode", False):
+    st.markdown("""
+    <style>
+    .block-container {
+      max-width: 95% !important;
+      padding-top: 1.2rem !important;
+    }
+    h1 {
+      font-size: 29px !important;
+    }
+    h2 {
+      font-size: 22px !important;
+    }
+    p, li {
+      font-size: 15px !important;
+      line-height: 1.7 !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+# ==============================================================================
+# MASTER NAVIGATION ROUTING (Punchy Titles that fit the slim rail)
+# ==============================================================================
+pg = st.navigation([
+    st.Page("home.py", title="Hospital Overview", icon="🏛️"),
+    st.Page("pages/0_executive_summary.py", title="Executive Summary", icon="📊"),
+    st.Page("pages/1_clinical.py", title="Clinical Risk & Safety", icon="🩺"),
+    st.Page("pages/2_operations.py", title="Operations & Reach", icon="⚙️"),
+    st.Page("pages/3_financial.py", title="Financial Stakes", icon="💰"),
+    st.Page("pages/4_roi.py", title="ROI & Staffing Model", icon="📈"),
+    st.Page("pages/5_recommendations.py", title="Strategic Roadmap", icon="🎯"),
+])
+
+pg.run()

@@ -1,0 +1,9 @@
+[theme]
+primaryColor = "#2563EB"              # Royal Blue for active highlights
+backgroundColor = "#F8FAFC"           # Clean cool porcelain canvas (micro-dot base)
+secondaryBackgroundColor = "#E2E8F0"  # Defined steel-slate sidebar
+textColor = "#0F172A"                 # Slate dark text
+font = "sans serif"
+
+[client]
+toolbarMode = "minimal"
