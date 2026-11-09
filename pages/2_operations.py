@@ -56,7 +56,7 @@ st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
 st.header("1. Patient Contactability Channels & Digital Blind Spots")
 
 if not df.empty:
-    with st.container(border=True):
+    with st.container(border=True, key="visual_panel_ops_1"):
         v4_col1, v4_col2 = st.columns(2, gap="large")
 
         with v4_col1:
@@ -148,7 +148,7 @@ st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
 st.header("2. Longitudinal Surveillance Cadence & Overdue Patient Recall")
 
 if not df.empty:
-    with st.container(border=True):
+    with st.container(border=True, key="visual_panel_ops_2"):
         v5_col1, v5_col2 = st.columns(2, gap="large")
 
         with v5_col1:
@@ -252,7 +252,7 @@ st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
 st.header("3. Clinical Laboratory Data Quality & Verification Auditing")
 
 if not df.empty:
-    with st.container(border=True):
+    with st.container(border=True, key="visual_panel_ops_3"):
         v6_col1, v6_col2 = st.columns(2, gap="large")
 
         with v6_col1:

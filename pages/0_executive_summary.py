@@ -55,7 +55,7 @@ st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
 st.header("1. Clinical Acuity Profile & Chronic Disease Burden")
 
 if not df.empty:
-    with st.container(border=True):
+    with st.container(border=True, key="visual_panel_exec_1"):
         chart1_col, chart2_col = st.columns(2, gap="large")
 
         with chart1_col:
@@ -148,7 +148,7 @@ st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
 st.header("2. Operational Reach: Care Gaps vs. Outreach Blind Spots")
 
 if not df.empty:
-    with st.container(border=True):
+    with st.container(border=True, key="visual_panel_exec_2"):
         chart3_col, chart4_col = st.columns(2, gap="large")
 
         with chart3_col:

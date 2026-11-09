@@ -206,7 +206,7 @@ st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
 # ==============================================================================
 st.header("2. Annual Inpatient Financial Liability & 80/20 Risk Concentration")
 
-with st.container(border=True):
+with st.container(border=True, key="visual_panel_fin_1"):
     v7_col1, v7_col2 = st.columns(2, gap="large")
 
     with v7_col1:

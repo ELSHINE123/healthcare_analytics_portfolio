@@ -190,7 +190,7 @@ st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
 # ==============================================================================
 st.header("2. Preventative Care Management ROI & Breakeven Simulation")
 
-with st.container(border=True):
+with st.container(border=True, key="visual_panel_roi_1"):
     v9_col1, v9_col2 = st.columns(2, gap="large")
 
     with v9_col1:
@@ -387,7 +387,7 @@ st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
 # ==============================================================================
 st.header("3. Clinical Care Manager Workforce Allocation & Self-Funding Model")
 
-with st.container(border=True):
+with st.container(border=True, key="visual_panel_roi_2"):
     v10_col1, v10_col2 = st.columns(2, gap="large")
 
     with v10_col1:
