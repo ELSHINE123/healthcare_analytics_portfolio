@@ -177,7 +177,7 @@ with kpi3:
             <div class="kpi-card-value" style="color: #DC2626;">&dollar;{total_financial_exposure / 1e6:.2f}M</div>
             <div class="kpi-card-subtitle">
                 <span>@ &dollar;{admission_cost:,}/Stay</span>
-                <span class="kpi-badge kpi-badge-red">HCUP Benchmark</span>
+                <span class="kpi-badge kpi-badge-red">AHRQ HCUP</span>
             </div>
         </div>
         """,
@@ -218,18 +218,18 @@ with v7_col1:
         orientation="h",
         width=0.42,
         marker=dict(color=[acuity_colors[t] for t in cost_df["clinical_risk_tier"]]),
-        text=[f"<b>${c:.2f}M</b> ({adm:.1f} adm)" for c, adm in zip(cost_df["cost_millions"], cost_df["expected_admissions"])],
+        text=[f"<b>${c:.2f}M</b> ({adm:.0f} adm)" for c, adm in zip(cost_df["cost_millions"], cost_df["expected_admissions"])],
         textposition="outside",
         textfont=dict(color="#0F172A", size=11.5, family="Be Vietnam Pro"),
         hovertemplate="<b>%{y}</b><br>Projected Cost: $%{x:.3f}M<br>Expected Admissions: %{customdata[0]:.1f}<br>Patient Count: %{customdata[1]:,}<extra></extra>",
         customdata=cost_df[["expected_admissions", "patient_count"]].values
     ))
 
-    max_x = max(cost_df["cost_millions"]) * 1.45 if max(cost_df["cost_millions"]) > 0 else 1.0
+    max_x = max(cost_df["cost_millions"]) * 1.65 if max(cost_df["cost_millions"]) > 0 else 1.0
 
     fig_v7a.update_layout(
         title=dict(text="<b>Annual Inpatient Cost Exposure by Acuity Tier</b>", x=0.5, y=0.96, xanchor="center", yanchor="top"),
-        margin=dict(l=120, r=30, t=50, b=40),
+        margin=dict(l=115, r=65, t=50, b=40),
         height=390,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",

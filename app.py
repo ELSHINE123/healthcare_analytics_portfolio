@@ -244,15 +244,16 @@ button[data-testid="stSidebarCollapseButton"]:hover {
 }
 
 .kpi-card-subtitle {
-  font-size: 12px !important;
+  font-size: 11.5px !important;
   color: #64748B !important;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  line-height: 1.2 !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  line-height: 1.35 !important;
   display: flex !important;
   align-items: center !important;
-  gap: 6px !important;
+  justify-content: space-between !important;
+  gap: 4px !important;
+  flex-wrap: wrap !important;
 }
 
 /* 10. Contextual Trend Pills & Benchmark Micro-Badges */
@@ -267,6 +268,7 @@ button[data-testid="stSidebarCollapseButton"]:hover {
   letter-spacing: 0.02em !important;
   white-space: nowrap !important;
   line-height: 1.2 !important;
+  flex-shrink: 0 !important;
 }
 .kpi-badge-green {
   background-color: #ECFDF5 !important;
@@ -314,6 +316,87 @@ button[data-testid="stSidebarCollapseButton"]:hover {
   font-size: 14px !important;
   font-weight: 600 !important;
   color: #0F172A !important;
+}
+
+/* 12. Global Responsive Tab Navigation */
+div[data-testid="stTabs"] div[role="tablist"] {
+  overflow-x: auto !important;
+  flex-wrap: nowrap !important;
+  scrollbar-width: thin !important;
+  -webkit-overflow-scrolling: touch !important;
+  gap: 4px !important;
+}
+div[data-testid="stTabs"] div[role="tablist"] button[role="tab"],
+button[data-testid="stBaseButton-tab"] {
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+  line-height: 1.3 !important;
+}
+
+/* 13. Mobile & Tablet Responsiveness */
+@media (max-width: 768px) {
+  /* Dynamic Mobile Sidebar Drawer */
+  section[data-testid="stSidebar"]:not([aria-expanded="false"]) {
+    width: 85vw !important;
+    max-width: 300px !important;
+  }
+  
+  /* Compact Canvas Padding */
+  .block-container {
+    padding-top: 1rem !important;
+    padding-bottom: 2rem !important;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+
+  /* Responsive Headings */
+  h1 { font-size: 22px !important; line-height: 1.25 !important; }
+  h2 { font-size: 18px !important; line-height: 1.3 !important; }
+  h3 { font-size: 15px !important; line-height: 1.35 !important; }
+  p, li { font-size: 13.5px !important; }
+
+  /* Stacked Full-Width KPI Cards */
+  .kpi-metric-card {
+    min-height: auto !important;
+    padding: 12px 14px !important;
+    margin-bottom: 8px !important;
+  }
+  .kpi-card-value {
+    font-size: 24px !important;
+  }
+  .kpi-card-subtitle {
+    font-size: 11px !important;
+  }
+
+  /* Tour Progression Card Responsive Layout */
+  .nav-progression-card {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+    padding: 14px 16px !important;
+  }
+
+  /* Data Table & Decision Matrix Touch Scroll */
+  div[data-testid="stDataFrame"],
+  .decision-matrix-container {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .kpi-card-value {
+    font-size: 22px !important;
+  }
+  .kpi-metric-card {
+    padding: 10px 12px !important;
+  }
+  div[data-testid="stTabs"] div[role="tablist"] button[role="tab"],
+  button[data-testid="stBaseButton-tab"] {
+    font-size: 12px !important;
+    padding: 6px 10px !important;
+  }
 }
 </style>
 """, unsafe_allow_html=True)

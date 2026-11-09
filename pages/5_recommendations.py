@@ -133,23 +133,25 @@ st.markdown(
     /* Full-width equal distribution across the canvas without overflow */
     div[data-testid="stTabs"] div[role="tablist"] {
         display: flex !important;
-        width: 100% !important;
-        gap: 6px !important;
+        overflow-x: auto !important;
+        flex-wrap: nowrap !important;
+        scrollbar-width: thin !important;
+        -webkit-overflow-scrolling: touch !important;
+        gap: 8px !important;
         border-bottom: 2px solid #E2E8F0 !important;
         padding-bottom: 0px !important;
     }
     div[data-testid="stTabs"] div[role="tablist"] button[role="tab"],
     button[data-testid="stBaseButton-tab"] {
-        flex: 1 1 0 !important;
-        min-width: 0 !important;
+        flex: 0 0 auto !important;
+        min-width: fit-content !important;
         text-align: center !important;
         justify-content: center !important;
-        padding: 8px 6px !important;
-        font-size: 12.5px !important;
+        padding: 8px 16px !important;
+        font-size: 13px !important;
         font-weight: 600 !important;
-        white-space: normal !important;
-        word-wrap: break-word !important;
-        line-height: 1.25 !important;
+        white-space: nowrap !important;
+        line-height: 1.3 !important;
         border-radius: 6px 6px 0 0 !important;
         background-color: transparent !important;
         transition: all 0.15s ease !important;
