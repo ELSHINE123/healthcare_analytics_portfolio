@@ -69,3 +69,4 @@ div[data-testid="stPlotlyChart"] .user-select-none.svg-container {
 def inject_chart_card_css():
     """Injects chart card container CSS with horizontal and vertical scroll support."""
     st.markdown(CHART_CARD_CSS, unsafe_allow_html=True)
+

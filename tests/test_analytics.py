@@ -157,6 +157,18 @@ class TestHealthcareAnalytics(unittest.TestCase):
         self.assertIn("Net Savings", matrix.columns)
         self.assertIn("Benefit-Cost Ratio", matrix.columns)
 
+    # 8. Glossary & Lexicon Data Integrity Tests
+    def test_glossary_integrity(self):
+        from src.glossary_data import GLOSSARY_TERMS, CATEGORIES
+        self.assertGreaterEqual(len(GLOSSARY_TERMS), 20)
+        self.assertIn("All Categories", CATEGORIES)
+        required_keys = {"term", "full_name", "category", "definition", "project_context", "related_page"}
+        for item in GLOSSARY_TERMS:
+            self.assertTrue(required_keys.issubset(item.keys()), f"Missing keys in {item.get('term')}")
+            self.assertIn(item["category"], CATEGORIES)
+            self.assertGreater(len(item["definition"]), 10)
+            self.assertGreater(len(item["project_context"]), 10)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -16,6 +16,7 @@ if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
 from src.export_engine import generate_board_memorandum_pdf, generate_care_gap_roster_csv
+from src.glossary_data import GLOSSARY_TERMS
 
 st.set_page_config(
     page_title="Healthcare Intelligence Suite",
@@ -504,6 +505,31 @@ with st.sidebar:
             mime="text/csv",
             use_container_width=True,
             help="Export the 553 high/severe acuity patient roster with care gaps."
+        )
+
+    st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
+    with st.expander("📖 Quick Terminology Lookup", expanded=False):
+        st.caption("Look up any healthcare acronym or economic term:")
+        term_options = [f"{t['term']} — {t['full_name']}" for t in GLOSSARY_TERMS]
+        sel_idx = st.selectbox(
+            "Select Term or Acronym:",
+            options=range(len(term_options)),
+            format_func=lambda i: term_options[i],
+            label_visibility="collapsed"
+        )
+        selected_item = GLOSSARY_TERMS[sel_idx]
+        st.markdown(
+            f"""
+            <div style="font-size: 12px; line-height: 1.5; color: #1E293B; margin-top: 4px;">
+                <div style="font-weight: 700; color: #1D4ED8;">{selected_item['term']}</div>
+                <div style="font-weight: 600; color: #0F172A; font-size: 12.5px; margin-bottom: 4px;">{selected_item['full_name']}</div>
+                <div style="margin-bottom: 6px; color: #334155; font-size: 11.5px;">{selected_item['definition']}</div>
+                <div style="background: #F1F5F9; padding: 6px 8px; border-radius: 4px; border-left: 2px solid #2563EB; font-size: 11px; color: #0F172A;">
+                    <strong>Project Role:</strong> {selected_item['project_context']}
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True
         )
 
 if st.session_state.get("presentation_mode", False):

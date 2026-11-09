@@ -38,7 +38,7 @@ Metropolitan Health System operates under two-sided downside risk contracts wher
 
 ## 📂 Application Architecture & Navigation
 
-The suite is organized into 7 sequential modules adhering to executive governance principles:
+The suite is organized into 8 sequential modules adhering to executive governance principles:
 
 ```text
 healthcare_analytics_portfolio/
@@ -50,13 +50,16 @@ healthcare_analytics_portfolio/
 │   ├── 2_operations.py        # Module 4: Contactability reach, surveillance recency & lab provenance
 │   ├── 3_financial.py         # Module 5: AHRQ HCUP cost simulation & HEDIS quality penalty scorecard
 │   ├── 4_roi.py               # Module 6: Preventative care ROI sensitivity & 7.0 RN staffing model
-│   └── 5_recommendations.py   # Module 7: 4 Pillars of transformation & 180-day executive roadmap
+│   ├── 5_recommendations.py   # Module 7: 4 Pillars of transformation & 180-day executive roadmap
+│   └── 6_glossary.py          # Module 8: Searchable healthcare acronym & value-based care lexicon
 ├── src/
 │   ├── export_engine.py       # Board memorandum and care gap CSV export generator
 │   ├── risk_engine.py         # Bivariate acuity scoring and risk tier categorization
 │   ├── therapeutic_engine.py  # HEDIS care gaps and contraindication identification
 │   ├── contact_engine.py      # Contactability reach and surveillance audit engine
-│   └── financial_engine.py    # Actuarial cost modeling and staffing ROI equations
+│   ├── financial_engine.py    # Actuarial cost modeling and staffing ROI equations
+│   ├── glossary_data.py       # Centralized domain terminology repository
+│   └── styles.py              # Unified scrollable card architecture & typography
 ├── data/
 │   ├── raw/                   # Baseline clinical and demographic datasets
 │   └── processed/             # healthcare_analytics_enriched.csv (983 enriched patient records)
