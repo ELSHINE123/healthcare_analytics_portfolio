@@ -258,6 +258,22 @@ fig_v9a.update_layout(
 )
 st.plotly_chart(fig_v9a, width="stretch")
 
+# Analysis Directly Under Visual 9A
+st.markdown(
+    """
+    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
+        <strong>Multi-Scenario Sensitivity Analysis</strong>: Across conservative, base case, and optimistic scenarios, the economic model benchmarks 
+        program costs against inpatient cost avoidance and CMS quality bonuses:
+    </p>
+    <ul style='margin-top: 6px; margin-bottom: 12px; padding-left: 22px; line-height: 1.65; color: #334155;'>
+        <li style='margin-bottom: 8px;'><strong>Downside Protection</strong>: Even under the Conservative scenario (15% admission reduction and zero quality bonus), the program generates <strong>&dollar;238.8K in inpatient cost avoidance</strong>, recovering <strong>86.4% of operating expenses</strong>.</li>
+        <li style='margin-bottom: 8px;'><strong>The Break-Even Admission Threshold</strong>: To completely recover the &dollar;276.5K program cost, Metropolitan Health System must avert just <strong>22 acute admissions per year</strong> out of the 254.8 baseline admissions expected across this high-risk cohort—a hurdle rate of only <strong>8.6%</strong> (less than 1.9 hospitalizations averted per month).</li>
+    </ul>
+    """,
+    unsafe_allow_html=True
+)
+st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
+
 # Visual 9B: Base Case Net Financial Bridge (Waterfall Chart - Standalone Full Width)
 steps = ["Program<br>Investment", "Inpatient<br>Savings", "Quality<br>Bonus", "Net Economic<br>Value"]
 measure_types = ["relative", "relative", "relative", "total"]
@@ -292,24 +308,16 @@ fig_v9b.update_layout(
 )
 st.plotly_chart(fig_v9b, width="stretch")
 
-# Narrative Directly Under Visual 9
+# Analysis Directly Under Visual 9B
 st.markdown(
     """
     <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
-        <strong>Economic Feasibility & Breakeven Analysis</strong>: Hospital executives transitioning into risk-bearing contracts frequently view care 
-        coordination as an unproven cost center. The simulation above models the empirical financial return of deploying dedicated preventative care 
-        management across the <strong>553 High and Severe Acuity patients</strong> (budgeted at a standardized <strong>&dollar;500 per patient per year</strong>, total annual investment of <strong>&dollar;276.5K</strong>):
+        <strong>Base Case Net Financial Bridge (+&dollar;109.9K Net Value)</strong>: Under the expected 20% reduction in preventable acute admissions, the program averts <strong>51.0 inpatient stays</strong>, generating <strong>&dollar;318.4K in direct cost avoidance</strong> under AHRQ HCUP benchmarks (&dollar;12,500/stay). Combined with a conservative <strong>&dollar;68.0K in CMS 4-Star Quality Bonus capture</strong>, the program yields <strong>&dollar;386.4K in gross economic value</strong> against &dollar;276.5K in expense—delivering <strong>+&dollar;109.9K in net margin (140% ROI)</strong>.
     </p>
-    <ul style='margin-top: 6px; margin-bottom: 12px; padding-left: 22px; line-height: 1.65; color: #334155;'>
-        <li style='margin-bottom: 8px;'><strong>The Base Case Reality</strong>: Under the expected 20% reduction in preventable acute admissions, the program averts <strong>51.0 inpatient stays</strong>, generating <strong>&dollar;318.4K in direct cost avoidance</strong> under AHRQ HCUP benchmarks (&dollar;12,500/stay). Combined with a conservative <strong>&dollar;68.0K in CMS 4-Star Quality Bonus capture</strong>, the program yields <strong>&dollar;386.4K in gross economic value</strong> against &dollar;276.5K in expense—delivering <strong>+&dollar;109.9K in net margin (140% ROI)</strong>.</li>
-        <li style='margin-bottom: 8px;'><strong>Downside Protection</strong>: Even under the Conservative scenario (15% admission reduction and zero quality bonus), the program generates <strong>&dollar;238.8K in inpatient cost avoidance</strong>, recovering <strong>86.4% of operating expenses</strong>.</li>
-        <li style='margin-bottom: 8px;'><strong>The Break-Even Admission Threshold</strong>: To completely recover the &dollar;276.5K program cost, Metropolitan Health System must avert just <strong>22 acute admissions per year</strong> out of the 254.8 baseline admissions expected across this high-risk cohort—a hurdle rate of only <strong>8.6%</strong>. Preventing less than 1.9 hospitalizations per month guarantees financial breakeven.</li>
-    </ul>
     """,
     unsafe_allow_html=True
 )
-
-st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
 
 # 2D Breakeven Sensitivity Matrix
 st.subheader("Actuarial Sensitivity Matrix: Breakeven Frontier")
@@ -375,6 +383,18 @@ fig_heatmap.update_layout(
 
 st.plotly_chart(fig_heatmap, width="stretch")
 
+# Analysis Directly Under Breakeven Heatmap
+st.markdown(
+    """
+    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
+        <strong>Breakeven Frontier Analysis</strong>: The 2D sensitivity matrix demonstrates robust downside insulation across all practical operational bounds. 
+        Even at high clinician compensation bands (&dollar;125K/yr fully loaded) with conservative admission reduction goals (15%), 
+        the care management program maintains positive operating margins. Green cells denote positive net economic return, confirming that 
+        the business case does not rely on aggressive clinical targets to achieve financial sustainability.
+    </p>
+    """,
+    unsafe_allow_html=True
+)
 st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
 
 # ==============================================================================
@@ -418,6 +438,24 @@ fig_v10a.update_layout(
 )
 st.plotly_chart(fig_v10a, width="stretch")
 
+# Analysis Directly Under Visual 10A
+st.markdown(
+    """
+    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
+        <strong>Care Management Workforce Calibration (CMSA & NCQA Standards)</strong>: High-quality care coordination requires rigorous caseload calibration. 
+        Overloading nurse navigators leads to superficial outreach and clinician burnout, while under-allocating staffing leaves high-risk patients 
+        unmonitored:
+    </p>
+    <ul style='margin-top: 6px; margin-bottom: 12px; padding-left: 22px; line-height: 1.65; color: #334155;'>
+        <li style='margin-bottom: 4px;'><strong>Severe Acuity (1:60 Ratio)</strong>: Managing 204 critical patients (frequent exacerbations, compounding diabetes/cardiac disease, Stage 2 hypertension) demands intensive weekly check-ins, medication reconciliation, and in-person clinic coordination, requiring <strong>3.4 RN FTEs</strong>.</li>
+        <li style='margin-bottom: 4px;'><strong>High Acuity (1:100 Ratio)</strong>: Managing 349 patients with persistent Stage 1 hypertension and rising risk requires bi-weekly surveillance and home biometric monitoring, requiring <strong>3.5 RN FTEs</strong>.</li>
+        <li style='margin-bottom: 4px;'><strong>Total Dedicated Workforce</strong>: Metropolitan Health System requires <strong>6.89 ~ 7.0 dedicated Registered Nurse FTEs</strong> to blanket the entire 553-patient high-risk panel.</li>
+    </ul>
+    """,
+    unsafe_allow_html=True
+)
+st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
+
 # Visual 10B: Self-Funding Economic Coverage Model (Standalone Full Width)
 fin_labels = ["Total Staffing Cost", "Total Value Created", "Net Operating Margin"]
 fin_vals = [total_staffing_cost / 1e3, total_value_created / 1e3, net_operating_margin / 1e3]
@@ -453,30 +491,19 @@ fig_v10b.update_layout(
 )
 st.plotly_chart(fig_v10b, width="stretch")
 
-# Narrative Directly Under Visual 10
+# Analysis Directly Under Visual 10B
 st.markdown(
     f"""
     <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
-        <strong>Workforce Staffing Calibration & Self-Funding Economics</strong>: High-quality care coordination requires rigorous caseload calibration. 
-        Overloading nurse navigators leads to superficial outreach and clinician burnout, while under-allocating staffing leaves high-risk patients 
-        unmonitored. The model above applies national <strong>Case Management Society of America (CMSA)</strong> and <strong>NCQA population health standards</strong>:
+        <strong>Self-Funding Economic Feasibility & Net Operating Return</strong>: The balance sheet analysis demonstrates that dedicated care management is an accretive operating investment:
     </p>
     <ul style='margin-top: 6px; margin-bottom: 12px; padding-left: 22px; line-height: 1.65; color: #334155;'>
-        <li style='margin-bottom: 8px;'>
-            <strong>Caseload Calibration</strong>:
-            <ul style='margin-top: 4px; padding-left: 20px; line-height: 1.6;'>
-                <li style='margin-bottom: 4px;'><strong>Severe Acuity (1:60 Ratio)</strong>: Managing 204 critical patients (frequent exacerbations, compounding diabetes/cardiac disease, Stage 2 hypertension) demands intensive weekly check-ins, medication reconciliation, and in-person clinic coordination, requiring <strong>3.4 RN FTEs</strong>.</li>
-                <li style='margin-bottom: 4px;'><strong>High Acuity (1:100 Ratio)</strong>: Managing 349 patients with persistent Stage 1 hypertension and rising risk requires bi-weekly surveillance and home biometric monitoring, requiring <strong>3.5 RN FTEs</strong>.</li>
-                <li style='margin-bottom: 4px;'><strong>Total Dedicated Workforce</strong>: Metropolitan Health System requires <strong>6.89 ~ 7.0 dedicated Registered Nurse FTEs</strong> to blanket the entire 553-patient high-risk panel.</li>
-            </ul>
-        </li>
-        <li style='margin-bottom: 8px;'><strong>The Self-Funding Economics</strong>: At a fully loaded annual investment of <strong>&dollar;{rn_salary:,} per nurse</strong> (totaling <strong>&dollar;{total_staffing_cost / 1e3:.0f}K</strong> for 7.0 RN FTEs), achieving the {reduction_target}% admission reduction target averts <strong>{admissions_averted:.1f} inpatient hospitalizations (&dollar;{direct_inpatient_savings / 1e3:.0f}K savings)</strong>. Coupled with <strong>&dollar;{quality_bonus_share / 1e3:.0f}K in CMS shared-savings quality bonuses</strong>, the 7.0 nurse unit generates <strong>&dollar;{total_value_created / 1e3:.0f}K in total economic value</strong>.</li>
+        <li style='margin-bottom: 8px;'><strong>The Economic Impact</strong>: At a fully loaded annual investment of <strong>&dollar;{rn_salary:,} per nurse</strong> (totaling <strong>&dollar;{total_staffing_cost / 1e3:.0f}K</strong> for 7.0 RN FTEs), achieving the {reduction_target}% admission reduction target averts <strong>{admissions_averted:.1f} inpatient hospitalizations (&dollar;{direct_inpatient_savings / 1e3:.0f}K savings)</strong>. Coupled with <strong>&dollar;{quality_bonus_share / 1e3:.0f}K in CMS shared-savings quality bonuses</strong>, the 7.0 nurse unit generates <strong>&dollar;{total_value_created / 1e3:.0f}K in total economic value</strong>.</li>
         <li style='margin-bottom: 8px;'><strong>Executive Conclusion</strong>: The entire care management unit is <strong>{self_funding_ratio:.0f}% self-funded</strong>, returning <strong>{sign}&dollar;{net_operating_margin / 1e3:.0f}K in net operating margin</strong> directly back to Metropolitan Health System while dramatically elevating clinical quality, patient safety, and CMS Star Ratings.</li>
     </ul>
     """,
     unsafe_allow_html=True
 )
-
 st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
 
 st.markdown(

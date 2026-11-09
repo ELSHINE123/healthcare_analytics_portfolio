@@ -85,6 +85,18 @@ if not df.empty:
     )
     st.plotly_chart(fig_v4a, width="stretch")
 
+    # Analysis Directly Under Visual 4A
+    st.markdown(
+        """
+        **Contactability Channel Reach & Digital Blind Spots**: Standard healthcare outreach strategies assume that patients can be contacted 
+        through automated telephone dialers or patient portal messaging. The audit above reveals the actual reachability of 
+        Metropolitan Health's chronic cohort: while **375 patients (38.1%)** possess verified omnichannel contact data (both phone and email), 
+        and another 463 patients have at least one channel, **145 patients (14.8%) are completely uncontactable**. 
+        These individuals lack both a valid phone number and a working email in the EHR, representing an operational dead end for automated outreach.
+        """
+    )
+    st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
+
     # Visual 4B: Acuity Breakdown of the 145 Uncontactable Patients (Slim Columns)
     uncontactable_df = df[df["uncontactable"] == True].copy()
     uncontactable_acuity = uncontactable_df["clinical_risk_tier"].value_counts().reindex(
@@ -114,28 +126,20 @@ if not df.empty:
     )
     st.plotly_chart(fig_v4b, width="stretch")
 
-# Narrative Directly Under Visual 4
-st.markdown(
-    """
-    **Contactability Audit Findings & Digital Blind Spots**: Standard healthcare outreach strategies assume that patients can be contacted 
-    through automated telephone dialers or patient portal messaging. The left chart audits the actual reachability of 
-    Metropolitan Health's chronic cohort: while **375 patients (38.1%)** possess verified omnichannel contact data (both phone and email), 
-    and another 463 patients have at least one channel, **145 patients (14.8%) are completely uncontactable**. 
-    These individuals lack both a valid phone number and a working email in the EHR, representing an operational dead end.
-    
-    The right chart reveals the severe clinical stakes of this operational gap: **85 of the 145 uncontactable patients (58.6%)** 
-    sit in the High Acuity (53 patients) or Severe Acuity (32 patients) tiers. These individuals suffer from uncontrolled Stage 2 
-    hypertension and dyslipidemia without any operational pathway for automated clinical recall. When chronic patients become 
-    unreachable 'clinical ghosts,' they do not receive preventative care; instead, they decompensate in the community and present 
-    directly to the Emergency Department, triggering catastrophic &dollar;12,500 inpatient stays.
-    
-    **Operational Prescription**: Automated recall campaigns must never be deployed blindly to this cohort. Clinic reception 
-    workflows must be configured with a mandatory EHR demographic stop-flag at clinic check-in, requiring front-desk staff 
-    to capture and verify contact credentials whenever an uncontactable patient presents for any service.
-    """
-)
-
-st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
+    # Analysis Directly Under Visual 4B
+    st.markdown(
+        """
+        **Acuity Risk of Uncontactable Patients**: The acuity breakdown reveals the severe clinical stakes of this operational gap: **85 of the 145 uncontactable patients (58.6%)** 
+        sit in the High Acuity (53 patients) or Severe Acuity (32 patients) tiers. These individuals suffer from uncontrolled Stage 2 
+        hypertension and dyslipidemia without any operational pathway for automated clinical recall. When chronic patients become 
+        unreachable 'clinical ghosts,' they decompensate in the community and present directly to the Emergency Department, triggering catastrophic &dollar;12,500 inpatient stays.
+        
+        **Operational Prescription**: Automated recall campaigns must never be deployed blindly to this cohort. Clinic reception 
+        workflows must be configured with a mandatory EHR demographic stop-flag at clinic check-in, requiring front-desk staff 
+        to capture and verify contact credentials whenever an uncontactable patient presents for any service.
+        """
+    )
+    st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
 
 # ==============================================================================
 # 4. SURVEILLANCE DELAYS & THE OVERDUE COHORT (STANDALONE VISUALS)
@@ -178,6 +182,20 @@ if not df.empty:
     )
     st.plotly_chart(fig_v5a, width="stretch")
 
+    # Analysis Directly Under Visual 5A
+    st.markdown(
+        """
+        **Surveillance Recency & High-Acuity Risk**: Chronic disease management requires continuous clinical surveillance. 
+        Under standard NCQA guidelines, patients with hypertension, coronary disease, or diabetes should complete a clinical 
+        evaluation at least every 6 months to titrate pharmacotherapy and assess organ function. 
+        The surveillance heatmap above reveals dangerous operational decay: **206 patients (21.0% of the entire panel)** 
+        have had no recorded in-person or telehealth contact with Metropolitan Health for over 365 days. 
+        Critically, **114 of these overdue patients sit in the High Acuity (74 patients) or Severe Acuity (40 patients)** tiers, 
+        living with unmonitored cardiovascular and metabolic deterioration.
+        """
+    )
+    st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
+
     # Visual 5B: Chronic Disease Breakdown of Overdue Patients (Slim Horizontal Columns)
     overdue_df = df[df["surveillance_status"] == "Critically Overdue (>12m)"].copy()
     cond_overdue = overdue_df[overdue_df["condition"] != "Unknown"]["condition"].str.title().value_counts().reset_index()
@@ -212,29 +230,19 @@ if not df.empty:
     )
     st.plotly_chart(fig_v5b, width="stretch")
 
-# Narrative Directly Under Visual 5
-st.markdown(
-    """
-    **Surveillance Cadence & Overdue Recall Priorities**: Chronic disease management requires continuous clinical surveillance. 
-    Under standard NCQA guidelines, patients with hypertension, coronary disease, or diabetes should complete a clinical 
-    evaluation at least every 6 months to titrate pharmacotherapy and assess organ function. 
-    
-    The surveillance heatmap on the left reveals a dangerous operational decay: **206 patients (21.0% of the entire panel)** 
-    have had no recorded in-person or telehealth contact with Metropolitan Health for over 365 days. 
-    Critically, **114 of these overdue patients sit in the High Acuity (74 patients) or Severe Acuity (40 patients)** tiers. 
-    These patients are living with unmonitored cardiovascular and metabolic deterioration, representing immediate actuarial liability.
-    
-    The right chart identifies the disease registries most heavily impacted by surveillance loss: diabetic patients (48 patients) 
-    and heart disease patients (45 patients) form the bulk of the critically overdue cohort. 
-    In diabetic patients, unmonitored glycemic levels lead to silent microvascular neuropathy; in heart disease patients, unmonitored 
-    ischemia leads to sudden acute myocardial infarction. 
-    
-    **Care Management Priority**: Metropolitan Health's 7.0 RN FTE care coordination unit must immediately triage the **40 Severe Acuity 
-    overdue patients** for rapid telephonic recall, reserving scheduled in-clinic appointment slots to re-establish clinical surveillance.
-    """
-)
-
-st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
+    # Analysis Directly Under Visual 5B
+    st.markdown(
+        """
+        **Overdue Patients by Disease Registry**: The disease breakdown identifies the clinical registries most heavily impacted by surveillance loss: diabetic patients (48 patients) 
+        and heart disease patients (45 patients) form the bulk of the critically overdue cohort. 
+        In diabetic patients, unmonitored glycemic levels lead to silent microvascular neuropathy; in heart disease patients, unmonitored 
+        ischemia leads to sudden acute myocardial infarction. 
+        
+        **Care Management Priority**: Metropolitan Health's 7.0 RN FTE care coordination unit must immediately triage the **40 Severe Acuity 
+        overdue patients** for rapid telephonic recall, reserving scheduled in-clinic appointment slots to re-establish clinical surveillance.
+        """
+    )
+    st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
 
 # ==============================================================================
 # 5. CLINICAL LABORATORY DATA QUALITY & AUDIT PROVENANCE (STANDALONE VISUALS)
@@ -274,6 +282,20 @@ if not df.empty:
         font=dict(family="Be Vietnam Pro, sans-serif")
     )
     st.plotly_chart(fig_v6a, width="stretch")
+
+    # Analysis Directly Under Visual 6A
+    st.markdown(
+        """
+        <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
+            <strong>Laboratory Measurement Provenance & Cohort Exposure</strong>: Across Metropolitan Health's 983 audited patients, 
+            <strong>344 records (35.0%) contain at least one unverified vital sign</strong>: 191 patients have estimated cholesterol, 125 have estimated blood pressure, 
+            and 28 have both vitals estimated. Only 639 patients (65.0%) possess complete, verified direct laboratory measurements. 
+            In clinical risk profiling, unverified lab data represents substantial hidden liability.
+        </p>
+        """,
+        unsafe_allow_html=True
+    )
+    st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
 
     # Visual 6B: Acuity Distribution by Data Provenance (Pure vs. Imputed Grouped Bar)
     df_prov_plot = df.copy()
@@ -320,25 +342,22 @@ if not df.empty:
     )
     st.plotly_chart(fig_v6b, width="stretch")
 
-# Narrative Directly Under Visual 6
-st.markdown(
-    """
-    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
-        <strong>Laboratory Data Quality & Regulatory Audit Risks</strong>: In healthcare analytics, handling missing biometric data with statistical 
-        estimation is a common data convention. However, when applied to clinical decision support and regulatory 
-        auditing, <strong>unverified or modeled lab records introduce significant clinical distortion</strong>:
-    </p>
-    <ul style='margin-top: 6px; margin-bottom: 12px; padding-left: 22px; line-height: 1.65; color: #334155;'>
-        <li style='margin-bottom: 8px;'><strong>Cohort Exposure</strong>: Across Metropolitan Health's 983 audited patients, <strong>344 records (35.0%) contain at least one unverified vital sign</strong>: 191 patients have estimated cholesterol, 125 have estimated blood pressure, and 28 have both vitals estimated. Only 639 patients (65.0%) possess complete, verified direct laboratory measurements.</li>
-        <li style='margin-bottom: 8px;'><strong>The Estimation Fallacy</strong>: Approximating missing blood pressure or cholesterol with group averages artificially compresses biological variance. Patients with unrecorded, dangerously elevated systolic pressure (e.g. 160+ mmHg) or severe familial hypercholesterolemia are pulled down to cohort averages (125 mmHg and 190 mg/dL), causing them to be falsely classified as Moderate or Low Acuity.</li>
-        <li style='margin-bottom: 8px;'><strong>Regulatory Audit Risk</strong>: Under federal CMS Medicare Advantage Risk Adjustment Data Validation (RADV) audits, estimated vitals cannot be submitted for clinical risk adjustment or HEDIS quality bonus claims. If an ACO relies on unverified vitals to calculate shared-savings benchmarks, it faces severe financial clawbacks during retrospective audits.</li>
-        <li style='margin-bottom: 8px;'><strong>Clinical Governance Mandate</strong>: Metropolitan Health System must enforce strict <strong>data provenance tracking</strong> in its clinical workflows. Care management systems must tag unverified records with a confirmatory draw order, directing nursing staff to collect physical lab panels and in-person biometric vitals before finalizing clinical risk tiers.</li>
-    </ul>
-    """,
-    unsafe_allow_html=True
-)
-
-st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
+    # Analysis Directly Under Visual 6B
+    st.markdown(
+        """
+        <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
+            <strong>Acuity Distortion & Regulatory Audit Risks</strong>: The comparison of verified direct labs versus unverified records illustrates 
+            the clinical risks of statistical estimation:
+        </p>
+        <ul style='margin-top: 6px; margin-bottom: 12px; padding-left: 22px; line-height: 1.65; color: #334155;'>
+            <li style='margin-bottom: 8px;'><strong>The Estimation Fallacy</strong>: Approximating missing blood pressure or cholesterol with group averages artificially compresses biological variance. Patients with dangerously elevated systolic pressure (e.g. 160+ mmHg) or severe hypercholesterolemia are pulled down to cohort averages (125 mmHg and 190 mg/dL), causing them to be falsely classified as Moderate or Low Acuity.</li>
+            <li style='margin-bottom: 8px;'><strong>Regulatory Audit Risk</strong>: Under federal CMS Medicare Advantage Risk Adjustment Data Validation (RADV) audits, estimated vitals cannot be submitted for clinical risk adjustment or HEDIS quality bonus claims. If an ACO relies on unverified vitals to calculate shared-savings benchmarks, it faces severe financial clawbacks during retrospective audits.</li>
+            <li style='margin-bottom: 8px;'><strong>Clinical Governance Mandate</strong>: Metropolitan Health System must enforce strict <strong>data provenance tracking</strong>. Care management systems must tag unverified records with a confirmatory draw order, directing nursing staff to collect physical lab panels and in-person biometric vitals before finalizing clinical risk tiers.</li>
+        </ul>
+        """,
+        unsafe_allow_html=True
+    )
+    st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
 
 st.markdown(
     """

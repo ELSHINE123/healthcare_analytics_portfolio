@@ -374,6 +374,22 @@ fig_roadmap.update_layout(
 
 st.plotly_chart(fig_roadmap, width="stretch")
 
+# Analysis Directly Under Implementation Gantt Chart
+st.markdown(
+    """
+    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
+        <strong>Implementation Phasing & Critical Path Governance</strong>: The 180-day transformation plan establishes sequential operational gates designed to front-load regulatory compliance and acute risk stabilization:
+    </p>
+    <ul style='margin-top: 6px; margin-bottom: 12px; padding-left: 22px; line-height: 1.65; color: #334155;'>
+        <li style='margin-bottom: 6px;'><strong>Phase 1 (Days 1–30)</strong>: Front-desk check-in contact verification and telephonic triage for the 40 critically overdue Severe Acuity patients to re-establish clinical surveillance within 30 days.</li>
+        <li style='margin-bottom: 6px;'><strong>Phase 2 (Days 31–90)</strong>: Deployment of the 7.0 RN care coordination unit and protocolized statin titration workflows to rapidly remediate the 58.4% and 53.4% HEDIS quality deficits.</li>
+        <li style='margin-bottom: 6px;'><strong>Phase 3 (Days 91–180)</strong>: Full operationalization of home biometric remote patient monitoring and CMS shared-savings quality revenue capture.</li>
+    </ul>
+    """,
+    unsafe_allow_html=True
+)
+st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
+
 st.markdown("---")
 
 # ==============================================================================

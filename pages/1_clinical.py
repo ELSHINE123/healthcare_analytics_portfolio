@@ -169,161 +169,151 @@ def get_clinical_narrative(cond, tier, n, pct, mean_sbp, mean_chol, unmed_count)
         )
 
 # ==============================================================================
-# 4. CLINICAL ACUITY WORKBENCH (SIDE-BY-SIDE INTERACTIVE LAYOUT)
+# 4. CLINICAL ACUITY WORKBENCH (STANDALONE VISUAL)
 # ==============================================================================
 st.header("1. Clinical Acuity Matrix: Blood Pressure vs. Lipid Stratification")
 
 if not df.empty:
-    chart_col, inspector_col = st.columns([1.45, 1.0], gap="medium")
-
-    with inspector_col:
-        st.markdown("#### 🔍 Cohort Inspector & Controls")
-        st.caption("Adjust filters below to update the clinical plot and diagnostic interpretation in real time.")
-        
+    st.caption("Adjust filters below to update the clinical plot and diagnostic interpretation in real time.")
+    ctrl_col1, ctrl_col2 = st.columns(2, gap="medium")
+    
+    with ctrl_col1:
         conditions_available = ["All Conditions"] + sorted([c.title() for c in df["condition"].dropna().unique() if c != "Unknown"])
         selected_condition = st.selectbox("Chronic Disease Registry:", conditions_available)
 
+    with ctrl_col2:
         tiers_available = ["All Acuity Tiers", "Severe Acuity", "High Acuity", "Moderate Acuity", "Low Acuity"]
         selected_tier = st.selectbox("Clinical Acuity Tier:", tiers_available)
 
-        # Apply filtering
-        filtered_df = df.copy()
-        if selected_condition != "All Conditions":
-            filtered_df = filtered_df[filtered_df["condition"].str.title() == selected_condition]
-        if selected_tier != "All Acuity Tiers":
-            filtered_df = filtered_df[filtered_df["clinical_risk_tier"] == selected_tier]
+    # Apply filtering
+    filtered_df = df.copy()
+    if selected_condition != "All Conditions":
+        filtered_df = filtered_df[filtered_df["condition"].str.title() == selected_condition]
+    if selected_tier != "All Acuity Tiers":
+        filtered_df = filtered_df[filtered_df["clinical_risk_tier"] == selected_tier]
 
-        # Calculate live metrics
-        sub_n = len(filtered_df)
-        sub_pct = (sub_n / len(df)) * 100
-        sub_sbp = filtered_df["systolic_bp"].mean() if sub_n > 0 else 0
-        sub_chol = filtered_df["cholesterol"].mean() if sub_n > 0 else 0
-        sub_unmed = filtered_df["unmedicated_chronic"].sum() if "unmedicated_chronic" in filtered_df.columns else 0
+    # Calculate live metrics
+    sub_n = len(filtered_df)
+    sub_pct = (sub_n / len(df)) * 100
+    sub_sbp = filtered_df["systolic_bp"].mean() if sub_n > 0 else 0
+    sub_chol = filtered_df["cholesterol"].mean() if sub_n > 0 else 0
+    sub_unmed = filtered_df["unmedicated_chronic"].sum() if "unmedicated_chronic" in filtered_df.columns else 0
 
-        # Compact Live Metric Pill Row
-        st.markdown(
-            f"""
-            <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 10px 14px; margin-top: 10px; margin-bottom: 14px;">
-                <div style="font-size: 11px; font-weight: 700; color: #1D4ED8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">
-                    Cohort Vital Signs Summary
-                </div>
-                <div style="font-size: 12.5px; color: #334155; line-height: 1.5;">
-                    • <strong>{sub_n:,} Patients</strong> ({sub_pct:.1f}% of Cohort)<br>
-                    • Mean SBP: <strong>{sub_sbp:.1f} mmHg</strong><br>
-                    • Mean Total Cholesterol: <strong>{sub_chol:.1f} mg/dL</strong><br>
-                    • Unmedicated Chronic Care Gaps: <strong>{sub_unmed}</strong>
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
+    # Apply Natural Biological Dispersion around Measurement Clusters (matching Notebook Visual 1)
+    plot_df = filtered_df.copy()
+    np.random.seed(42)
+    plot_df["cholesterol_plot"] = plot_df["cholesterol"] + np.random.normal(0, 2.5, size=len(plot_df))
+    plot_df["systolic_bp_plot"] = plot_df["systolic_bp"] + np.random.normal(0, 1.4, size=len(plot_df))
 
-        st.markdown(
-            """
-            <div style="font-size: 13px; font-weight: 700; color: #0F172A; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 10px; margin-bottom: 6px;">
-                🩺 Clinical Diagnostic Interpretation
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-        dynamic_text = get_clinical_narrative(selected_condition, selected_tier, sub_n, sub_pct, sub_sbp, sub_chol, sub_unmed)
-        st.markdown(f'<div class="inspector-text">{dynamic_text}</div>', unsafe_allow_html=True)
+    # Color palette matching clinical severity
+    acuity_palette = {
+        "Low Acuity": "#10B981",       # Emerald Green
+        "Moderate Acuity": "#3B82F6",  # Blue
+        "High Acuity": "#F59E0B",      # Amber
+        "Severe Acuity": "#DC2626"     # Crimson Red
+    }
 
-    with chart_col:
-        # Apply Natural Biological Dispersion around Measurement Clusters (matching Notebook Visual 1)
-        plot_df = filtered_df.copy()
-        np.random.seed(42)
-        plot_df["cholesterol_plot"] = plot_df["cholesterol"] + np.random.normal(0, 2.5, size=len(plot_df))
-        plot_df["systolic_bp_plot"] = plot_df["systolic_bp"] + np.random.normal(0, 1.4, size=len(plot_df))
-
-        # Color palette matching clinical severity
-        acuity_palette = {
-            "Low Acuity": "#10B981",       # Emerald Green
-            "Moderate Acuity": "#3B82F6",  # Blue
-            "High Acuity": "#F59E0B",      # Amber
-            "Severe Acuity": "#DC2626"     # Crimson Red
+    fig_v1 = px.scatter(
+        plot_df,
+        x="cholesterol_plot",
+        y="systolic_bp_plot",
+        color="clinical_risk_tier",
+        color_discrete_map=acuity_palette,
+        category_orders={"clinical_risk_tier": ["Low Acuity", "Moderate Acuity", "High Acuity", "Severe Acuity"]},
+        hover_data={
+            "cholesterol_plot": False,
+            "systolic_bp_plot": False,
+            "patient_name": True,
+            "age": True,
+            "condition": True,
+            "systolic_bp": True,
+            "diastolic_bp": True,
+            "cholesterol": True,
+            "clinical_risk_tier": True
         }
+    )
 
-        fig_v1 = px.scatter(
-            plot_df,
-            x="cholesterol_plot",
-            y="systolic_bp_plot",
-            color="clinical_risk_tier",
-            color_discrete_map=acuity_palette,
-            category_orders={"clinical_risk_tier": ["Low Acuity", "Moderate Acuity", "High Acuity", "Severe Acuity"]},
-            hover_data={
-                "cholesterol_plot": False,
-                "systolic_bp_plot": False,
-                "patient_name": True,
-                "age": True,
-                "condition": True,
-                "systolic_bp": True,
-                "diastolic_bp": True,
-                "cholesterol": True,
-                "clinical_risk_tier": True
-            }
-        )
+    # Reference Threshold Lines: AHA/ACC BP Guidelines & NCEP ATP III
+    fig_v1.add_hline(
+        y=130, 
+        line_dash="dot", 
+        line_color="#F59E0B", 
+        annotation_text="AHA Stage 1 (130 mmHg)", 
+        annotation_position="bottom left",
+        annotation_font=dict(color="#B45309", size=10.5, family="Be Vietnam Pro")
+    )
+    fig_v1.add_hline(
+        y=140, 
+        line_dash="dash", 
+        line_color="#DC2626", 
+        annotation_text="AHA Stage 2 (140 mmHg)", 
+        annotation_position="top left",
+        annotation_font=dict(color="#991B1B", size=10.5, family="Be Vietnam Pro")
+    )
+    fig_v1.add_vline(
+        x=200, 
+        line_dash="dot", 
+        line_color="#2563EB", 
+        annotation_text="NCEP Border (200 mg/dL)", 
+        annotation_position="top right",
+        annotation_font=dict(color="#1D4ED8", size=10.5, family="Be Vietnam Pro")
+    )
 
-        # Reference Threshold Lines: AHA/ACC BP Guidelines & NCEP ATP III
-        fig_v1.add_hline(
-            y=130, 
-            line_dash="dot", 
-            line_color="#F59E0B", 
-            annotation_text="AHA Stage 1 (130 mmHg)", 
-            annotation_position="bottom left",
-            annotation_font=dict(color="#B45309", size=10.5, family="Be Vietnam Pro")
-        )
-        fig_v1.add_hline(
-            y=140, 
-            line_dash="dash", 
-            line_color="#DC2626", 
-            annotation_text="AHA Stage 2 (140 mmHg)", 
-            annotation_position="top left",
-            annotation_font=dict(color="#991B1B", size=10.5, family="Be Vietnam Pro")
-        )
-        fig_v1.add_vline(
-            x=200, 
-            line_dash="dot", 
-            line_color="#2563EB", 
-            annotation_text="NCEP Border (200 mg/dL)", 
-            annotation_position="top right",
-            annotation_font=dict(color="#1D4ED8", size=10.5, family="Be Vietnam Pro")
-        )
+    fig_v1.update_traces(
+        marker=dict(size=7.5, opacity=0.82, line=dict(width=0.5, color="#FFFFFF")),
+        hovertemplate="<b>Patient:</b> %{customdata[2]}<br>" +
+                      "<b>Age:</b> %{customdata[3]} | <b>Condition:</b> %{customdata[4]}<br>" +
+                      "<b>Recorded Systolic BP:</b> %{customdata[5]} mmHg<br>" +
+                      "<b>Recorded Diastolic BP:</b> %{customdata[6]} mmHg<br>" +
+                      "<b>Recorded Cholesterol:</b> %{customdata[7]} mg/dL<br>" +
+                      "<b>Acuity Tier:</b> %{customdata[8]}<extra></extra>"
+    )
 
-        fig_v1.update_traces(
-            marker=dict(size=7.5, opacity=0.82, line=dict(width=0.5, color="#FFFFFF")),
-            hovertemplate="<b>Patient:</b> %{customdata[2]}<br>" +
-                          "<b>Age:</b> %{customdata[3]} | <b>Condition:</b> %{customdata[4]}<br>" +
-                          "<b>Recorded Systolic BP:</b> %{customdata[5]} mmHg<br>" +
-                          "<b>Recorded Diastolic BP:</b> %{customdata[6]} mmHg<br>" +
-                          "<b>Recorded Cholesterol:</b> %{customdata[7]} mg/dL<br>" +
-                          "<b>Acuity Tier:</b> %{customdata[8]}<extra></extra>"
-        )
+    fig_v1.update_layout(
+        title=dict(
+            text="<b>Bivariate Clinical Acuity Distribution</b><br><span style='font-size:11.5px; color:#64748B; font-weight:500;'>983 Patients Displayed across SBP & Cholesterol</span>",
+            x=0.5, y=0.97, xanchor="center", yanchor="top"
+        ),
+        margin=dict(l=40, r=20, t=55, b=85),
+        height=490,
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        xaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Total Cholesterol (mg/dL) — NCEP ATP III", range=[150, 235]),
+        yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Systolic BP (mmHg) — 2017 ACC/AHA", range=[102, 148]),
+        legend=dict(
+            orientation="h",
+            yanchor="top",
+            y=-0.16,
+            xanchor="center",
+            x=0.5,
+            title="",
+            font=dict(family="Be Vietnam Pro", size=12)
+        ),
+        font=dict(family="Be Vietnam Pro, sans-serif")
+    )
 
-        fig_v1.update_layout(
-            title=dict(
-                text="<b>Bivariate Clinical Acuity Distribution</b><br><span style='font-size:11.5px; color:#64748B; font-weight:500;'>983 Patients Displayed across SBP & Cholesterol</span>",
-                x=0.5, y=0.97, xanchor="center", yanchor="top"
-            ),
-            margin=dict(l=40, r=20, t=55, b=85),
-            height=490,
-            paper_bgcolor="rgba(0,0,0,0)",
-            plot_bgcolor="rgba(0,0,0,0)",
-            xaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Total Cholesterol (mg/dL) — NCEP ATP III", range=[150, 235]),
-            yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Systolic BP (mmHg) — 2017 ACC/AHA", range=[102, 148]),
-            legend=dict(
-                orientation="h",
-                yanchor="top",
-                y=-0.16,
-                xanchor="center",
-                x=0.5,
-                title="",
-                font=dict(family="Be Vietnam Pro", size=12)
-            ),
-            font=dict(family="Be Vietnam Pro, sans-serif")
-        )
+    st.plotly_chart(fig_v1, width="stretch")
 
-        st.plotly_chart(fig_v1, width="stretch")
+    # Analysis & Diagnostic Interpretation Directly Under Visual 1
+    dynamic_text = get_clinical_narrative(selected_condition, selected_tier, sub_n, sub_pct, sub_sbp, sub_chol, sub_unmed)
+    st.markdown(
+        f"""
+        <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 14px 18px; margin-top: 8px; margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E2E8F0; padding-bottom: 8px; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+                <div style="font-size: 13px; font-weight: 700; color: #0F172A; text-transform: uppercase; letter-spacing: 0.05em;">
+                    🩺 Clinical Diagnostic Interpretation: {selected_condition} &bull; {selected_tier}
+                </div>
+                <div style="font-size: 12px; color: #475569; font-weight: 600;">
+                    {sub_n:,} Patients ({sub_pct:.1f}%) &bull; Mean SBP: {sub_sbp:.1f} mmHg &bull; Mean Chol: {sub_chol:.1f} mg/dL &bull; Care Gaps: {sub_unmed}
+                </div>
+            </div>
+            <div style="color: #334155; font-size: 14px; line-height: 1.65;">
+                {dynamic_text}
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
 st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
 

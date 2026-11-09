@@ -87,6 +87,17 @@ if not df.empty:
     )
     st.plotly_chart(fig_tier, width="stretch")
 
+    # Analysis Directly Under Visual 1A
+    st.markdown(
+        """
+        **Clinical Acuity Stratification**: When objectively stratified against **2017 ACC/AHA blood pressure guidelines** 
+        and **NCEP ATP III lipid cutoffs**, more than half of the health system's chronic panel—**56.3% (553 patients)**—sits 
+        in the High or Severe Acuity tiers. These patients exhibit uncontrolled Stage 1 or Stage 2 hypertension, profound 
+        dyslipidemia, or multi-morbid vascular complications that dramatically elevate their short-term risk of acute decompensation.
+        """
+    )
+    st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
+
     # Visual 1B: Chronic Disease Registry Volume (Clean Vertical Column Chart)
     cond_counts = df[df["condition"] != "Unknown"]["condition"].value_counts().reset_index()
     cond_counts.columns = ["Condition", "Patients"]
@@ -120,22 +131,16 @@ if not df.empty:
     )
     st.plotly_chart(fig_cond, width="stretch")
 
-# Narrative Directly Under Visual Set 1
-st.markdown(
-    """
-    **The Clinical Reality**: When objectively stratified against **2017 ACC/AHA blood pressure guidelines** 
-    and **NCEP ATP III lipid cutoffs**, more than half of the health system's chronic panel—**56.3% (553 patients)**—sits 
-    in the High or Severe Acuity tiers. These patients exhibit uncontrolled Stage 1 or Stage 2 hypertension, profound 
-    dyslipidemia, or multi-morbid vascular complications that dramatically elevate their short-term risk of acute decompensation.
-    
-    The disease distribution confirms that asthma (209 patients), coronary heart disease (207 patients), and type 2 diabetes (204 patients) 
-    form nearly equal pillars of chronic illness within Metropolitan Health. However, clinical acuity is not evenly dispersed across 
-    these registries: patients with concurrent hypertension and metabolic disease face compounding vascular deterioration, 
-    representing the primary clinical cohort driving avoidable emergency hospital admissions.
-    """
-)
-
-st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
+    # Analysis Directly Under Visual 1B
+    st.markdown(
+        """
+        **Chronic Disease Registry Burden**: The disease distribution confirms that asthma (209 patients), coronary heart disease (207 patients), and type 2 diabetes (204 patients) 
+        form nearly equal pillars of chronic illness within Metropolitan Health. However, clinical acuity is not evenly dispersed across 
+        these registries: patients with concurrent hypertension and metabolic disease face compounding vascular deterioration, 
+        representing the primary clinical cohort driving avoidable emergency hospital admissions.
+        """
+    )
+    st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
 
 # ==============================================================================
 # 4. OPERATIONAL CARE GAPS & REACHABILITY (STANDALONE VISUALS)
@@ -184,6 +189,18 @@ if not df.empty:
     )
     st.plotly_chart(fig_gaps, width="stretch")
 
+    # Analysis Directly Under Visual 2A
+    st.markdown(
+        """
+        **Pharmacotherapy Concordance & Care Gaps**: Auditing pharmacotherapy records uncovers **220 actionable care gaps**. 
+        Specifically, **109 patients** with formally documented chronic disease are receiving zero pharmacotherapy, 
+        while another **111 patients** are on discordant medications that fail to control their primary diagnosis 
+        (such as diabetic patients without glycemic control or hypertensive patients without anti-hypertensives). 
+        These prescribing disconnects represent immediate, remediable targets for clinical protocol standardization.
+        """
+    )
+    st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
+
     # Visual 2B: Patient Contactability Status (Accurate Enrichment Recovery)
     contact_counts = df["contact_status"].value_counts().reset_index() if "contact_status" in df.columns else pd.DataFrame({
         "contact_status": ["Omnichannel (Email & Phone)", "Phone Only", "Email Only", "Uncontactable (Loss to Follow-up)"],
@@ -215,23 +232,17 @@ if not df.empty:
     )
     st.plotly_chart(fig_contact, width="stretch")
 
-# Narrative Directly Under Visual Set 2
-st.markdown(
-    """
-    **The Operational Dilemma**: Auditing pharmacotherapy records uncovers **220 actionable care gaps**. 
-    Specifically, **109 patients** with formally documented chronic disease are receiving zero pharmacotherapy, 
-    while another **111 patients** are on discordant medications that fail to control their primary diagnosis 
-    (such as diabetic patients without glycemic control or hypertensive patients without anti-hypertensives).
-    
-    However, closing these clinical care gaps is complicated by an operational outreach bottleneck: **145 high-risk patients** 
-    represent complete digital blind spots, lacking both a working telephone number and a valid email address in the EHR. 
-    Standard automated recall workflows and text notifications will fail for this cohort 100% of the time. 
-    To prevent acute decompensations, clinic intake staff must prioritize demographic data capture during in-person visits, 
-    while community health workers deploy targeted physical outreach.
-    """
-)
-
-st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
+    # Analysis Directly Under Visual 2B
+    st.markdown(
+        """
+        **Patient Contactability & Digital Blind Spots**: Closing these clinical care gaps is complicated by an operational outreach bottleneck: **145 high-risk patients** 
+        represent complete digital blind spots, lacking both a working telephone number and a valid email address in the EHR. 
+        Standard automated recall workflows and text notifications will fail for this cohort 100% of the time. 
+        To prevent acute decompensations, clinic intake staff must prioritize demographic data capture during in-person visits, 
+        while community health workers deploy targeted physical outreach.
+        """
+    )
+    st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
 
 # ==============================================================================
 # 5. FINANCIAL EXPOSURE & THE SELF-FUNDING CARE MODEL

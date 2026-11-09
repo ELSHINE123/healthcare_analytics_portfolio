@@ -236,6 +236,22 @@ fig_v7a.update_layout(
 )
 st.plotly_chart(fig_v7a, width="stretch")
 
+# Analysis Directly Under Visual 7A
+severe_cost = cost_df.loc[cost_df['clinical_risk_tier'] == 'Severe Acuity', 'cost_exposure'].values[0] if not cost_df.empty else 0
+st.markdown(
+    f"""
+    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
+        <strong>Actuarial Inpatient Risk Assessment by Acuity Tier</strong>: In value-based ACO contracts, acute inpatient admissions represent the single largest 
+        source of avoidable medical expense. Applying national <strong>AHRQ HCUP benchmarks</strong> (&dollar;{admission_cost:,} average cost per acute chronic stay) 
+        against actuarial admission probabilities (5% for Low Acuity, 15% for Moderate, 35% for High, and 65% for Severe), 
+        Metropolitan Health System faces a baseline inpatient exposure of <strong>&dollar;{total_financial_exposure / 1e6:.2f}M across {total_projected_admissions:.1f} projected admissions</strong> 
+        in this cohort alone.
+    </p>
+    """,
+    unsafe_allow_html=True
+)
+st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
+
 # Visual 7B: Pareto Risk Concentration Donut (Standalone Full Width)
 pareto_df = pd.DataFrame({
     "Tier Group": ["High & Severe Acuity", "Low & Moderate Acuity"],
@@ -274,20 +290,11 @@ fig_v7b.update_layout(
 )
 st.plotly_chart(fig_v7b, width="stretch")
 
-# Narrative Directly Under Visual 7
-severe_cost = cost_df.loc[cost_df['clinical_risk_tier'] == 'Severe Acuity', 'cost_exposure'].values[0]
-
+# Analysis Directly Under Visual 7B
 st.markdown(
     f"""
     <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
-        <strong>Actuarial Inpatient Risk Assessment</strong>: In value-based ACO contracts, acute inpatient admissions represent the single largest 
-        source of avoidable medical expense. Applying national <strong>AHRQ HCUP benchmarks</strong> (&dollar;{admission_cost:,} average cost per acute chronic stay) 
-        against actuarial admission probabilities (5% for Low Acuity, 15% for Moderate, 35% for High, and 65% for Severe), 
-        Metropolitan Health System faces a baseline inpatient exposure of <strong>&dollar;{total_financial_exposure / 1e6:.2f}M across {total_projected_admissions:.1f} projected admissions</strong> 
-        in this cohort alone.
-    </p>
-    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; margin-top: 6px;'>
-        The Pareto decomposition on the right illustrates the classic <strong>80/20 risk asymmetry of population health</strong>:
+        <strong>80/20 Pareto Financial Risk Concentration</strong>: The Pareto decomposition illustrates the classic risk asymmetry of population health:
     </p>
     <ul style='margin-top: 6px; margin-bottom: 12px; padding-left: 22px; line-height: 1.65; color: #334155;'>
         <li style='margin-bottom: 8px;'><strong>The Critical Driver</strong>: The High and Severe Acuity tiers account for <strong>&dollar;{high_severe_cost / 1e6:.2f}M ({pareto_share:.1f}%)</strong> of the entire health system's financial liability. Specifically, the 204 Severe Acuity patients (mean SBP ≥140 mmHg or total cholesterol ≥240 mg/dL) generate <strong>&dollar;{severe_cost / 1e6:.2f}M</strong> in exposure alone, with a significant 65% annual admission probability.</li>
@@ -296,7 +303,6 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-
 st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
 
 # ==============================================================================
