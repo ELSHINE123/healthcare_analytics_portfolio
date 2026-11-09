@@ -131,10 +131,12 @@ st.markdown(
         min-width: 0 !important;
         text-align: center !important;
         justify-content: center !important;
-        padding: 10px 14px !important;
-        font-size: 13px !important;
+        padding: 8px 6px !important;
+        font-size: 12.5px !important;
         font-weight: 600 !important;
-        white-space: nowrap !important;
+        white-space: normal !important;
+        word-wrap: break-word !important;
+        line-height: 1.25 !important;
         border-radius: 6px 6px 0 0 !important;
         background-color: transparent !important;
         transition: all 0.15s ease !important;
@@ -157,10 +159,10 @@ st.markdown(
 )
 
 pillar_tab1, pillar_tab2, pillar_tab3, pillar_tab4 = st.tabs([
-    "🩺 1. Clinical Protocols",
-    "⚙️ 2. Operational Reach",
-    "👥 3. Workforce Pods",
-    "💰 4. Value Governance"
+    "🩺 1. Clinical",
+    "⚙️ 2. Operations",
+    "👥 3. Workforce",
+    "💰 4. Governance"
 ])
 
 with pillar_tab1:

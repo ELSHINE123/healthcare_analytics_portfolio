@@ -357,7 +357,7 @@ if not df.empty:
         )
 
     with st.expander("🔍 Preview Board of Directors Memorandum", expanded=False):
-        st.markdown(memo_text)
+        st.markdown(memo_text.replace('$', '&dollar;'), unsafe_allow_html=True)
 
 st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
 

@@ -301,12 +301,8 @@ if not df.empty:
         )
 
         fig_v1.update_layout(
-            title=dict(
-                text=f"<b>Bivariate Clinical Acuity Distribution</b><br><span style='font-size:11.5px; color:#64748B; font-weight:500;'>{len(plot_df):,} Patients Displayed across SBP & Cholesterol</span>",
-                x=0.5, y=0.97, xanchor="center", yanchor="top"
-            ),
-            margin=dict(l=35, r=20, t=65, b=85),
-            height=515,
+            margin=dict(l=35, r=20, t=25, b=75),
+            height=475,
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
             xaxis=dict(showgrid=True, gridcolor="#E2E8F0", title="Total Cholesterol (mg/dL) — NCEP ATP III", range=[150, 235]),
@@ -314,13 +310,27 @@ if not df.empty:
             legend=dict(
                 orientation="h",
                 yanchor="top",
-                y=-0.22,
+                y=-0.20,
                 xanchor="center",
                 x=0.5,
                 title="",
                 font=dict(family="Be Vietnam Pro", size=11)
             ),
             font=dict(family="Be Vietnam Pro, sans-serif")
+        )
+
+        st.markdown(
+            f"""
+            <div style="text-align: center; margin-bottom: 4px;">
+                <div style="font-size: 15px; font-weight: 800; color: #0F172A; letter-spacing: -0.01em;">
+                    Bivariate Clinical Acuity Distribution
+                </div>
+                <div style="font-size: 12px; color: #64748B; font-weight: 500;">
+                    {len(plot_df):,} Patients Displayed across SBP & Cholesterol
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True
         )
 
         st.plotly_chart(fig_v1, width="stretch")

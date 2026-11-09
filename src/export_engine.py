@@ -52,7 +52,7 @@ def generate_board_memorandum(df: pd.DataFrame) -> str:
 Metropolitan Health System has audited **{total_pts:,} chronic disease patients** to evaluate institutional risk under downside risk contracts. The clinical panel exhibits severe risk polarization that threatens clinical quality benchmarks and financial solvency:
 
 * **High-Acuity Concentration**: **{target_caseload:,} patients ({target_caseload / total_pts * 100:.1f}%)** occupy the High Acuity ({high:,} pts) and Severe Acuity ({severe:,} pts) tiers.
-* **Inpatient Cost Exposure**: Under baseline utilization rates (65% in Severe, 35% in High Acuity), this high-risk sub-cohort generates **{base_admissions:.1f} avoidable acute admissions annually**, representing **${total_exposure / 1e6:.2f} Million in annual inpatient cost liability**.
+* **Inpatient Cost Exposure**: Under baseline utilization rates (65% in Severe, 35% in High Acuity), this high-risk sub-cohort generates **{base_admissions:.1f} avoidable acute admissions annually**, representing **&dollar;{total_exposure / 1e6:.2f} Million in annual inpatient cost liability**.
 * **Risk Concentration**: Following the 80/20 Pareto principle, the top **20% highest-risk patients drive 82% of all avoidable inpatient expenses**.
 
 ---
@@ -90,7 +90,7 @@ Applying **Case Management Society of America (CMSA)** and **NCQA** population h
   * **Severe Acuity (1:60 Ratio)**: 204 patients require **3.4 RN FTEs** for intensive weekly navigation, medication reconciliation, and home visits.
   * **High Acuity (1:100 Ratio)**: 349 patients require **3.5 RN FTEs** for bi-weekly telephonic check-ins and biometric monitoring.
   * **Total Workforce Requirement**: **{rn_fte:.1f} Registered Nurse FTEs**.
-* **Financial Investment**: At a fully loaded annual investment of **${salary:,} per nurse**, total annual workforce investment is **${staffing_cost / 1e3:.0f}K**.
+* **Financial Investment**: At a fully loaded annual investment of **&dollar;{salary:,} per nurse**, total annual workforce investment is **&dollar;{staffing_cost / 1e3:.0f}K**.
 
 ---
 
@@ -99,11 +99,11 @@ Deploying 7.0 RN FTEs achieving a conservative **20% preventable admission reduc
 
 | Economic Component | Annual Financial Value | Actuarial Derivation |
 | :--- | :--- | :--- |
-| **Workforce Staffing Cost** | **-${staffing_cost / 1e3:.0f}K** | 7.0 Dedicated RN FTEs @ $95,000 fully loaded annual salary |
-| **Inpatient Cost Avoidance** | **+${savings_20pct / 1e3:.0f}K** | 50.95 acute hospitalizations averted @ $12,500 HCUP benchmark |
-| **CMS Quality Incentive Bonus** | **+${bonus_share / 1e3:.0f}K** | CMS 4-Star shared-savings bonus ($60,000 per active care manager) |
-| **Total Economic Value Created** | **+${total_value / 1e3:.0f}K** | Combined cost avoidance and quality incentive rewards |
-| **Net Operating Margin** | **+${net_margin / 1e3:.0f}K** | **159% Self-Funded** (returns $1.59 in value for every $1.00 invested) |
+| **Workforce Staffing Cost** | **-&dollar;{staffing_cost / 1e3:.0f}K** | 7.0 Dedicated RN FTEs @ &dollar;95,000 fully loaded annual salary |
+| **Inpatient Cost Avoidance** | **+&dollar;{savings_20pct / 1e3:.0f}K** | 50.95 acute hospitalizations averted @ &dollar;12,500 HCUP benchmark |
+| **CMS Quality Incentive Bonus** | **+&dollar;{bonus_share / 1e3:.0f}K** | CMS 4-Star shared-savings bonus (&dollar;60,000 per active care manager) |
+| **Total Economic Value Created** | **+&dollar;{total_value / 1e3:.0f}K** | Combined cost avoidance and quality incentive rewards |
+| **Net Operating Margin** | **+&dollar;{net_margin / 1e3:.0f}K** | **159% Self-Funded** (returns &dollar;1.59 in value for every &dollar;1.00 invested) |
 
 ---
 
