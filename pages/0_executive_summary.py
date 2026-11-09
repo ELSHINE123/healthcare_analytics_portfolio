@@ -55,74 +55,75 @@ st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
 st.header("1. Clinical Acuity Profile & Chronic Disease Burden")
 
 if not df.empty:
-    chart1_col, chart2_col = st.columns(2, gap="large")
+    with st.container(border=True):
+        chart1_col, chart2_col = st.columns(2, gap="large")
 
-    with chart1_col:
-        # Visual 1A: Clinical Risk Acuity Donut (Cleanly Formatted with Legend)
-        tier_counts = df["clinical_risk_tier"].value_counts().reset_index()
-        tier_counts.columns = ["Tier", "Patients"]
-        
-        tier_order = ["Low Acuity", "Moderate Acuity", "High Acuity", "Severe Acuity"]
-        tier_counts["Tier"] = pd.Categorical(tier_counts["Tier"], categories=tier_order, ordered=True)
-        tier_counts = tier_counts.sort_values("Tier")
+        with chart1_col:
+            # Visual 1A: Clinical Risk Acuity Donut (Cleanly Formatted with Legend)
+            tier_counts = df["clinical_risk_tier"].value_counts().reset_index()
+            tier_counts.columns = ["Tier", "Patients"]
+            
+            tier_order = ["Low Acuity", "Moderate Acuity", "High Acuity", "Severe Acuity"]
+            tier_counts["Tier"] = pd.Categorical(tier_counts["Tier"], categories=tier_order, ordered=True)
+            tier_counts = tier_counts.sort_values("Tier")
 
-        tier_colors = ["#10B981", "#3B82F6", "#F59E0B", "#EF4444"]
+            tier_colors = ["#10B981", "#3B82F6", "#F59E0B", "#EF4444"]
 
-        fig_tier = go.Figure(data=[go.Pie(
-            labels=tier_counts["Tier"],
-            values=tier_counts["Patients"],
-            hole=0.55,
-            domain=dict(y=[0.24, 1.0]),
-            marker=dict(colors=tier_colors),
-            textinfo="percent",
-            textposition="inside",
-            insidetextfont=dict(color="#FFFFFF", size=13, family="Be Vietnam Pro"),
-            hovertemplate="<b>%{label}</b><br>Patients: %{value:,}<br>Proportion: %{percent}<extra></extra>"
-        )])
-        fig_tier.update_layout(
-            title="<b>Population by Clinical Acuity Tier</b>",
-            margin=dict(l=10, r=10, t=40, b=10),
-            legend=dict(orientation="h", yanchor="top", y=0.12, xanchor="center", x=0.5, font=dict(family="Be Vietnam Pro", size=11.5)),
-            height=390,
-            paper_bgcolor="rgba(0,0,0,0)",
-            plot_bgcolor="rgba(0,0,0,0)",
-            font=dict(family="Be Vietnam Pro, sans-serif")
-        )
-        st.plotly_chart(fig_tier, width="stretch")
+            fig_tier = go.Figure(data=[go.Pie(
+                labels=tier_counts["Tier"],
+                values=tier_counts["Patients"],
+                hole=0.55,
+                domain=dict(y=[0.24, 1.0]),
+                marker=dict(colors=tier_colors),
+                textinfo="percent",
+                textposition="inside",
+                insidetextfont=dict(color="#FFFFFF", size=13, family="Be Vietnam Pro"),
+                hovertemplate="<b>%{label}</b><br>Patients: %{value:,}<br>Proportion: %{percent}<extra></extra>"
+            )])
+            fig_tier.update_layout(
+                title="<b>Population by Clinical Acuity Tier</b>",
+                margin=dict(l=10, r=10, t=40, b=10),
+                legend=dict(orientation="h", yanchor="top", y=0.12, xanchor="center", x=0.5, font=dict(family="Be Vietnam Pro", size=11.5)),
+                height=390,
+                paper_bgcolor="rgba(0,0,0,0)",
+                plot_bgcolor="rgba(0,0,0,0)",
+                font=dict(family="Be Vietnam Pro, sans-serif")
+            )
+            st.plotly_chart(fig_tier, width="stretch")
 
-    with chart2_col:
-        # Visual 1B: Chronic Disease Registry Volume (Clean Vertical Column Chart)
-        cond_counts = df[df["condition"] != "Unknown"]["condition"].value_counts().reset_index()
-        cond_counts.columns = ["Condition", "Patients"]
-        cond_counts["Condition"] = cond_counts["Condition"].replace({
-            "heart disease": "Heart Disease",
-            "diabetes": "Diabetes",
-            "asthma": "Asthma",
-            "hypertension": "Hypertension"
-        })
-        cond_counts = cond_counts.sort_values("Patients", ascending=False)
+        with chart2_col:
+            # Visual 1B: Chronic Disease Registry Volume (Clean Vertical Column Chart)
+            cond_counts = df[df["condition"] != "Unknown"]["condition"].value_counts().reset_index()
+            cond_counts.columns = ["Condition", "Patients"]
+            cond_counts["Condition"] = cond_counts["Condition"].replace({
+                "heart disease": "Heart Disease",
+                "diabetes": "Diabetes",
+                "asthma": "Asthma",
+                "hypertension": "Hypertension"
+            })
+            cond_counts = cond_counts.sort_values("Patients", ascending=False)
 
-        fig_cond = go.Figure(data=[go.Bar(
-            x=cond_counts["Condition"],
-            y=cond_counts["Patients"],
-            text=cond_counts["Patients"],
-            textposition="outside",
-            width=0.42,
-            marker=dict(color=["#2563EB", "#3B82F6", "#60A5FA", "#93C5FD"]),
-            hovertemplate="<b>%{x}</b><br>Active Registry: %{y:,} Patients<extra></extra>"
-        )])
-        fig_cond.update_layout(
-            title="<b>Patient Registry Volume by Chronic Condition</b>",
-            margin=dict(l=40, r=20, t=50, b=40),
-            height=370,
-            bargap=0.45,
-            paper_bgcolor="rgba(0,0,0,0)",
-            plot_bgcolor="rgba(0,0,0,0)",
-            yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Number of Patients", range=[0, 250]),
-            xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=12, family="Be Vietnam Pro")),
-            font=dict(family="Be Vietnam Pro, sans-serif")
-        )
-        st.plotly_chart(fig_cond, width="stretch")
+            fig_cond = go.Figure(data=[go.Bar(
+                x=cond_counts["Condition"],
+                y=cond_counts["Patients"],
+                text=cond_counts["Patients"],
+                textposition="outside",
+                width=0.42,
+                marker=dict(color=["#2563EB", "#3B82F6", "#60A5FA", "#93C5FD"]),
+                hovertemplate="<b>%{x}</b><br>Active Registry: %{y:,} Patients<extra></extra>"
+            )])
+            fig_cond.update_layout(
+                title="<b>Patient Registry Volume by Chronic Condition</b>",
+                margin=dict(l=40, r=20, t=50, b=40),
+                height=370,
+                bargap=0.45,
+                paper_bgcolor="rgba(0,0,0,0)",
+                plot_bgcolor="rgba(0,0,0,0)",
+                yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Number of Patients", range=[0, 250]),
+                xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=12, family="Be Vietnam Pro")),
+                font=dict(family="Be Vietnam Pro, sans-serif")
+            )
+            st.plotly_chart(fig_cond, width="stretch")
 
 # Narrative Directly Under Visual Set 1
 st.markdown(
@@ -147,81 +148,82 @@ st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
 st.header("2. Operational Reach: Care Gaps vs. Outreach Blind Spots")
 
 if not df.empty:
-    chart3_col, chart4_col = st.columns(2, gap="large")
+    with st.container(border=True):
+        chart3_col, chart4_col = st.columns(2, gap="large")
 
-    with chart3_col:
-        # Visual 2A: Pharmacotherapy Care Gaps (Accurate Enrichment Recovery)
-        concordant_count = df[df["care_gap_flagged"] == False].shape[0] if "care_gap_flagged" in df.columns else 763
-        unmedicated_count = df[df["unmedicated_chronic"] == True].shape[0] if "unmedicated_chronic" in df.columns else 109
-        discordant_count = df[df["therapeutic_discordance"] == True].shape[0] if "therapeutic_discordance" in df.columns else 111
+        with chart3_col:
+            # Visual 2A: Pharmacotherapy Care Gaps (Accurate Enrichment Recovery)
+            concordant_count = df[df["care_gap_flagged"] == False].shape[0] if "care_gap_flagged" in df.columns else 763
+            unmedicated_count = df[df["unmedicated_chronic"] == True].shape[0] if "unmedicated_chronic" in df.columns else 109
+            discordant_count = df[df["therapeutic_discordance"] == True].shape[0] if "therapeutic_discordance" in df.columns else 111
 
-        df_gaps = pd.DataFrame({
-            "Category": ["Concordant Therapy", "Unmedicated Chronic", "Therapeutic Discordance"],
-            "Patients": [concordant_count, unmedicated_count, discordant_count]
-        })
+            df_gaps = pd.DataFrame({
+                "Category": ["Concordant Therapy", "Unmedicated Chronic", "Therapeutic Discordance"],
+                "Patients": [concordant_count, unmedicated_count, discordant_count]
+            })
 
-        fig_gaps = px.bar(
-            df_gaps,
-            x="Category",
-            y="Patients",
-            text="Patients",
-            title="<b>Pharmacotherapy Concordance vs. Care Gaps</b>",
-            color="Category",
-            color_discrete_map={
-                "Concordant Therapy": "#2563EB",
-                "Unmedicated Chronic": "#DC2626",
-                "Therapeutic Discordance": "#D97706"
-            }
-        )
-        fig_gaps.update_traces(
-            textposition="outside",
-            width=0.42,
-            hovertemplate="<b>%{x}</b><br>Patients: %{y}<extra></extra>"
-        )
-        fig_gaps.update_layout(
-            margin=dict(l=10, r=10, t=50, b=10),
-            showlegend=False,
-            height=370,
-            bargap=0.45,
-            paper_bgcolor="rgba(0,0,0,0)",
-            plot_bgcolor="rgba(0,0,0,0)",
-            yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Number of Patients", range=[0, 850]),
-            xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title=""),
-            font=dict(family="Be Vietnam Pro, sans-serif")
-        )
-        st.plotly_chart(fig_gaps, width="stretch")
+            fig_gaps = px.bar(
+                df_gaps,
+                x="Category",
+                y="Patients",
+                text="Patients",
+                title="<b>Pharmacotherapy Concordance vs. Care Gaps</b>",
+                color="Category",
+                color_discrete_map={
+                    "Concordant Therapy": "#2563EB",
+                    "Unmedicated Chronic": "#DC2626",
+                    "Therapeutic Discordance": "#D97706"
+                }
+            )
+            fig_gaps.update_traces(
+                textposition="outside",
+                width=0.42,
+                hovertemplate="<b>%{x}</b><br>Patients: %{y}<extra></extra>"
+            )
+            fig_gaps.update_layout(
+                margin=dict(l=10, r=10, t=50, b=10),
+                showlegend=False,
+                height=370,
+                bargap=0.45,
+                paper_bgcolor="rgba(0,0,0,0)",
+                plot_bgcolor="rgba(0,0,0,0)",
+                yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Number of Patients", range=[0, 850]),
+                xaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title=""),
+                font=dict(family="Be Vietnam Pro, sans-serif")
+            )
+            st.plotly_chart(fig_gaps, width="stretch")
 
-    with chart4_col:
-        # Visual 2B: Patient Contactability Status (Accurate Enrichment Recovery)
-        contact_counts = df["contact_status"].value_counts().reset_index() if "contact_status" in df.columns else pd.DataFrame({
-            "contact_status": ["Omnichannel (Email & Phone)", "Phone Only", "Email Only", "Uncontactable (Loss to Follow-up)"],
-            "count": [375, 233, 230, 145]
-        })
-        contact_counts.columns = ["Channel", "Patients"]
+        with chart4_col:
+            # Visual 2B: Patient Contactability Status (Accurate Enrichment Recovery)
+            contact_counts = df["contact_status"].value_counts().reset_index() if "contact_status" in df.columns else pd.DataFrame({
+                "contact_status": ["Omnichannel (Email & Phone)", "Phone Only", "Email Only", "Uncontactable (Loss to Follow-up)"],
+                "count": [375, 233, 230, 145]
+            })
+            contact_counts.columns = ["Channel", "Patients"]
 
-        contact_colors = ["#10B981", "#3B82F6", "#6366F1", "#EF4444"]
+            contact_colors = ["#10B981", "#3B82F6", "#6366F1", "#EF4444"]
 
-        fig_contact = go.Figure(data=[go.Pie(
-            labels=contact_counts["Channel"],
-            values=contact_counts["Patients"],
-            hole=0.55,
-            domain=dict(y=[0.24, 1.0]),
-            marker=dict(colors=contact_colors),
-            textinfo="percent",
-            textposition="inside",
-            insidetextfont=dict(color="#FFFFFF", size=13, family="Be Vietnam Pro"),
-            hovertemplate="<b>%{label}</b><br>Patients: %{value:,}<br>Share: %{percent}<extra></extra>"
-        )])
-        fig_contact.update_layout(
-            title="<b>Patient Contactability & Recall Reach</b>",
-            legend=dict(orientation="h", yanchor="top", y=0.12, xanchor="center", x=0.5, font=dict(family="Be Vietnam Pro", size=11.5)),
-            margin=dict(l=10, r=10, t=40, b=10),
-            height=390,
-            paper_bgcolor="rgba(0,0,0,0)",
-            plot_bgcolor="rgba(0,0,0,0)",
-            font=dict(family="Be Vietnam Pro, sans-serif")
-        )
-        st.plotly_chart(fig_contact, width="stretch")
+            fig_contact = go.Figure(data=[go.Pie(
+                labels=contact_counts["Channel"],
+                values=contact_counts["Patients"],
+                hole=0.55,
+                domain=dict(y=[0.24, 1.0]),
+                marker=dict(colors=contact_colors),
+                textinfo="percent",
+                textposition="inside",
+                insidetextfont=dict(color="#FFFFFF", size=13, family="Be Vietnam Pro"),
+                hovertemplate="<b>%{label}</b><br>Patients: %{value:,}<br>Share: %{percent}<extra></extra>"
+            )])
+            fig_contact.update_layout(
+                title="<b>Patient Contactability & Recall Reach</b>",
+                legend=dict(orientation="h", yanchor="top", y=0.12, xanchor="center", x=0.5, font=dict(family="Be Vietnam Pro", size=11.5)),
+                margin=dict(l=10, r=10, t=40, b=10),
+                height=390,
+                paper_bgcolor="rgba(0,0,0,0)",
+                plot_bgcolor="rgba(0,0,0,0)",
+                font=dict(family="Be Vietnam Pro, sans-serif")
+            )
+            st.plotly_chart(fig_contact, width="stretch")
 
 # Narrative Directly Under Visual Set 2
 st.markdown(

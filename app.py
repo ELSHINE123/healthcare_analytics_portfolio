@@ -333,7 +333,23 @@ button[data-testid="stBaseButton-tab"] {
   line-height: 1.3 !important;
 }
 
-/* 13. Executive Visual Card Container Architecture */
+/* 13. Executive Visual Card & Unified Panel Architecture */
+div[data-testid="stVerticalBlockBorderWrapper"] {
+  background-color: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  padding: 16px 18px 10px 18px !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+  margin-bottom: 12px !important;
+}
+
+div[data-testid="stVerticalBlockBorderWrapper"]:hover {
+  border-color: #CBD5E1 !important;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.07) !important;
+}
+
+/* Standalone Visual Cards (when not inside a bordered container) */
 div[data-testid="stPlotlyChart"] {
   background-color: #FFFFFF !important;
   border: 1px solid #E2E8F0 !important;
@@ -348,6 +364,15 @@ div[data-testid="stPlotlyChart"] {
 div[data-testid="stPlotlyChart"]:hover {
   border-color: #CBD5E1 !important;
   box-shadow: 0 4px 14px rgba(15, 23, 42, 0.07) !important;
+}
+
+/* When a chart is inside a unified bordered container, eliminate the nested double border */
+div[data-testid="stVerticalBlockBorderWrapper"] div[data-testid="stPlotlyChart"] {
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0px 4px !important;
+  background-color: transparent !important;
+  margin-bottom: 0px !important;
 }
 
 /* Ensure Plotly canvas does not overflow its card */
@@ -511,12 +536,23 @@ if st.session_state.get("presentation_mode", False):
       font-size: 13.5px !important;
       color: #475569 !important;
     }
-    /* Boardroom Calibrated Visual Cards */
+    /* Boardroom Calibrated Visual Cards & Unified Panels */
+    div[data-testid="stVerticalBlockBorderWrapper"] {
+      border: 1.5px solid #CBD5E1 !important;
+      border-radius: 14px !important;
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08) !important;
+      padding: 20px 22px 14px 22px !important;
+    }
     div[data-testid="stPlotlyChart"] {
       border: 1.5px solid #CBD5E1 !important;
       border-radius: 14px !important;
       box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08) !important;
       padding: 16px 18px 12px 18px !important;
+    }
+    div[data-testid="stVerticalBlockBorderWrapper"] div[data-testid="stPlotlyChart"] {
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0px 4px !important;
     }
     /* Boardroom Table Typography */
     table th {

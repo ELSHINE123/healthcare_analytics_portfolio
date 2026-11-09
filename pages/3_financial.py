@@ -206,77 +206,78 @@ st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
 # ==============================================================================
 st.header("2. Annual Inpatient Financial Liability & 80/20 Risk Concentration")
 
-v7_col1, v7_col2 = st.columns(2, gap="large")
+with st.container(border=True):
+    v7_col1, v7_col2 = st.columns(2, gap="large")
 
-with v7_col1:
-    # Visual 7A: Cost Exposure by Acuity Tier (Horizontal Bar)
-    fig_v7a = go.Figure()
+    with v7_col1:
+        # Visual 7A: Cost Exposure by Acuity Tier (Horizontal Bar)
+        fig_v7a = go.Figure()
 
-    fig_v7a.add_trace(go.Bar(
-        y=cost_df["clinical_risk_tier"],
-        x=cost_df["cost_millions"],
-        orientation="h",
-        width=0.42,
-        marker=dict(color=[acuity_colors[t] for t in cost_df["clinical_risk_tier"]]),
-        text=[f"<b>${c:.2f}M</b> ({adm:.0f} adm)" for c, adm in zip(cost_df["cost_millions"], cost_df["expected_admissions"])],
-        textposition="outside",
-        textfont=dict(color="#0F172A", size=11.5, family="Be Vietnam Pro"),
-        hovertemplate="<b>%{y}</b><br>Projected Cost: $%{x:.3f}M<br>Expected Admissions: %{customdata[0]:.1f}<br>Patient Count: %{customdata[1]:,}<extra></extra>",
-        customdata=cost_df[["expected_admissions", "patient_count"]].values
-    ))
+        fig_v7a.add_trace(go.Bar(
+            y=cost_df["clinical_risk_tier"],
+            x=cost_df["cost_millions"],
+            orientation="h",
+            width=0.42,
+            marker=dict(color=[acuity_colors[t] for t in cost_df["clinical_risk_tier"]]),
+            text=[f"<b>${c:.2f}M</b> ({adm:.0f} adm)" for c, adm in zip(cost_df["cost_millions"], cost_df["expected_admissions"])],
+            textposition="outside",
+            textfont=dict(color="#0F172A", size=11.5, family="Be Vietnam Pro"),
+            hovertemplate="<b>%{y}</b><br>Projected Cost: $%{x:.3f}M<br>Expected Admissions: %{customdata[0]:.1f}<br>Patient Count: %{customdata[1]:,}<extra></extra>",
+            customdata=cost_df[["expected_admissions", "patient_count"]].values
+        ))
 
-    max_x = max(cost_df["cost_millions"]) * 1.65 if max(cost_df["cost_millions"]) > 0 else 1.0
+        max_x = max(cost_df["cost_millions"]) * 1.65 if max(cost_df["cost_millions"]) > 0 else 1.0
 
-    fig_v7a.update_layout(
-        title=dict(text="<b>Annual Inpatient Cost Exposure by Acuity Tier</b>", x=0.5, y=0.96, xanchor="center", yanchor="top"),
-        margin=dict(l=115, r=65, t=50, b=40),
-        height=390,
-        paper_bgcolor="rgba(0,0,0,0)",
-        plot_bgcolor="rgba(0,0,0,0)",
-        xaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Projected Acute Inpatient Exposure ($ Millions)", range=[0, max_x]),
-        yaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=12, family="Be Vietnam Pro")),
-        font=dict(family="Be Vietnam Pro, sans-serif")
-    )
-    st.plotly_chart(fig_v7a, width="stretch")
+        fig_v7a.update_layout(
+            title=dict(text="<b>Annual Inpatient Cost Exposure by Acuity Tier</b>", x=0.5, y=0.96, xanchor="center", yanchor="top"),
+            margin=dict(l=115, r=65, t=50, b=40),
+            height=390,
+            paper_bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor="rgba(0,0,0,0)",
+            xaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Projected Acute Inpatient Exposure ($ Millions)", range=[0, max_x]),
+            yaxis=dict(showline=True, linecolor="#CBD5E1", linewidth=1.2, title="", tickfont=dict(size=12, family="Be Vietnam Pro")),
+            font=dict(family="Be Vietnam Pro, sans-serif")
+        )
+        st.plotly_chart(fig_v7a, width="stretch")
 
-with v7_col2:
-    # Visual 7B: Pareto Risk Concentration Donut
-    pareto_df = pd.DataFrame({
-        "Tier Group": ["High & Severe Acuity", "Low & Moderate Acuity"],
-        "Cost": [high_severe_cost, low_mod_cost],
-        "Share": [pareto_share, 100.0 - pareto_share]
-    })
+    with v7_col2:
+        # Visual 7B: Pareto Risk Concentration Donut
+        pareto_df = pd.DataFrame({
+            "Tier Group": ["High & Severe Acuity", "Low & Moderate Acuity"],
+            "Cost": [high_severe_cost, low_mod_cost],
+            "Share": [pareto_share, 100.0 - pareto_share]
+        })
 
-    fig_v7b = go.Figure(data=[go.Pie(
-        labels=pareto_df["Tier Group"],
-        values=pareto_df["Cost"],
-        hole=0.55,
-        domain=dict(y=[0.24, 1.0]),
-        marker=dict(colors=["#DC2626", "#3B82F6"]),
-        textinfo="percent",
-        textposition="inside",
-        insidetextfont=dict(color="#FFFFFF", size=13, family="Be Vietnam Pro"),
-        hovertemplate="<b>%{label}</b><br>Cost Exposure: $%{value:,.0f}<br>Proportion: %{percent}<extra></extra>"
-    )])
+        fig_v7b = go.Figure(data=[go.Pie(
+            labels=pareto_df["Tier Group"],
+            values=pareto_df["Cost"],
+            hole=0.55,
+            domain=dict(y=[0.24, 1.0]),
+            marker=dict(colors=["#DC2626", "#3B82F6"]),
+            textinfo="percent",
+            textposition="inside",
+            insidetextfont=dict(color="#FFFFFF", size=13, family="Be Vietnam Pro"),
+            hovertemplate="<b>%{label}</b><br>Cost Exposure: $%{value:,.0f}<br>Proportion: %{percent}<extra></extra>"
+        )])
 
-    # Center Text in Donut Hole
-    fig_v7b.add_annotation(
-        text=f"<b>${total_financial_exposure / 1e6:.2f}M</b><br><span style='font-size:10px; color:#64748B;'>Total Annual<br>Cost Exposure</span>",
-        x=0.5, y=0.62,
-        showarrow=False,
-        font=dict(size=14, color="#0F172A", family="Be Vietnam Pro")
-    )
+        # Center Text in Donut Hole
+        fig_v7b.add_annotation(
+            text=f"<b>${total_financial_exposure / 1e6:.2f}M</b><br><span style='font-size:10px; color:#64748B;'>Total Annual<br>Cost Exposure</span>",
+            x=0.5, y=0.62,
+            showarrow=False,
+            font=dict(size=14, color="#0F172A", family="Be Vietnam Pro")
+        )
 
-    fig_v7b.update_layout(
-        title=dict(text="<b>80/20 Pareto Financial Risk Concentration</b>", x=0.5, y=0.96, xanchor="center", yanchor="top"),
-        margin=dict(l=10, r=10, t=50, b=10),
-        legend=dict(orientation="h", yanchor="top", y=0.12, xanchor="center", x=0.5, font=dict(family="Be Vietnam Pro", size=11.5)),
-        height=390,
-        paper_bgcolor="rgba(0,0,0,0)",
-        plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(family="Be Vietnam Pro, sans-serif")
-    )
-    st.plotly_chart(fig_v7b, width="stretch")
+        fig_v7b.update_layout(
+            title=dict(text="<b>80/20 Pareto Financial Risk Concentration</b>", x=0.5, y=0.96, xanchor="center", yanchor="top"),
+            margin=dict(l=10, r=10, t=50, b=10),
+            legend=dict(orientation="h", yanchor="top", y=0.12, xanchor="center", x=0.5, font=dict(family="Be Vietnam Pro", size=11.5)),
+            height=390,
+            paper_bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor="rgba(0,0,0,0)",
+            font=dict(family="Be Vietnam Pro, sans-serif")
+        )
+        st.plotly_chart(fig_v7b, width="stretch")
 
 # Narrative Directly Under Visual 7
 severe_cost = cost_df.loc[cost_df['clinical_risk_tier'] == 'Severe Acuity', 'cost_exposure'].values[0]
