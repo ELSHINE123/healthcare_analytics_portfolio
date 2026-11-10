@@ -15,7 +15,7 @@ project_root = Path(__file__).resolve().parent.parent
 if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
-from src.styles import inject_chart_card_css, render_page_header
+from src.styles import inject_chart_card_css
 from src.glossary_data import GLOSSARY_TERMS, CATEGORIES
 
 # Inject unified styling
@@ -100,11 +100,8 @@ st.markdown(
 # ==============================================================================
 # 1. PAGE HEADER & EXECUTIVE METADATA
 # ==============================================================================
-render_page_header(
-    title="Healthcare & Value-Based Care Terminology Lexicon",
-    subtitle="Interactive Reference Guide to Clinical Guidelines, HEDIS Measures, Actuarial Economics & Healthcare Acronyms",
-    act_badge="Lexicon"
-)
+st.title("Healthcare & Value-Based Care Terminology Lexicon")
+st.caption("Interactive Reference Guide to Clinical Guidelines, HEDIS Measures, Actuarial Economics & Healthcare Acronyms")
 
 st.markdown(
     """

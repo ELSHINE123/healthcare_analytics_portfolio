@@ -13,18 +13,15 @@ project_root = Path(__file__).resolve().parent
 if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
-from src.styles import inject_chart_card_css, render_page_header
+from src.styles import inject_chart_card_css
 
 inject_chart_card_css()
 
 # ==============================================================================
 # 1. HEADER & INSTITUTIONAL IDENTITY
 # ==============================================================================
-render_page_header(
-    title="Metropolitan Health System: Clinical EHR Intelligence",
-    subtitle="Value-Based Healthcare Intelligence & Actuarial Cohort Audit • Executive Decision Support • Lead Architect: Daniel Ademola Dongo",
-    act_badge="Overview"
-)
+st.title("Metropolitan Health System: Clinical EHR Intelligence")
+st.caption("Value-Based Healthcare Intelligence & Actuarial Cohort Audit • Executive Decision Support • Lead Architect: Daniel Ademola Dongo")
 
 # ==============================================================================
 # 2. OVERVIEW OF THE HOSPITAL

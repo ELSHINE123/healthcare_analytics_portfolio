@@ -19,18 +19,15 @@ project_root = Path(__file__).resolve().parent.parent
 if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
-from src.styles import inject_chart_card_css, render_page_header
+from src.styles import inject_chart_card_css
 
 inject_chart_card_css()
 
 # ==============================================================================
 # 1. PAGE HEADER & EXECUTIVE METADATA
 # ==============================================================================
-render_page_header(
-    title="Financial Liability & Quality Benchmark Penalties",
-    subtitle="Actuarial Acute Inpatient Exposure Modeling & National HEDIS Quality Scorecard Audit",
-    act_badge="Act 3"
-)
+st.title("Financial Liability & Quality Benchmark Penalties")
+st.caption("Actuarial Acute Inpatient Exposure Modeling & National HEDIS Quality Scorecard Audit")
 
 # ==============================================================================
 # 2. DATA INGESTION
