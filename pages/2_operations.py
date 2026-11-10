@@ -170,6 +170,7 @@ if not df.empty:
     fig_v5a = px.imshow(
         recall_ct_clean,
         text_auto=True,
+        aspect="auto",
         labels=dict(x="Surveillance Recency", y="Acuity Tier", color="Patients"),
         x=["Active (<6m)", "Recall Due (6-12m)", "Overdue (>12m)"],
         y=recall_ct_clean.index,
@@ -181,7 +182,12 @@ if not df.empty:
         textfont=dict(size=18, family="Be Vietnam Pro", color="#0F172A")
     )
     fig_v5a.update_layout(
-        margin=dict(l=30, r=30, t=55, b=35),
+        title=dict(
+            text="<b>Surveillance Recency by Clinical Acuity Matrix</b>",
+            x=0.02, y=0.98, yref="container", xanchor="left", yanchor="top",
+            font=dict(size=14, family="Be Vietnam Pro", color="#0F172A")
+        ),
+        margin=dict(l=40, r=40, t=65, b=45),
         height=470,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",

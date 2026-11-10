@@ -494,6 +494,7 @@ if not df.empty:
     fig_v3 = px.imshow(
         matrix_clean,
         text_auto=True,
+        aspect="auto",
         labels=dict(x="Prescribed Medication", y="Documented Diagnosis", color="Patients"),
         x=matrix_clean.columns,
         y=matrix_clean.index,
@@ -507,7 +508,12 @@ if not df.empty:
     )
 
     fig_v3.update_layout(
-        margin=dict(l=30, r=30, t=60, b=40),
+        title=dict(
+            text="<b>Clinical Prescribing Alignment: Documented Condition vs. Active Pharmacotherapy</b>",
+            x=0.02, y=0.98, yref="container", xanchor="left", yanchor="top",
+            font=dict(size=14, family="Be Vietnam Pro", color="#0F172A")
+        ),
+        margin=dict(l=40, r=40, t=65, b=45),
         height=490,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",

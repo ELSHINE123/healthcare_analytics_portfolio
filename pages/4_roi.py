@@ -390,9 +390,10 @@ fig_heatmap = go.Figure(data=go.Heatmap(
 fig_heatmap.update_layout(
     title=dict(
         text="<b>Preventative Care Breakeven Frontier (2D Sensitivity Matrix)</b>",
-        x=0.5, y=0.96, xanchor="center", yanchor="top"
+        x=0.5, y=0.98, yref="container", xanchor="center", yanchor="top",
+        font=dict(size=14, family="Be Vietnam Pro", color="#0F172A")
     ),
-    margin=dict(l=50, r=40, t=60, b=50),
+    margin=dict(l=55, r=75, t=70, b=55),
     height=480,
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
@@ -446,9 +447,10 @@ fig_v10a.add_trace(go.Bar(
 fig_v10a.update_layout(
     title=dict(
         text="<b>Care Management Caseload Staffing Model</b>",
-        x=0.5, y=0.96, xanchor="center", yanchor="top"
+        x=0.5, y=0.98, yref="container", xanchor="center", yanchor="top",
+        font=dict(size=14, family="Be Vietnam Pro", color="#0F172A")
     ),
-    margin=dict(l=200, r=60, t=65, b=40),
+    margin=dict(l=200, r=60, t=75, b=45),
     height=420,
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
