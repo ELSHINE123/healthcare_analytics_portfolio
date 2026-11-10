@@ -108,12 +108,19 @@ div[data-testid="collapsedControl"] span {
   color: #0F172A !important;
 }
 
-/* 3b. Frosted Glass Top Header for Smooth Scroll Transition */
+/* 3b. Dissolve Native Topbar — Unified Sticky Page Header Architecture */
 header[data-testid="stHeader"] {
-  background: rgba(248, 250, 252, 0.8) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
-  border-bottom: 1px solid rgba(226, 232, 240, 0.7) !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  pointer-events: none !important;
+  z-index: 999990 !important;
+}
+
+header[data-testid="stHeader"] * {
+  pointer-events: auto !important;
 }
 
 /* 4. Distinct Steel-Slate Sidebar (Noticeably Defined, Not Heavy or Dark) */
@@ -251,7 +258,7 @@ button[data-testid="stSidebarCollapseButton"]:hover {
 }
 
 .block-container {
-  padding-top: 4.5rem !important;
+  padding-top: 0rem !important;
   padding-bottom: 2.5rem !important;
   max-width: 1250px !important;
 }
