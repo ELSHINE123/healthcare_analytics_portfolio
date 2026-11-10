@@ -72,11 +72,11 @@ def get_clinical_narrative(cond, tier, n, pct, mean_sbp, mean_chol, unmed_count)
     if cond == "All Conditions" and tier == "All Acuity Tiers":
         return (
             "The bivariate distribution maps patient vulnerability across vascular pressure and serum lipid concentration for all 983 patients. "
-            "Under **2017 ACC/AHA guidelines**, normal systolic pressure is `<120 mmHg`, Stage 1 HTN is `130–139 mmHg`, and Stage 2 HTN is `≥140 mmHg`. "
-            "Concurrently, **NCEP ATP III guidelines** establish total cholesterol `<200 mg/dL` as desirable and `≥240 mg/dL` as high risk.\n\n"
-            "**553 patients (56.3% of the cohort)** sit in High or Severe Acuity tiers. These individuals experience concurrent uncontrolled "
-            "hypertension and dyslipidemia, driving preventable emergency department visits and acute inpatient admissions (&dollar;12,500 benchmark). "
-            "Select specific disease or acuity filters above to inspect subgroup clinical dynamics."
+            "Under <strong>2017 ACC/AHA guidelines</strong>, normal systolic pressure is &lt;120 mmHg, Stage 1 HTN is 130–139 mmHg, and Stage 2 HTN is &ge;140 mmHg. "
+            "Concurrently, <strong>NCEP ATP III guidelines</strong> establish total cholesterol &lt;200 mg/dL as desirable and &ge;240 mg/dL as high risk.<br><br>"
+            "<strong>553 patients (56.3% of the cohort)</strong> sit in High or Severe Acuity tiers with concurrent uncontrolled hypertension and dyslipidemia, "
+            "driving preventable emergency department visits and acute inpatient admissions ($12,500 benchmark). "
+            "Adjust the filters above to inspect specific disease or acuity subgroups."
         )
 
     # Case 2: Severe Acuity Subgroups
@@ -344,7 +344,7 @@ if not df.empty:
     )
 
     # Render Expanded Main Visual and Compact Dynamic Inspector Side-by-Side
-    col_chart, col_narrative = st.columns([1.65, 1], gap="medium")
+    col_chart, col_narrative = st.columns([2.1, 1], gap="medium")
 
     with col_chart:
         st.plotly_chart(fig_v1, width="stretch")
@@ -353,23 +353,28 @@ if not df.empty:
         dynamic_text = get_clinical_narrative(selected_condition, selected_tier, sub_n, sub_pct, sub_sbp, sub_chol, sub_unmed)
         formatted_narrative = (
             re.sub(r"\*\*(.*?)\*\*", r"<strong>\1</strong>", dynamic_text)
+            .replace("`<", "&lt;")
+            .replace("`", "")
+            .replace("<120", "&lt;120")
+            .replace("<200", "&lt;200")
+            .replace("<130", "&lt;130")
             .replace("\n\n", "<br><br>")
             .replace("\n", " ")
         )
         inspector_html = (
-            f'<div style="background-color: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; padding: 16px 18px; box-shadow: 0 1px 3px rgba(15,23,42,0.04); height: 538px; box-sizing: border-box; overflow-y: auto; overflow-x: hidden;">'
+            f'<div style="background-color: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; padding: 14px 16px; box-shadow: 0 1px 3px rgba(15,23,42,0.04); height: 538px; box-sizing: border-box; overflow-y: auto; overflow-x: hidden;">'
             f'<div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E2E8F0; padding-bottom: 8px; margin-bottom: 10px;">'
-            f'<div style="font-size: 12.5px; font-weight: 700; color: #0F172A; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 5px;"><span>🩺</span> Dynamic Diagnostic Inspector</div>'
-            f'<span style="background-color: #EFF6FF; color: #1D4ED8; border: 1px solid #BFDBFE; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 9999px; text-transform: uppercase; letter-spacing: 0.03em;">Live Selection</span>'
+            f'<div style="font-size: 11.5px; font-weight: 700; color: #0F172A; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 5px;"><span>🩺</span> Dynamic Diagnostic Inspector</div>'
+            f'<span style="background-color: #EFF6FF; color: #1D4ED8; border: 1px solid #BFDBFE; font-size: 9.5px; font-weight: 700; padding: 2px 7px; border-radius: 9999px; text-transform: uppercase; letter-spacing: 0.03em;">Live Selection</span>'
             f'</div>'
-            f'<div style="margin-bottom: 10px; font-size: 13.5px; font-weight: 700; color: #1E293B;">{selected_condition} &bull; <span style="color: {acuity_palette.get(selected_tier, "#2563EB")};">{selected_tier}</span></div>'
-            f'<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 12px;">'
-            f'<div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 6px 4px; text-align: center;"><div style="font-size: 9px; font-weight: 700; color: #64748B; text-transform: uppercase;">Patients</div><div style="font-size: 13.5px; font-weight: 800; color: #0F172A;">{sub_n:,}</div></div>'
-            f'<div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 6px 4px; text-align: center;"><div style="font-size: 9px; font-weight: 700; color: #64748B; text-transform: uppercase;">Share</div><div style="font-size: 13.5px; font-weight: 800; color: #0F172A;">{sub_pct:.1f}%</div></div>'
-            f'<div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 6px 4px; text-align: center;"><div style="font-size: 9px; font-weight: 700; color: #64748B; text-transform: uppercase;">Mean SBP</div><div style="font-size: 13.5px; font-weight: 800; color: #0F172A;">{sub_sbp:.0f} <span style="font-size: 8.5px; font-weight: 500; color: #64748B;">mmHg</span></div></div>'
-            f'<div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 6px 4px; text-align: center;"><div style="font-size: 9px; font-weight: 700; color: #64748B; text-transform: uppercase;">Care Gaps</div><div style="font-size: 13.5px; font-weight: 800; color: #DC2626;">{sub_unmed}</div></div>'
+            f'<div style="margin-bottom: 10px; font-size: 13px; font-weight: 700; color: #1E293B;">{selected_condition} &bull; <span style="color: {acuity_palette.get(selected_tier, "#2563EB")};">{selected_tier}</span></div>'
+            f'<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin-bottom: 12px;">'
+            f'<div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 5px 3px; text-align: center;"><div style="font-size: 8.5px; font-weight: 700; color: #64748B; text-transform: uppercase;">Patients</div><div style="font-size: 13px; font-weight: 800; color: #0F172A;">{sub_n:,}</div></div>'
+            f'<div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 5px 3px; text-align: center;"><div style="font-size: 8.5px; font-weight: 700; color: #64748B; text-transform: uppercase;">Share</div><div style="font-size: 13px; font-weight: 800; color: #0F172A;">{sub_pct:.1f}%</div></div>'
+            f'<div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 5px 3px; text-align: center;"><div style="font-size: 8.5px; font-weight: 700; color: #64748B; text-transform: uppercase;">Mean SBP</div><div style="font-size: 13px; font-weight: 800; color: #0F172A;">{sub_sbp:.0f} <span style="font-size: 8px; font-weight: 500; color: #64748B;">mmHg</span></div></div>'
+            f'<div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 5px 3px; text-align: center;"><div style="font-size: 8.5px; font-weight: 700; color: #64748B; text-transform: uppercase;">Care Gaps</div><div style="font-size: 13px; font-weight: 800; color: #DC2626;">{sub_unmed}</div></div>'
             f'</div>'
-            f'<div style="font-size: 13px; line-height: 1.58; color: #334155; font-family: \'Be Vietnam Pro\', -apple-system, BlinkMacSystemFont, sans-serif; text-align: left; border-top: 1px solid #E2E8F0; padding-top: 10px;">{formatted_narrative}</div>'
+            f'<div style="font-size: 12px; line-height: 1.55; color: #334155; font-family: \'Be Vietnam Pro\', -apple-system, BlinkMacSystemFont, sans-serif; text-align: left; border-top: 1px solid #E2E8F0; padding-top: 10px;">{formatted_narrative}</div>'
             f'</div>'
         )
         st.markdown(inspector_html, unsafe_allow_html=True)
