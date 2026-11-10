@@ -11,22 +11,75 @@ CHART_CARD_CSS = """
 <style>
 /* 1. Global Block Container & Navigable Space Optimization */
 .block-container {
-  padding-top: 5.25rem !important; /* Clears fixed native topbar (2.875rem) with 38px generous breathing room */
+  padding-top: 4.5rem !important; /* Clears fixed native topbar (2.875rem = ~46px) with 26px breathing room */
   padding-bottom: 2.5rem !important;
   max-width: 1280px !important;
 }
 
-/* 2. Compact & Elegant Page Title Scale (Recovers ~100px+ of Vertical Space) */
-h1, [data-testid="stHeading"] h1 {
-  font-size: 23px !important;
+/* 2. Compact & Sticky Executive Page Header Architecture */
+div[data-testid="stElementContainer"]:has(.sticky-page-header) {
+  position: sticky !important;
+  top: 3.75rem !important; /* Snaps cleanly 14px below the native topbar (2.875rem = ~46px, 3.75rem = 60px) */
+  z-index: 995 !important;
+  margin-top: 0px !important;
+  margin-bottom: 16px !important;
+}
+
+.sticky-page-header {
+  position: sticky !important;
+  top: 3.75rem !important;
+  z-index: 995 !important;
+  background: rgba(255, 255, 255, 0.96) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid #CBD5E1 !important;
+  padding: 10px 16px 11px 16px !important;
+  border-radius: 10px !important;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06) !important;
+}
+
+.sticky-page-header-inner {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 3px !important;
+}
+
+.sticky-title-row {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex-wrap: wrap !important;
+}
+
+.sticky-page-title {
+  font-size: 20px !important;
   font-weight: 700 !important;
   letter-spacing: -0.02em !important;
   color: #0F172A !important;
-  margin-top: 10px !important;
-  margin-bottom: 6px !important;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
   line-height: 1.25 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.sticky-act-pill {
+  background-color: #EFF6FF !important;
+  color: #1D4ED8 !important;
+  border: 1px solid #BFDBFE !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  padding: 2px 9px !important;
+  border-radius: 9999px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  display: inline-block !important;
+}
+
+.sticky-page-caption {
+  font-size: 12.5px !important;
+  color: #64748B !important;
+  font-weight: 500 !important;
+  line-height: 1.35 !important;
+  margin: 0 !important;
 }
 
 /* 2b. Clean Left-Aligned Typography for All Narrative Content */
@@ -109,3 +162,22 @@ div[data-testid="stPlotlyChart"] .user-select-none.svg-container {
 def inject_chart_card_css():
     """Injects chart card container CSS ensuring all visual content is 100% visible without internal scrolling."""
     st.markdown(CHART_CARD_CSS, unsafe_allow_html=True)
+
+def render_page_header(title: str, subtitle: str, act_badge: str = None):
+    """
+    Renders a space-efficient, sticky executive page header.
+    Snaps to the screen below the top bar when scrolling so executive users always maintain navigation context.
+    """
+    badge_html = f'<span class="sticky-act-pill">{act_badge}</span>' if act_badge else ""
+    header_html = (
+        f'<div class="sticky-page-header">'
+        f'<div class="sticky-page-header-inner">'
+        f'<div class="sticky-title-row">'
+        f'{badge_html}'
+        f'<h1 class="sticky-page-title">{title}</h1>'
+        f'</div>'
+        f'<div class="sticky-page-caption">{subtitle}</div>'
+        f'</div>'
+        f'</div>'
+    )
+    st.markdown(header_html, unsafe_allow_html=True)

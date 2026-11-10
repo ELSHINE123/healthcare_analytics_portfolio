@@ -251,7 +251,7 @@ button[data-testid="stSidebarCollapseButton"]:hover {
 }
 
 .block-container {
-  padding-top: 5.25rem !important;
+  padding-top: 4.5rem !important;
   padding-bottom: 2.5rem !important;
   max-width: 1250px !important;
 }

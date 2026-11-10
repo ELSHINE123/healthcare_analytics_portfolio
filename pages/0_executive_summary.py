@@ -18,7 +18,7 @@ project_root = Path(__file__).resolve().parent.parent
 if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
-from src.styles import inject_chart_card_css
+from src.styles import inject_chart_card_css, render_page_header
 
 inject_chart_card_css()
 
@@ -40,8 +40,11 @@ df = load_data()
 # ==============================================================================
 # 2. EDITORIAL HERO & STRATEGIC CONTEXT
 # ==============================================================================
-st.title("Executive Summary: Value-Based Population Health Intelligence")
-st.caption("Enterprise Decision Support & Population Health Briefing")
+render_page_header(
+    title="Executive Summary: Value-Based Population Health Intelligence",
+    subtitle="Enterprise Decision Support & Population Health Briefing • 983-Patient Chronic Cohort Audit",
+    act_badge="Briefing"
+)
 
 st.markdown(
     """

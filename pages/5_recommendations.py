@@ -19,7 +19,7 @@ project_root = Path(__file__).resolve().parent.parent
 if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
-from src.styles import inject_chart_card_css
+from src.styles import inject_chart_card_css, render_page_header
 
 inject_chart_card_css()
 
@@ -37,8 +37,11 @@ df = load_data()
 # ==============================================================================
 # 1. PAGE HEADER & EXECUTIVE METADATA
 # ==============================================================================
-st.title("Strategic Recommendations & Executive Implementation Roadmap")
-st.caption("Board-Level Governance, Clinical Protocolization & 180-Day Phased Execution Plan")
+render_page_header(
+    title="Strategic Recommendations & Executive Implementation Roadmap",
+    subtitle="Board-Level Governance, Clinical Protocolization & 180-Day Phased Execution Plan",
+    act_badge="Act 5"
+)
 
 st.markdown(
     """
