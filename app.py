@@ -101,6 +101,11 @@ div[data-testid="collapsedControl"] span {
 }
 
 /* 3. Main Canvas (Micro-Dot Tech Grid) */
+html, body, .stApp, .main, section.main {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+}
+
 .stApp {
   background-color: #F8FAFC !important;
   background-image: radial-gradient(#CBD5E1 1.1px, transparent 1.1px) !important;
@@ -465,7 +470,7 @@ div[data-testid="stPlotlyChart"] .user-select-none.svg-container {
   
   /* Compact Canvas Padding */
   .block-container {
-    padding-top: 1rem !important;
+    padding-top: 0rem !important;
     padding-bottom: 2rem !important;
     padding-left: 0.75rem !important;
     padding-right: 0.75rem !important;
