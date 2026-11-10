@@ -79,7 +79,7 @@ healthcare_analytics_portfolio/
 ### 1. Clone & Set Up Virtual Environment
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/ELSHINE123/healthcare_analytics_portfolio.git
 cd healthcare_analytics_portfolio
 
 # Create and activate a virtual environment
@@ -169,6 +169,12 @@ git push origin master
 * **Boardroom Presentation Mode**: Toggle in the sidebar expands the canvas to 95% width, scales up typography, elevates contrast, and locks the ROI model into recommended executive baselines for conference room projectors.
 * **One-Click Certified Board Memorandum**: Download a complete, publication-ready executive briefing document (`.md`) directly from the sidebar, Executive Summary, or Strategic Roadmap.
 * **Care Gap Audit Registry**: Export an actionable, audit-ready CSV roster of all 553 high-risk patients with assigned clinical pathways for frontline care management teams.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 *Developed by Daniel Ademola Dongo | Healthcare Systems Architecture & Actuarial Intelligence.*
