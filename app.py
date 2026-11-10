@@ -120,15 +120,44 @@ header[data-testid="stHeader"] {
 
 /* 4. Distinct Steel-Slate Sidebar (Noticeably Defined, Not Heavy or Dark) */
 section[data-testid="stSidebar"]:not([aria-expanded="false"]) {
-  width: 235px !important;
-  min-width: 235px !important;
+  width: 268px !important;
+  min-width: 268px !important;
 }
 
 section[data-testid="stSidebar"] {
   background-color: #E2E8F0 !important; /* Defined Cool Slate */
   border-right: 1px solid #CBD5E1 !important; /* Firm boundary line */
   box-shadow: 6px 0 24px -2px rgba(15, 23, 42, 0.09) !important; /* Prominent elevation shadow */
-  padding-top: 12px !important;
+  padding-top: 10px !important;
+}
+
+/* Ensure smooth, visible scrollbar on the sidebar at all times */
+section[data-testid="stSidebar"] div[data-testid="stSidebarUserContent"],
+section[data-testid="stSidebar"] > div {
+  scrollbar-width: thin !important;
+  scrollbar-color: #94A3B8 #E2E8F0 !important;
+  overflow-y: auto !important;
+}
+
+section[data-testid="stSidebar"] div[data-testid="stSidebarUserContent"]::-webkit-scrollbar,
+section[data-testid="stSidebar"] > div::-webkit-scrollbar {
+  width: 6px !important;
+}
+
+section[data-testid="stSidebar"] div[data-testid="stSidebarUserContent"]::-webkit-scrollbar-track,
+section[data-testid="stSidebar"] > div::-webkit-scrollbar-track {
+  background: #E2E8F0 !important;
+}
+
+section[data-testid="stSidebar"] div[data-testid="stSidebarUserContent"]::-webkit-scrollbar-thumb,
+section[data-testid="stSidebar"] > div::-webkit-scrollbar-thumb {
+  background-color: #94A3B8 !important;
+  border-radius: 4px !important;
+}
+
+section[data-testid="stSidebar"] div[data-testid="stSidebarUserContent"]::-webkit-scrollbar-thumb:hover,
+section[data-testid="stSidebar"] > div::-webkit-scrollbar-thumb:hover {
+  background-color: #64748B !important;
 }
 
 section[data-testid="stSidebar"] h1,
@@ -149,20 +178,20 @@ section[data-testid="stSidebar"] div[data-testid="stSidebarNav"]::before {
   text-transform: uppercase;
   letter-spacing: .09em;
   color: #475569;
-  padding: 8px 12px 6px 12px;
+  padding: 6px 10px 4px 10px;
 }
 
-/* 6. Navigation Link Rows (Proportioned for 235px) */
+/* 6. Navigation Link Rows (Proportioned for 268px Rail) */
 section[data-testid="stSidebar"] div[data-testid="stSidebarNav"] li div a {
-  min-height: 36px !important;
-  padding: 0 10px !important;
-  border-radius: 7px !important;
-  margin: 2px 4px !important;
+  min-height: 31px !important;
+  padding: 0 8px !important;
+  border-radius: 6px !important;
+  margin: 1px 3px !important;
   display: flex !important;
   align-items: center !important;
-  gap: 8px !important;
+  gap: 7px !important;
   color: #334155 !important;
-  font-size: 13px !important;
+  font-size: 12.5px !important;
   font-weight: 500 !important;
   text-decoration: none !important;
   white-space: nowrap !important;
@@ -183,6 +212,25 @@ section[data-testid="stSidebar"] div[data-testid="stSidebarNav"] li div a[aria-c
   font-weight: 700 !important;
   border-left: 3px solid #2563EB !important;
   box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08) !important;
+}
+
+/* Sidebar Custom Action Buttons */
+section[data-testid="stSidebar"] div.stDownloadButton button {
+  background-color: #FFFFFF !important;
+  color: #1E293B !important;
+  border: 1px solid #CBD5E1 !important;
+  border-radius: 7px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  padding: 5px 8px !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
+  transition: all 0.15s ease !important;
+}
+section[data-testid="stSidebar"] div.stDownloadButton button:hover {
+  background-color: #EFF6FF !important;
+  border-color: #93C5FD !important;
+  color: #1D4ED8 !important;
+  box-shadow: 0 2px 5px rgba(37, 99, 235, 0.12) !important;
 }
 
 /* 7. Refined Sidebar Collapse Button */
@@ -474,7 +522,14 @@ def get_export_data():
 pdf_data, csv_data = get_export_data()
 
 with st.sidebar:
-    st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div style="font-family: 'Be Vietnam Pro', sans-serif; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .09em; color: #475569; padding: 10px 0 6px 0; border-top: 1px solid #CBD5E1; margin-top: 6px;">
+            ⚡ EXECUTIVE COMMAND & EXPORTS
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
     pres_mode = st.toggle(
         "💼 Boardroom Mode",
         key="presentation_mode",
@@ -482,14 +537,6 @@ with st.sidebar:
     )
     
     if pdf_data and csv_data:
-        st.markdown(
-            """
-            <div style="font-family: 'Be Vietnam Pro', sans-serif; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .09em; color: #475569; padding: 12px 0 6px 0;">
-                EXECUTIVE EXPORTS
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
         st.download_button(
             "📄 Board Memorandum (PDF)",
             data=pdf_data,
@@ -499,7 +546,7 @@ with st.sidebar:
             help="Download the certified executive memorandum formatted for boardroom presentation."
         )
         st.download_button(
-            "📊 Care Gap Audit Roster",
+            "📊 Care Gap Audit Roster (CSV)",
             data=csv_data,
             file_name="Metropolitan_Health_Care_Gap_Registry.csv",
             mime="text/csv",
@@ -507,8 +554,8 @@ with st.sidebar:
             help="Export the 553 high/severe acuity patient roster with care gaps."
         )
 
-    st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
-    with st.expander("📖 Quick Terminology Lookup", expanded=False):
+    st.markdown("<div style='height: 4px;'></div>", unsafe_allow_html=True)
+    with st.expander("📖 Terminology Lookup", expanded=False):
         st.caption("Look up any healthcare acronym or economic term:")
         term_options = [f"{t['term']} — {t['full_name']}" for t in GLOSSARY_TERMS]
         sel_idx = st.selectbox(
@@ -520,11 +567,11 @@ with st.sidebar:
         selected_item = GLOSSARY_TERMS[sel_idx]
         st.markdown(
             f"""
-            <div style="font-size: 12px; line-height: 1.5; color: #1E293B; margin-top: 4px;">
+            <div style="font-size: 11.5px; line-height: 1.45; color: #1E293B; margin-top: 2px;">
                 <div style="font-weight: 700; color: #1D4ED8;">{selected_item['term']}</div>
-                <div style="font-weight: 600; color: #0F172A; font-size: 12.5px; margin-bottom: 4px;">{selected_item['full_name']}</div>
-                <div style="margin-bottom: 6px; color: #334155; font-size: 11.5px;">{selected_item['definition']}</div>
-                <div style="background: #F1F5F9; padding: 6px 8px; border-radius: 4px; border-left: 2px solid #2563EB; font-size: 11px; color: #0F172A;">
+                <div style="font-weight: 600; color: #0F172A; font-size: 12px; margin-bottom: 3px;">{selected_item['full_name']}</div>
+                <div style="margin-bottom: 5px; color: #334155; font-size: 11px;">{selected_item['definition']}</div>
+                <div style="background: #F1F5F9; padding: 5px 7px; border-radius: 4px; border-left: 2px solid #2563EB; font-size: 10.5px; color: #0F172A;">
                     <strong>Project Role:</strong> {selected_item['project_context']}
                 </div>
             </div>
@@ -535,21 +582,21 @@ with st.sidebar:
     # Lead Data Analyst Professional Badge
     st.markdown(
         """
-        <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid #CBD5E1;">
-            <div style="font-family: 'Be Vietnam Pro', sans-serif; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .09em; color: #475569; margin-bottom: 8px;">
+        <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid #CBD5E1;">
+            <div style="font-family: 'Be Vietnam Pro', sans-serif; font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .09em; color: #475569; margin-bottom: 6px;">
                 PROJECT LEAD & ARCHITECT
             </div>
-            <div style="background-color: #FFFFFF; border: 1px solid #CBD5E1; border-radius: 8px; padding: 12px; box-shadow: 0 1px 3px rgba(15,23,42,0.05);">
-                <div style="font-size: 13.5px; font-weight: 700; color: #0F172A;">Daniel Ademola Dongo</div>
-                <div style="font-size: 11px; color: #2563EB; font-weight: 600; margin-bottom: 4px;">Healthcare Data Analyst & BI Developer</div>
-                <div style="font-size: 11px; color: #475569; line-height: 1.45; margin-bottom: 10px;">
-                    Population Health Analytics &bull; Actuarial Cost Modeling &bull; Executive Decision Support
+            <div style="background-color: #FFFFFF; border: 1px solid #CBD5E1; border-radius: 8px; padding: 10px; box-shadow: 0 1px 3px rgba(15,23,42,0.05);">
+                <div style="font-size: 13px; font-weight: 700; color: #0F172A;">Daniel Ademola Dongo</div>
+                <div style="font-size: 10.5px; color: #2563EB; font-weight: 600; margin-bottom: 2px;">Healthcare Data Analyst & BI Developer</div>
+                <div style="font-size: 10.5px; color: #475569; line-height: 1.4; margin-bottom: 8px;">
+                    Population Health Analytics &bull; Actuarial Cost Modeling
                 </div>
                 <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-                    <a href="https://linkedin.com" target="_blank" style="text-decoration: none; font-size: 11px; font-weight: 600; color: #1D4ED8; background: #EFF6FF; border: 1px solid #BFDBFE; padding: 3px 8px; border-radius: 4px;">
+                    <a href="https://linkedin.com" target="_blank" style="text-decoration: none; font-size: 10.5px; font-weight: 600; color: #1D4ED8; background: #EFF6FF; border: 1px solid #BFDBFE; padding: 2px 7px; border-radius: 4px;">
                         💼 LinkedIn
                     </a>
-                    <a href="https://github.com" target="_blank" style="text-decoration: none; font-size: 11px; font-weight: 600; color: #334155; background: #F1F5F9; border: 1px solid #CBD5E1; padding: 3px 8px; border-radius: 4px;">
+                    <a href="https://github.com" target="_blank" style="text-decoration: none; font-size: 10.5px; font-weight: 600; color: #334155; background: #F1F5F9; border: 1px solid #CBD5E1; padding: 2px 7px; border-radius: 4px;">
                         💻 GitHub
                     </a>
                 </div>
