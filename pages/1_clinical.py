@@ -301,12 +301,11 @@ if not df.empty:
             text="<b>Bivariate Clinical Acuity Distribution</b>",
             x=0.01,
             y=0.98,
-            yref="container",
             xanchor="left",
             yanchor="top",
             font=dict(size=14, family="Be Vietnam Pro", color="#0F172A")
         ),
-        margin=dict(l=55, r=20, t=80, b=55),
+        margin=dict(l=55, r=20, t=55, b=85),
         height=510,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
@@ -330,13 +329,12 @@ if not df.empty:
         ),
         legend=dict(
             orientation="h",
-            yref="container",
             yanchor="top",
-            y=0.88,
-            xanchor="right",
-            x=0.99,
+            y=-0.18,
+            xanchor="center",
+            x=0.5,
             title="",
-            font=dict(family="Be Vietnam Pro", size=10)
+            font=dict(family="Be Vietnam Pro", size=11)
         ),
         font=dict(family="Be Vietnam Pro, sans-serif")
     )
@@ -453,7 +451,7 @@ if not df.empty:
 # Narrative Directly Under Visual 2
 st.markdown(
     """
-    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
+    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: left;'>
         <strong>Clinical Acuity Findings & Senior Cohort Vulnerabilities</strong>: In a well-managed healthcare network, patients carrying formal ICD-coded diagnoses 
         for chronic vascular or endocrine disease must receive guideline-directed medical therapy. The grouped analysis above isolates the 
         <strong>109 patients who have documented chronic disease but zero prescribed medication</strong> (patients with no active prescription on record).
@@ -526,7 +524,7 @@ if not df.empty:
 # Narrative Directly Under Visual 3
 st.markdown(
     """
-    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
+    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: left;'>
         <strong>Pharmacotherapy Discordance & Contraindication Analysis</strong>: The cross-tabulation matrix above reveals profound pharmacotherapeutic discordance 
         and contraindication risk across the health system's ambulatory network. While diagonal alignment indicates guideline-concordant 
         care (e.g., diabetics on metformin, hypertensives on lisinopril, hyperlipidemic patients on atorvastatin), the off-diagonal cells 

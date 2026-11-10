@@ -46,7 +46,7 @@ st.markdown(
 
 st.markdown(
     """
-    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
+    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: left;'>
         In recent years, Metropolitan Health entered two-sided risk-bearing agreements with federal and commercial payers, 
         most notably transitioning into an <strong>Accountable Care Organization (ACO)</strong> and accepting capitated <strong>Medicare Advantage</strong> 
         contracts. Under these value-based arrangements, the health system's economic incentives inverted overnight:
@@ -68,11 +68,11 @@ st.markdown(
             <span style="font-size: 16px;">🛡️</span>
             <strong style="color: #0F172A; font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em;">Clinical Data Governance & HIPAA Safe Harbor Compliance Notice</strong>
         </div>
-        <p style="color: #334155; font-size: 13px; line-height: 1.6; margin: 0; text-align: justify;">
+        <p style="color: #334155; font-size: 13px; line-height: 1.6; margin: 0; text-align: left;">
             To ensure patient confidentiality and regulatory integrity, all patient records within this application are derived from a 
             <strong>statistically calibrated synthetic cohort (N = 983)</strong> modeled after national epidemiological benchmarks 
             (NHANES, AHRQ HCUP, and ACC/AHA registries). This dataset strictly complies with 
-            <strong>HIPAA Safe Harbor De-Identification standards (45 CFR § 164.514(b)(2))</strong>. 
+            <strong>HIPAA Safe Harbor De-Identification standards (45 CFR Section 164.514(b)(2))</strong>. 
             Zero Protected Health Information (PHI) is collected, stored, or transmitted, ensuring complete compliance for public portfolio demonstration and technical evaluation.
         </p>
     </div>
@@ -81,15 +81,15 @@ st.markdown(
 )
 
 # ==============================================================================
-# 2B. EXECUTIVE PERSONA NAVIGATION GUIDE
+# 2B. EXECUTIVE REVIEW PATHWAYS
 # ==============================================================================
-with st.expander("🧭 **Executive Stakeholder Guide: Select Your Leadership Persona**", expanded=False):
-    st.caption("Select your role to view a curated review pathway, key visual indicators, and actionable decisions:")
+with st.expander("🧭 **Executive Review Pathways**", expanded=False):
+    st.caption("Select your leadership focus to view a curated 3-step review path, priority visuals, and actionable decisions:")
     tab_cmo, tab_coo, tab_cfo, tab_analyst = st.tabs([
-        "🩺 Chief Medical Officer",
-        "⚙️ Chief Operating Officer",
-        "💰 Chief Financial Officer",
-        "📋 Care Manager / Analyst"
+        "🩺 Clinical Leadership (CMO / Quality)",
+        "⚙️ Operations & Reach (COO / Pop Health)",
+        "💰 Finance & Risk (CFO / Managed Care)",
+        "📋 Care Management & Analytics"
     ])
     
     with tab_cmo:
@@ -142,7 +142,7 @@ st.header("Executive Decision Framework & Study Objectives")
 
 st.markdown(
     """
-    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
+    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: left;'>
         To navigate this transition and safeguard both patient health and operating margins, 
         executive leadership commissioned an in-depth audit of a <strong>983-patient chronic disease cohort</strong>. 
         This analytics study evaluates core priorities spanning clinical risk, operational feasibility, 

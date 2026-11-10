@@ -11,22 +11,28 @@ CHART_CARD_CSS = """
 <style>
 /* 1. Global Block Container & Navigable Space Optimization */
 .block-container {
-  padding-top: 1.4rem !important;
-  padding-bottom: 2.2rem !important;
+  padding-top: 5.25rem !important; /* Clears fixed native topbar (2.875rem) with 38px generous breathing room */
+  padding-bottom: 2.5rem !important;
   max-width: 1280px !important;
 }
 
 /* 2. Compact & Elegant Page Title Scale (Recovers ~100px+ of Vertical Space) */
 h1, [data-testid="stHeading"] h1 {
-  font-size: 22px !important;
+  font-size: 23px !important;
   font-weight: 700 !important;
   letter-spacing: -0.02em !important;
   color: #0F172A !important;
-  margin-top: 0 !important;
-  margin-bottom: 2px !important;
+  margin-top: 10px !important;
+  margin-bottom: 6px !important;
   padding-top: 0 !important;
   padding-bottom: 0 !important;
   line-height: 1.25 !important;
+}
+
+/* 2b. Clean Left-Aligned Typography for All Narrative Content */
+p, li, .stMarkdown p {
+  text-align: left !important;
+  text-justify: auto !important;
 }
 
 /* 3. Compact Subtitle / Caption */

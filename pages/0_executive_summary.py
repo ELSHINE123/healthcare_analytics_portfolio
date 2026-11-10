@@ -291,7 +291,7 @@ st.plotly_chart(fig_fin, width="stretch")
 # Narrative Directly Under Visual Set 3
 st.markdown(
     """
-    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
+    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: left;'>
         <strong>The Economic Mandate</strong>: Applying national <strong>AHRQ HCUP benchmarks</strong> (&dollar;12,500 average cost per acute avoidable chronic admission), 
         Metropolitan Health System faces over <strong>&dollar;1.25M in gross financial liability</strong> across its uncontrolled chronic panel. 
         Under legacy fee-for-service, this inpatient utilization was billed and collected; under capitation and ACO shared savings, 

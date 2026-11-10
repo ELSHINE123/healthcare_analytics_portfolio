@@ -105,7 +105,7 @@ st.caption("Interactive Reference Guide to Clinical Guidelines, HEDIS Measures, 
 
 st.markdown(
     """
-    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
+    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: left;'>
         Healthcare analytics operates at the intersection of clinical medicine, actuarial economics, federal quality regulations, 
         and health informatics. Use this searchable knowledge base to look up acronyms, guideline standards, 
         pharmacology mechanisms, and economic models referenced across the <strong>Metropolitan Health System Intelligence Suite</strong>.

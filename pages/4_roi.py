@@ -279,7 +279,7 @@ st.plotly_chart(fig_v9a, width="stretch")
 # Analysis Directly Under Visual 9A
 st.markdown(
     """
-    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
+    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: left;'>
         <strong>Multi-Scenario Sensitivity Analysis</strong>: Across conservative, base case, and optimistic scenarios, the economic model benchmarks 
         program costs against inpatient cost avoidance and CMS quality bonuses:
     </p>
@@ -329,7 +329,7 @@ st.plotly_chart(fig_v9b, width="stretch")
 # Analysis Directly Under Visual 9B
 st.markdown(
     """
-    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
+    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: left;'>
         <strong>Base Case Net Financial Bridge (+&dollar;109.9K Net Value)</strong>: Under the expected 20% reduction in preventable acute admissions, the program averts <strong>51.0 inpatient stays</strong>, generating <strong>&dollar;318.4K in direct cost avoidance</strong> under AHRQ HCUP benchmarks (&dollar;12,500/stay). Combined with a conservative <strong>&dollar;68.0K in CMS 4-Star Quality Bonus capture</strong>, the program yields <strong>&dollar;386.4K in gross economic value</strong> against &dollar;276.5K in expense—delivering <strong>+&dollar;109.9K in net margin (140% ROI)</strong>.
     </p>
     """,
@@ -405,7 +405,7 @@ st.plotly_chart(fig_heatmap, width="stretch")
 # Analysis Directly Under Breakeven Heatmap
 st.markdown(
     """
-    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
+    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: left;'>
         <strong>Breakeven Frontier Analysis</strong>: The 2D sensitivity matrix demonstrates robust downside insulation across all practical operational bounds. 
         Even at high clinician compensation bands (&dollar;125K/yr fully loaded) with conservative admission reduction goals (15%), 
         the care management program maintains positive operating margins. Green cells denote positive net economic return, confirming that 
@@ -461,7 +461,7 @@ st.plotly_chart(fig_v10a, width="stretch")
 # Analysis Directly Under Visual 10A
 st.markdown(
     """
-    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
+    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: left;'>
         <strong>Care Management Workforce Calibration (CMSA & NCQA Standards)</strong>: High-quality care coordination requires rigorous caseload calibration. 
         Overloading nurse navigators leads to superficial outreach and clinician burnout, while under-allocating staffing leaves high-risk patients 
         unmonitored:
@@ -514,7 +514,7 @@ st.plotly_chart(fig_v10b, width="stretch")
 # Analysis Directly Under Visual 10B
 st.markdown(
     f"""
-    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
+    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: left;'>
         <strong>Self-Funding Economic Feasibility & Net Operating Return</strong>: The balance sheet analysis demonstrates that dedicated care management is an accretive operating investment:
     </p>
     <ul style='margin-top: 6px; margin-bottom: 12px; padding-left: 22px; line-height: 1.65; color: #334155;'>

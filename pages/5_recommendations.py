@@ -385,7 +385,7 @@ st.plotly_chart(fig_roadmap, width="stretch")
 # Analysis Directly Under Implementation Gantt Chart
 st.markdown(
     """
-    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
+    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: left;'>
         <strong>Implementation Phasing & Critical Path Governance</strong>: The 180-day transformation plan establishes sequential operational gates designed to front-load regulatory compliance and acute risk stabilization:
     </p>
     <ul style='margin-top: 6px; margin-bottom: 12px; padding-left: 22px; line-height: 1.65; color: #334155;'>
@@ -465,9 +465,9 @@ st.markdown(gov_rows_html, unsafe_allow_html=True)
 st.markdown(
     """
     **Executive Summary Conclusion**: Metropolitan Health System stands at a decisive strategic crossroads. 
-    Passive management of its chronic panel carries an unmitigated balance sheet liability exceeding **&dollar;3.83M in gross acute inpatient exposure**. 
-    Conversely, investing **&dollar;665K in a 7.0 RN FTE care coordination unit** averts 51 avoidable acute hospitalizations, secures 
-    CMS 4.5-Star Quality Bonus incentives, and returns a verified **+&dollar;392.5K in net operating margin (159% self-funding ratio)**. 
+    Passive management of its chronic panel carries an unmitigated balance sheet liability exceeding **$3.83M in gross acute inpatient exposure**. 
+    Conversely, investing **$665K in a 7.0 RN FTE care coordination unit** averts 51 avoidable acute hospitalizations, secures 
+    CMS 4.5-Star Quality Bonus incentives, and returns a verified **+$392.5K in net operating margin (159% self-funding ratio)**. 
     The clinical, operational, and financial evidence conclusively supports immediate board approval of the 180-Day Implementation Plan.
     """
 )

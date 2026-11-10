@@ -258,7 +258,7 @@ st.plotly_chart(fig_v7a, width="stretch")
 severe_cost = cost_df.loc[cost_df['clinical_risk_tier'] == 'Severe Acuity', 'cost_exposure'].values[0] if not cost_df.empty else 0
 st.markdown(
     f"""
-    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
+    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: left;'>
         <strong>Actuarial Inpatient Risk Assessment by Acuity Tier</strong>: In value-based ACO contracts, acute inpatient admissions represent the single largest 
         source of avoidable medical expense. Applying national <strong>AHRQ HCUP benchmarks</strong> (&dollar;{admission_cost:,} average cost per acute chronic stay) 
         against actuarial admission probabilities (5% for Low Acuity, 15% for Moderate, 35% for High, and 65% for Severe), 
@@ -311,7 +311,7 @@ st.plotly_chart(fig_v7b, width="stretch")
 # Analysis Directly Under Visual 7B
 st.markdown(
     f"""
-    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
+    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: left;'>
         <strong>80/20 Pareto Financial Risk Concentration</strong>: The Pareto decomposition illustrates the classic risk asymmetry of population health:
     </p>
     <ul style='margin-top: 6px; margin-bottom: 12px; padding-left: 22px; line-height: 1.65; color: #334155;'>
@@ -531,7 +531,7 @@ st.plotly_chart(fig_v8, width="stretch")
 # Narrative Directly Under Visual 8
 st.markdown(
     """
-    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
+    <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: left;'>
         <strong>Quality Governance & CMS Star Rating Assessment</strong>: Under federal CMS Medicare Advantage Star Ratings, health systems are scored on a 1-to-5 star scale. 
         Achieving a 4.0 or 5.0 Star Rating unlocks substantial annual Quality Bonus Payments (typically 5% bonus on Medicare benchmark payments), 
         while falling below 3.5 stars results in marketing restrictions, loss of auto-enrollment, and severe financial penalties.

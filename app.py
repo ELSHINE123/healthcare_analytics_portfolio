@@ -79,8 +79,7 @@ p, li {
   font-size: 14.5px !important;
   line-height: 1.65 !important;
   color: #334155 !important;
-  text-align: justify !important;
-  text-justify: inter-word !important;
+  text-align: left !important;
 }
 
 /* Inspector Side-Panel Text (Refined, Compact Scale) */
@@ -88,8 +87,7 @@ p, li {
   font-size: 13px !important;
   line-height: 1.6 !important;
   color: #334155 !important;
-  text-align: justify !important;
-  text-justify: inter-word !important;
+  text-align: left !important;
 }
 
 /* 2. Protect Icon Fonts */
@@ -253,7 +251,7 @@ button[data-testid="stSidebarCollapseButton"]:hover {
 }
 
 .block-container {
-  padding-top: 1.8rem !important;
+  padding-top: 5.25rem !important;
   padding-bottom: 2.5rem !important;
   max-width: 1250px !important;
 }

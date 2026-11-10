@@ -302,7 +302,7 @@ if not df.empty:
     # Analysis Directly Under Visual 6A
     st.markdown(
         """
-        <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
+        <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: left;'>
             <strong>Laboratory Measurement Provenance & Cohort Exposure</strong>: Across Metropolitan Health's 983 audited patients, 
             <strong>344 records (35.0%) contain at least one unverified vital sign</strong>: 191 patients have estimated cholesterol, 125 have estimated blood pressure, 
             and 28 have both vitals estimated. Only 639 patients (65.0%) possess complete, verified direct laboratory measurements. 
@@ -361,7 +361,7 @@ if not df.empty:
     # Analysis Directly Under Visual 6B
     st.markdown(
         """
-        <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: justify;'>
+        <p style='color: #334155; font-size: 14.5px; line-height: 1.65; text-align: left;'>
             <strong>Acuity Distortion & Regulatory Audit Risks</strong>: The comparison of verified direct labs versus unverified records illustrates 
             the clinical risks of statistical estimation:
         </p>

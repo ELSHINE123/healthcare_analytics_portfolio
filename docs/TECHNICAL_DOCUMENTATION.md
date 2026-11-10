@@ -156,3 +156,4 @@ The suite incorporates two tiers of automated validation:
    * Programmatically executes all 8 application pages in headless mode.
    * Verifies dynamic selectboxes (e.g. `Diabetes` + `Severe Acuity`) and resets.
    * Asserts zero runtime exceptions (`assert len(at.exception) == 0`).
+
