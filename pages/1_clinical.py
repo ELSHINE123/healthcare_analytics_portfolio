@@ -329,55 +329,41 @@ if not df.empty:
     with inspect_col:
         dynamic_text = get_clinical_narrative(selected_condition, selected_tier, sub_n, sub_pct, sub_sbp, sub_chol, sub_unmed)
         gap_color = "#DC2626" if sub_unmed > 0 else "#059669"
-        st.markdown(
-            f"""
-            <div style="background-color: #FFFFFF; border: 1px solid #CBD5E1; border-radius: 12px; padding: 18px 20px; box-shadow: 0 2px 8px rgba(15,23,42,0.05); min-height: 500px; display: flex; flex-direction: column; justify-content: space-between; box-sizing: border-box; margin-top: 8px;">
-                <div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E2E8F0; padding-bottom: 10px; margin-bottom: 12px;">
-                        <span style="font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #2563EB;">
-                            🩺 DYNAMIC DIAGNOSTIC INSPECTOR
-                        </span>
-                        <span style="font-size: 10px; font-weight: 700; background-color: #EFF6FF; color: #1D4ED8; border: 1px solid #BFDBFE; border-radius: 4px; padding: 2px 7px;">
-                            LIVE SELECTION
-                        </span>
-                    </div>
-                    
-                    <div style="font-size: 15px; font-weight: 700; color: #0F172A; margin-bottom: 12px;">
-                        {selected_condition} &bull; {selected_tier}
-                    </div>
-
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px;">
-                        <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 10px;">
-                            <div style="font-size: 9.5px; font-weight: 700; color: #64748B; text-transform: uppercase;">Cohort Size</div>
-                            <div style="font-size: 16px; font-weight: 800; color: #0F172A;">{sub_n:,} <span style="font-size: 11px; font-weight: 600; color: #64748B;">({sub_pct:.1f}%)</span></div>
-                        </div>
-                        <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 10px;">
-                            <div style="font-size: 9.5px; font-weight: 700; color: #64748B; text-transform: uppercase;">Active Care Gaps</div>
-                            <div style="font-size: 16px; font-weight: 800; color: {gap_color};">{sub_unmed} <span style="font-size: 11px; font-weight: 600; color: #64748B;">Pts</span></div>
-                        </div>
-                        <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 10px;">
-                            <div style="font-size: 9.5px; font-weight: 700; color: #64748B; text-transform: uppercase;">Mean SBP</div>
-                            <div style="font-size: 15px; font-weight: 800; color: #0F172A;">{sub_sbp:.1f} <span style="font-size: 10px; font-weight: 600; color: #64748B;">mmHg</span></div>
-                        </div>
-                        <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 10px;">
-                            <div style="font-size: 9.5px; font-weight: 700; color: #64748B; text-transform: uppercase;">Mean Cholesterol</div>
-                            <div style="font-size: 15px; font-weight: 800; color: #0F172A;">{sub_chol:.1f} <span style="font-size: 10px; font-weight: 600; color: #64748B;">mg/dL</span></div>
-                        </div>
-                    </div>
-
-                    <div style="color: #334155; font-size: 13.5px; line-height: 1.6; text-align: justify; text-justify: inter-word;">
-                        {dynamic_text}
-                    </div>
-                </div>
-
-                <div style="margin-top: 14px; padding-top: 10px; border-top: 1px solid #E2E8F0; font-size: 11px; color: #64748B; display: flex; align-items: center; justify-content: space-between;">
-                    <span>⚡ Synchronized with Selection</span>
-                    <span style="font-weight: 600; color: #2563EB;">ACC/AHA &bull; NCEP Standards</span>
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True
+        inspector_html = (
+            f'<div style="background-color: #FFFFFF; border: 1px solid #CBD5E1; border-radius: 12px; padding: 18px 20px; box-shadow: 0 2px 8px rgba(15,23,42,0.05); min-height: 500px; display: flex; flex-direction: column; justify-content: space-between; box-sizing: border-box; margin-top: 8px;">'
+            f'<div>'
+            f'<div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E2E8F0; padding-bottom: 10px; margin-bottom: 12px;">'
+            f'<span style="font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #2563EB;">🩺 DYNAMIC DIAGNOSTIC INSPECTOR</span>'
+            f'<span style="font-size: 10px; font-weight: 700; background-color: #EFF6FF; color: #1D4ED8; border: 1px solid #BFDBFE; border-radius: 4px; padding: 2px 7px;">LIVE SELECTION</span>'
+            f'</div>'
+            f'<div style="font-size: 15px; font-weight: 700; color: #0F172A; margin-bottom: 12px;">{selected_condition} &bull; {selected_tier}</div>'
+            f'<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px;">'
+            f'<div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 10px;">'
+            f'<div style="font-size: 9.5px; font-weight: 700; color: #64748B; text-transform: uppercase;">Cohort Size</div>'
+            f'<div style="font-size: 16px; font-weight: 800; color: #0F172A;">{sub_n:,} <span style="font-size: 11px; font-weight: 600; color: #64748B;">({sub_pct:.1f}%)</span></div>'
+            f'</div>'
+            f'<div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 10px;">'
+            f'<div style="font-size: 9.5px; font-weight: 700; color: #64748B; text-transform: uppercase;">Active Care Gaps</div>'
+            f'<div style="font-size: 16px; font-weight: 800; color: {gap_color};">{sub_unmed} <span style="font-size: 11px; font-weight: 600; color: #64748B;">Pts</span></div>'
+            f'</div>'
+            f'<div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 10px;">'
+            f'<div style="font-size: 9.5px; font-weight: 700; color: #64748B; text-transform: uppercase;">Mean SBP</div>'
+            f'<div style="font-size: 15px; font-weight: 800; color: #0F172A;">{sub_sbp:.1f} <span style="font-size: 10px; font-weight: 600; color: #64748B;">mmHg</span></div>'
+            f'</div>'
+            f'<div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 10px;">'
+            f'<div style="font-size: 9.5px; font-weight: 700; color: #64748B; text-transform: uppercase;">Mean Cholesterol</div>'
+            f'<div style="font-size: 15px; font-weight: 800; color: #0F172A;">{sub_chol:.1f} <span style="font-size: 10px; font-weight: 600; color: #64748B;">mg/dL</span></div>'
+            f'</div>'
+            f'</div>'
+            f'<div style="color: #334155; font-size: 13.5px; line-height: 1.6; text-align: justify; text-justify: inter-word;">{dynamic_text}</div>'
+            f'</div>'
+            f'<div style="margin-top: 14px; padding-top: 10px; border-top: 1px solid #E2E8F0; font-size: 11px; color: #64748B; display: flex; align-items: center; justify-content: space-between;">'
+            f'<span>⚡ Synchronized with Selection</span>'
+            f'<span style="font-weight: 600; color: #2563EB;">ACC/AHA &bull; NCEP Standards</span>'
+            f'</div>'
+            f'</div>'
         )
+        st.markdown(inspector_html, unsafe_allow_html=True)
 
 st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
 
