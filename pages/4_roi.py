@@ -19,17 +19,18 @@ project_root = Path(__file__).resolve().parent.parent
 if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
-from src.styles import inject_chart_card_css
+from src.styles import inject_chart_card_css, render_page_header
 
 inject_chart_card_css()
 
 # ==============================================================================
 # 1. PAGE HEADER & EXECUTIVE METADATA
 # ==============================================================================
-st.title("Preventative Care ROI & Clinical Staffing Model")
-st.caption("Multi-Scenario Preventative Care Economics & Calibrated Nurse Caseload Allocation")
-
-st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+render_page_header(
+    title="Preventative Care ROI & Clinical Staffing Model",
+    subtitle="Multi-Scenario Preventative Care Economics & Calibrated Nurse Caseload Allocation",
+    act_badge="Act 4"
+)
 
 # ==============================================================================
 # 2. DATA INGESTION & COHORT SIZING

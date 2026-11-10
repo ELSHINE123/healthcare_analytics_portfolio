@@ -19,7 +19,7 @@ project_root = Path(__file__).resolve().parent.parent
 if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
-from src.styles import inject_chart_card_css
+from src.styles import inject_chart_card_css, render_page_header
 
 inject_chart_card_css()
 
@@ -41,8 +41,11 @@ df = load_data()
 # ==============================================================================
 # 2. PAGE HEADER & OPERATIONAL FRAMING
 # ==============================================================================
-st.title("Operational Reach, Surveillance & Data Quality")
-st.caption("Patient Contactability Channels, Longitudinal Surveillance Cadence & Clinical Data Quality")
+render_page_header(
+    title="Operational Reach, Surveillance & Data Quality",
+    subtitle="Patient Contactability Channels, Longitudinal Surveillance Cadence & Clinical Data Quality",
+    act_badge="Act 2"
+)
 
 st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
 

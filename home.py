@@ -5,15 +5,26 @@ Author: Daniel Ademola Dongo
 Homepage: Hospital Narrative Overview & Strategic Business Questions
 """
 
+import sys
+from pathlib import Path
 import streamlit as st
+
+project_root = Path(__file__).resolve().parent
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
+
+from src.styles import inject_chart_card_css, render_page_header
+
+inject_chart_card_css()
 
 # ==============================================================================
 # 1. HEADER & INSTITUTIONAL IDENTITY
 # ==============================================================================
-st.title("Metropolitan Health System: Clinical EHR Intelligence")
-st.caption("Value-Based Healthcare Intelligence & Actuarial Cohort Audit • Executive Decision Support • Lead Architect: Daniel Ademola Dongo")
-
-st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+render_page_header(
+    title="Metropolitan Health System: Clinical EHR Intelligence",
+    subtitle="Value-Based Healthcare Intelligence & Actuarial Cohort Audit • Executive Decision Support • Lead Architect: Daniel Ademola Dongo",
+    act_badge="Overview"
+)
 
 # ==============================================================================
 # 2. OVERVIEW OF THE HOSPITAL
