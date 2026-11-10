@@ -266,25 +266,25 @@ if not df.empty:
         y=130, 
         line_dash="dot", 
         line_color="#F59E0B", 
-        annotation_text="Stage 1 (130)", 
-        annotation_position="bottom right",
-        annotation_font=dict(color="#B45309", size=10, family="Be Vietnam Pro")
+        annotation_text="AHA Stage 1 (130 mmHg)", 
+        annotation_position="bottom left",
+        annotation_font=dict(color="#B45309", size=10.5, family="Be Vietnam Pro")
     )
     fig_v1.add_hline(
         y=140, 
         line_dash="dash", 
         line_color="#DC2626", 
-        annotation_text="Stage 2 (140)", 
-        annotation_position="top right",
-        annotation_font=dict(color="#991B1B", size=10, family="Be Vietnam Pro")
+        annotation_text="AHA Stage 2 (140 mmHg)", 
+        annotation_position="top left",
+        annotation_font=dict(color="#991B1B", size=10.5, family="Be Vietnam Pro")
     )
     fig_v1.add_vline(
         x=200, 
         line_dash="dot", 
         line_color="#2563EB", 
-        annotation_text="NCEP (200)", 
-        annotation_position="bottom left",
-        annotation_font=dict(color="#1D4ED8", size=10, family="Be Vietnam Pro")
+        annotation_text="NCEP Border (200 mg/dL)", 
+        annotation_position="top right",
+        annotation_font=dict(color="#1D4ED8", size=10.5, family="Be Vietnam Pro")
     )
 
     fig_v1.update_traces(
@@ -299,90 +299,49 @@ if not df.empty:
 
     fig_v1.update_layout(
         title=dict(
-            text="<b>Bivariate Clinical Acuity Distribution</b>",
-            x=0.03, y=0.96, xanchor="left", yanchor="top",
-            font=dict(size=14, family="Be Vietnam Pro", color="#0F172A")
+            text="<b>Bivariate Clinical Acuity Distribution</b><br><span style='font-size:11.5px; color:#64748B; font-weight:500;'>983 Patients Displayed across SBP & Cholesterol</span>",
+            x=0.5, y=0.97, xanchor="center", yanchor="top"
         ),
-        margin=dict(l=55, r=20, t=65, b=60),
+        margin=dict(l=45, r=25, t=55, b=110),
         height=510,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        xaxis=dict(
-            showgrid=True,
-            gridcolor="#E2E8F0",
-            showline=True,
-            linecolor="#CBD5E1",
-            linewidth=1.2,
-            title=dict(text="Total Cholesterol (mg/dL) — NCEP ATP III", font=dict(size=11.5, family="Be Vietnam Pro", color="#475569")),
-            tickfont=dict(size=10.5, family="Be Vietnam Pro", color="#475569"),
-            range=[148, 236]
-        ),
-        yaxis=dict(
-            showgrid=True,
-            gridcolor="#E2E8F0",
-            showline=True,
-            linecolor="#CBD5E1",
-            linewidth=1.2,
-            title=dict(text="Systolic BP (mmHg) — 2017 ACC/AHA", font=dict(size=11.5, family="Be Vietnam Pro", color="#475569")),
-            tickfont=dict(size=10.5, family="Be Vietnam Pro", color="#475569"),
-            range=[100, 150]
-        ),
+        xaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Total Cholesterol (mg/dL) — NCEP ATP III", range=[150, 235]),
+        yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Systolic BP (mmHg) — 2017 ACC/AHA", range=[102, 148]),
         legend=dict(
             orientation="h",
-            yanchor="bottom",
-            y=1.01,
-            xanchor="right",
-            x=0.98,
+            yanchor="top",
+            y=-0.17,
+            xanchor="center",
+            x=0.5,
             title="",
-            font=dict(family="Be Vietnam Pro", size=10.5)
+            font=dict(family="Be Vietnam Pro", size=12)
         ),
         font=dict(family="Be Vietnam Pro, sans-serif")
     )
 
-    # Perfectly Matched Side-by-Side Executive Panels (50% / 50% Equal Width and Equal Height)
-    plot_col, inspect_col = st.columns(2, gap="medium")
+    st.plotly_chart(fig_v1, width="stretch")
 
-    with plot_col:
-        st.plotly_chart(fig_v1, width="stretch")
-
-    with inspect_col:
-        dynamic_text = get_clinical_narrative(selected_condition, selected_tier, sub_n, sub_pct, sub_sbp, sub_chol, sub_unmed)
-        gap_color = "#DC2626" if sub_unmed > 0 else "#059669"
-        inspector_html = (
-            f'<div style="background-color: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; padding: 18px 20px; box-shadow: 0 1px 3px rgba(15,23,42,0.04); height: 538px; display: flex; flex-direction: column; justify-content: space-between; box-sizing: border-box; margin-top: 8px; margin-bottom: 18px; overflow-y: auto;">'
-            f'<div>'
-            f'<div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E2E8F0; padding-bottom: 10px; margin-bottom: 12px;">'
-            f'<span style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #2563EB; font-family: \'Be Vietnam Pro\', sans-serif;">🩺 DYNAMIC DIAGNOSTIC INSPECTOR</span>'
-            f'<span style="font-size: 10.5px; font-weight: 700; background-color: #EFF6FF; color: #1D4ED8; border: 1px solid #BFDBFE; border-radius: 4px; padding: 2px 7px; font-family: \'Be Vietnam Pro\', sans-serif;">LIVE SELECTION</span>'
-            f'</div>'
-            f'<div style="font-size: 16px; font-weight: 700; color: #0F172A; margin-bottom: 12px; font-family: \'Be Vietnam Pro\', sans-serif;">{selected_condition} &bull; {selected_tier}</div>'
-            f'<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px;">'
-            f'<div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 10px;">'
-            f'<div style="font-size: 10px; font-weight: 700; color: #64748B; text-transform: uppercase; font-family: \'Be Vietnam Pro\', sans-serif;">Cohort Size</div>'
-            f'<div style="font-size: 16px; font-weight: 800; color: #0F172A; font-family: \'Be Vietnam Pro\', sans-serif;">{sub_n:,} <span style="font-size: 11.5px; font-weight: 600; color: #64748B;">({sub_pct:.1f}%)</span></div>'
-            f'</div>'
-            f'<div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 10px;">'
-            f'<div style="font-size: 10px; font-weight: 700; color: #64748B; text-transform: uppercase; font-family: \'Be Vietnam Pro\', sans-serif;">Active Care Gaps</div>'
-            f'<div style="font-size: 16px; font-weight: 800; color: {gap_color}; font-family: \'Be Vietnam Pro\', sans-serif;">{sub_unmed} <span style="font-size: 11.5px; font-weight: 600; color: #64748B;">Pts</span></div>'
-            f'</div>'
-            f'<div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 10px;">'
-            f'<div style="font-size: 10px; font-weight: 700; color: #64748B; text-transform: uppercase; font-family: \'Be Vietnam Pro\', sans-serif;">Mean SBP</div>'
-            f'<div style="font-size: 15px; font-weight: 800; color: #0F172A; font-family: \'Be Vietnam Pro\', sans-serif;">{sub_sbp:.1f} <span style="font-size: 10.5px; font-weight: 600; color: #64748B;">mmHg</span></div>'
-            f'</div>'
-            f'<div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 10px;">'
-            f'<div style="font-size: 10px; font-weight: 700; color: #64748B; text-transform: uppercase; font-family: \'Be Vietnam Pro\', sans-serif;">Mean Cholesterol</div>'
-            f'<div style="font-size: 15px; font-weight: 800; color: #0F172A; font-family: \'Be Vietnam Pro\', sans-serif;">{sub_chol:.1f} <span style="font-size: 10.5px; font-weight: 600; color: #64748B;">mg/dL</span></div>'
-            f'</div>'
-            f'</div>'
-            f'<div style="color: #334155; font-size: 14.5px; line-height: 1.65; font-family: \'Be Vietnam Pro\', sans-serif; text-align: justify; text-justify: inter-word;">{dynamic_text}</div>'
-            f'</div>'
-            f'<div style="margin-top: 14px; padding-top: 10px; border-top: 1px solid #E2E8F0; font-size: 11.5px; color: #64748B; font-family: \'Be Vietnam Pro\', sans-serif; display: flex; align-items: center; justify-content: space-between;">'
-            f'<span>⚡ Synchronized with Selection</span>'
-            f'<span style="font-weight: 600; color: #2563EB;">ACC/AHA &bull; NCEP Standards</span>'
-            f'</div>'
-            f'</div>'
-        )
-        st.markdown(inspector_html, unsafe_allow_html=True)
+    # Analysis & Diagnostic Interpretation Directly Under Visual 1
+    dynamic_text = get_clinical_narrative(selected_condition, selected_tier, sub_n, sub_pct, sub_sbp, sub_chol, sub_unmed)
+    st.markdown(
+        f"""
+        <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 14px 18px; margin-top: 8px; margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E2E8F0; padding-bottom: 8px; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+                <div style="font-size: 13px; font-weight: 700; color: #0F172A; text-transform: uppercase; letter-spacing: 0.05em;">
+                    🩺 Clinical Diagnostic Interpretation: {selected_condition} &bull; {selected_tier}
+                </div>
+                <div style="font-size: 12px; color: #475569; font-weight: 600;">
+                    {sub_n:,} Patients ({sub_pct:.1f}%) &bull; Mean SBP: {sub_sbp:.1f} mmHg &bull; Mean Chol: {sub_chol:.1f} mg/dL &bull; Care Gaps: {sub_unmed}
+                </div>
+            </div>
+            <div style="color: #334155; font-size: 14px; line-height: 1.65;">
+                {dynamic_text}
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
 st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
 
@@ -499,7 +458,6 @@ if not df.empty:
     fig_v3 = px.imshow(
         matrix_clean,
         text_auto=True,
-        aspect="auto",
         labels=dict(x="Prescribed Medication", y="Documented Diagnosis", color="Patients"),
         x=matrix_clean.columns,
         y=matrix_clean.index,
@@ -513,11 +471,7 @@ if not df.empty:
     )
 
     fig_v3.update_layout(
-        title=dict(
-            text="<b>Clinical Prescribing Alignment: Documented Condition vs. Active Pharmacotherapy</b>",
-            x=0.5, y=0.95, xanchor="center", yanchor="top"
-        ),
-        margin=dict(l=40, r=40, t=75, b=45),
+        margin=dict(l=30, r=30, t=60, b=40),
         height=490,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",

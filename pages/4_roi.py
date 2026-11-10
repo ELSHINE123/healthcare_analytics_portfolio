@@ -255,9 +255,9 @@ fig_v9a.add_trace(go.Bar(
 fig_v9a.update_layout(
     title=dict(
         text="<b>Preventative Care Sensitivity across 3 Scenarios</b>",
-        x=0.5, y=0.94, xanchor="center", yanchor="top"
+        x=0.5, y=0.96, xanchor="center", yanchor="top"
     ),
-    margin=dict(l=45, r=25, t=75, b=95),
+    margin=dict(l=35, r=20, t=55, b=110),
     height=480,
     barmode="group",
     bargap=0.25,
@@ -316,9 +316,9 @@ fig_v9b = go.Figure(go.Waterfall(
 fig_v9b.update_layout(
     title=dict(
         text="<b>Base Case Financial Bridge: +$109.9K Net Value</b>",
-        x=0.5, y=0.94, xanchor="center", yanchor="top"
+        x=0.5, y=0.96, xanchor="center", yanchor="top"
     ),
-    margin=dict(l=45, r=25, t=75, b=50),
+    margin=dict(l=25, r=20, t=55, b=50),
     height=450,
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
@@ -390,9 +390,9 @@ fig_heatmap = go.Figure(data=go.Heatmap(
 fig_heatmap.update_layout(
     title=dict(
         text="<b>Preventative Care Breakeven Frontier (2D Sensitivity Matrix)</b>",
-        x=0.5, y=0.94, xanchor="center", yanchor="top"
+        x=0.5, y=0.96, xanchor="center", yanchor="top"
     ),
-    margin=dict(l=55, r=105, t=75, b=55),
+    margin=dict(l=50, r=40, t=60, b=50),
     height=480,
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
@@ -446,9 +446,9 @@ fig_v10a.add_trace(go.Bar(
 fig_v10a.update_layout(
     title=dict(
         text="<b>Care Management Caseload Staffing Model</b>",
-        x=0.5, y=0.94, xanchor="center", yanchor="top"
+        x=0.5, y=0.96, xanchor="center", yanchor="top"
     ),
-    margin=dict(l=200, r=60, t=75, b=45),
+    margin=dict(l=200, r=60, t=65, b=40),
     height=420,
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
