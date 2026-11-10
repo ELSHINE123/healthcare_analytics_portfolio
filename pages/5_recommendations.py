@@ -43,8 +43,7 @@ df = load_data()
 # ==============================================================================
 render_page_header(
     title="Strategic Recommendations & Executive Implementation Roadmap",
-    subtitle="Board-Level Governance, Clinical Protocolization & 180-Day Phased Execution Plan",
-    act_badge="Act 5"
+    subtitle="Board-Level Governance, Clinical Protocolization & 180-Day Phased Execution Plan"
 )
 
 st.markdown(

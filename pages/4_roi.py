@@ -32,8 +32,7 @@ inject_chart_card_css()
 # ==============================================================================
 render_page_header(
     title="Preventative Care ROI & Clinical Staffing Model",
-    subtitle="Multi-Scenario Preventative Care Economics & Calibrated Nurse Caseload Allocation",
-    act_badge="Act 4"
+    subtitle="Multi-Scenario Preventative Care Economics & Calibrated Nurse Caseload Allocation"
 )
 
 # ==============================================================================

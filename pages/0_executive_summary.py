@@ -46,8 +46,7 @@ df = load_data()
 # ==============================================================================
 render_page_header(
     title="Executive Summary: Value-Based Population Health Intelligence",
-    subtitle="Enterprise Decision Support & Population Health Briefing • 983-Patient Chronic Cohort Audit",
-    act_badge="Briefing"
+    subtitle="Enterprise Decision Support & Population Health Briefing • 983-Patient Chronic Cohort Audit"
 )
 
 st.markdown(
@@ -391,7 +390,7 @@ with tour_col1:
         """
         <div style="padding: 2px 0;">
             <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #2563EB; margin-bottom: 2px;">
-                EXECUTIVE TOUR &bull; ACT 1 OF 4
+                EXECUTIVE TOUR &bull; NEXT MODULE: CLINICAL RISK & SAFETY
             </div>
             <div style="font-size: 15px; font-weight: 700; color: #0F172A;">
                 Clinical Risk, Acuity Matrix & Safety

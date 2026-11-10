@@ -106,8 +106,7 @@ st.markdown(
 # ==============================================================================
 render_page_header(
     title="Healthcare & Value-Based Care Terminology Lexicon",
-    subtitle="Interactive Reference Guide to Clinical Guidelines, HEDIS Measures, Actuarial Economics & Healthcare Acronyms",
-    act_badge="Lexicon"
+    subtitle="Interactive Reference Guide to Clinical Guidelines, HEDIS Measures, Actuarial Economics & Healthcare Acronyms"
 )
 
 st.markdown(

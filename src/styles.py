@@ -118,19 +118,6 @@ div[data-testid="stElementContainer"]:has(.sticky-page-header) {
   padding: 0 !important;
 }
 
-.sticky-act-pill {
-  background-color: #EFF6FF !important;
-  color: #1D4ED8 !important;
-  border: 1px solid #BFDBFE !important;
-  font-size: 10.5px !important;
-  font-weight: 700 !important;
-  padding: 2px 8px !important;
-  border-radius: 9999px !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.05em !important;
-  display: inline-block !important;
-}
-
 .sticky-page-caption {
   font-size: 12px !important;
   color: #64748B !important;
@@ -220,17 +207,15 @@ def inject_chart_card_css():
     """Injects chart card container CSS ensuring all visual content is 100% visible without internal scrolling."""
     st.markdown(CHART_CARD_CSS, unsafe_allow_html=True)
 
-def render_page_header(title: str, subtitle: str, act_badge: str = None):
+def render_page_header(title: str, subtitle: str, *args, **kwargs):
     """
     Renders a space-efficient, sticky executive page header.
-    Snaps to the screen below the top bar when scrolling so executive users always maintain navigation context.
+    Snaps to the top bar when scrolling so executive users always maintain navigation context.
     """
-    badge_html = f'<span class="sticky-act-pill">{act_badge}</span>' if act_badge else ""
     header_html = (
         f'<div class="sticky-page-header">'
         f'<div class="sticky-page-header-inner">'
         f'<div class="sticky-title-row">'
-        f'{badge_html}'
         f'<h1 class="sticky-page-title">{title}</h1>'
         f'</div>'
         f'<div class="sticky-page-caption">{subtitle}</div>'

@@ -49,8 +49,7 @@ df = load_data()
 # ==============================================================================
 render_page_header(
     title="Clinical Risk Stratification & Patient Safety",
-    subtitle="Guideline-Concordant Acuity Profiling, Demographic Care Gaps & Pharmacotherapy Safety",
-    act_badge="Act 1"
+    subtitle="Guideline-Concordant Acuity Profiling, Demographic Care Gaps & Pharmacotherapy Safety"
 )
 
 st.markdown(
@@ -829,7 +828,7 @@ with tour_col1:
         """
         <div style="padding: 2px 0;">
             <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #2563EB; margin-bottom: 2px;">
-                EXECUTIVE TOUR &bull; ACT 2 OF 4
+                EXECUTIVE TOUR &bull; NEXT MODULE: OPERATIONS & REACH
             </div>
             <div style="font-size: 15px; font-weight: 700; color: #0F172A;">
                 Operations & Reach: Contactability, Surveillance & Data Quality

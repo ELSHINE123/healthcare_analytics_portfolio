@@ -47,8 +47,7 @@ df = load_data()
 # ==============================================================================
 render_page_header(
     title="Operational Reach, Surveillance & Data Quality",
-    subtitle="Patient Contactability Channels, Longitudinal Surveillance Cadence & Clinical Data Quality",
-    act_badge="Act 2"
+    subtitle="Patient Contactability Channels, Longitudinal Surveillance Cadence & Clinical Data Quality"
 )
 
 st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
@@ -402,7 +401,7 @@ with tour_col1:
         """
         <div style="padding: 2px 0;">
             <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #2563EB; margin-bottom: 2px;">
-                EXECUTIVE TOUR &bull; ACT 3 OF 4
+                EXECUTIVE TOUR &bull; NEXT MODULE: FINANCIAL STAKES
             </div>
             <div style="font-size: 15px; font-weight: 700; color: #0F172A;">
                 Financial Stakes: Inpatient Liability & Quality Bonuses

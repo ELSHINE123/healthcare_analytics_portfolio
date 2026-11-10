@@ -32,8 +32,7 @@ inject_chart_card_css()
 # ==============================================================================
 render_page_header(
     title="Financial Liability & Quality Benchmark Penalties",
-    subtitle="Actuarial Acute Inpatient Exposure Modeling & National HEDIS Quality Scorecard Audit",
-    act_badge="Act 3"
+    subtitle="Actuarial Acute Inpatient Exposure Modeling & National HEDIS Quality Scorecard Audit"
 )
 
 # ==============================================================================
@@ -640,7 +639,7 @@ with tour_col1:
         """
         <div style="padding: 2px 0;">
             <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #2563EB; margin-bottom: 2px;">
-                EXECUTIVE TOUR &bull; ACT 4 OF 4
+                EXECUTIVE TOUR &bull; NEXT MODULE: ROI & STAFFING MODEL
             </div>
             <div style="font-size: 15px; font-weight: 700; color: #0F172A;">
                 ROI & Preventative Care Staffing Model
