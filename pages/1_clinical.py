@@ -10,6 +10,7 @@ Answers Questions 1, 6, 4, and 5
 import streamlit as st
 import pandas as pd
 import numpy as np
+import re
 from pathlib import Path
 import sys
 import plotly.express as px
@@ -266,25 +267,25 @@ if not df.empty:
         y=130, 
         line_dash="dot", 
         line_color="#F59E0B", 
-        annotation_text="AHA Stage 1 (130 mmHg)", 
-        annotation_position="bottom left",
-        annotation_font=dict(color="#B45309", size=10.5, family="Be Vietnam Pro")
+        annotation_text="Stage 1 (130)", 
+        annotation_position="bottom right",
+        annotation_font=dict(color="#B45309", size=10, family="Be Vietnam Pro")
     )
     fig_v1.add_hline(
         y=140, 
         line_dash="dash", 
         line_color="#DC2626", 
-        annotation_text="AHA Stage 2 (140 mmHg)", 
-        annotation_position="top left",
-        annotation_font=dict(color="#991B1B", size=10.5, family="Be Vietnam Pro")
+        annotation_text="Stage 2 (140)", 
+        annotation_position="top right",
+        annotation_font=dict(color="#991B1B", size=10, family="Be Vietnam Pro")
     )
     fig_v1.add_vline(
         x=200, 
         line_dash="dot", 
         line_color="#2563EB", 
-        annotation_text="NCEP Border (200 mg/dL)", 
-        annotation_position="top right",
-        annotation_font=dict(color="#1D4ED8", size=10.5, family="Be Vietnam Pro")
+        annotation_text="NCEP (200)", 
+        annotation_position="bottom left",
+        annotation_font=dict(color="#1D4ED8", size=10, family="Be Vietnam Pro")
     )
 
     fig_v1.update_traces(
@@ -299,10 +300,11 @@ if not df.empty:
 
     fig_v1.update_layout(
         title=dict(
-            text="<b>Bivariate Clinical Acuity Distribution</b><br><span style='font-size:11.5px; color:#64748B; font-weight:500;'>983 Patients Displayed across SBP & Cholesterol</span>",
-            x=0.5, y=0.97, xanchor="center", yanchor="top"
+            text="<b>Bivariate Clinical Acuity Distribution</b>",
+            x=0.03, y=0.96, xanchor="left", yanchor="top",
+            font=dict(size=14, family="Be Vietnam Pro", color="#0F172A")
         ),
-        margin=dict(l=45, r=25, t=55, b=110),
+        margin=dict(l=55, r=20, t=65, b=60),
         height=510,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
@@ -310,38 +312,46 @@ if not df.empty:
         yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Systolic BP (mmHg) — 2017 ACC/AHA", range=[102, 148]),
         legend=dict(
             orientation="h",
-            yanchor="top",
-            y=-0.17,
-            xanchor="center",
-            x=0.5,
+            yanchor="bottom",
+            y=1.01,
+            xanchor="right",
+            x=0.98,
             title="",
-            font=dict(family="Be Vietnam Pro", size=12)
+            font=dict(family="Be Vietnam Pro", size=10.5)
         ),
         font=dict(family="Be Vietnam Pro, sans-serif")
     )
 
-    st.plotly_chart(fig_v1, width="stretch")
+    # Render Scatter Chart and Interactive Diagnostic Inspector Side-by-Side
+    col_chart, col_narrative = st.columns(2, gap="medium")
 
-    # Analysis & Diagnostic Interpretation Directly Under Visual 1
-    dynamic_text = get_clinical_narrative(selected_condition, selected_tier, sub_n, sub_pct, sub_sbp, sub_chol, sub_unmed)
-    st.markdown(
-        f"""
-        <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 14px 18px; margin-top: 8px; margin-bottom: 16px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E2E8F0; padding-bottom: 8px; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
-                <div style="font-size: 13px; font-weight: 700; color: #0F172A; text-transform: uppercase; letter-spacing: 0.05em;">
-                    🩺 Clinical Diagnostic Interpretation: {selected_condition} &bull; {selected_tier}
-                </div>
-                <div style="font-size: 12px; color: #475569; font-weight: 600;">
-                    {sub_n:,} Patients ({sub_pct:.1f}%) &bull; Mean SBP: {sub_sbp:.1f} mmHg &bull; Mean Chol: {sub_chol:.1f} mg/dL &bull; Care Gaps: {sub_unmed}
-                </div>
-            </div>
-            <div style="color: #334155; font-size: 14px; line-height: 1.65;">
-                {dynamic_text}
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    with col_chart:
+        st.plotly_chart(fig_v1, width="stretch")
+
+    with col_narrative:
+        dynamic_text = get_clinical_narrative(selected_condition, selected_tier, sub_n, sub_pct, sub_sbp, sub_chol, sub_unmed)
+        formatted_narrative = (
+            re.sub(r"\*\*(.*?)\*\*", r"<strong>\1</strong>", dynamic_text)
+            .replace("\n\n", "<br><br>")
+            .replace("\n", " ")
+        )
+        inspector_html = (
+            f'<div style="background-color: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; padding: 18px 20px; box-shadow: 0 1px 3px rgba(15,23,42,0.04); height: 538px; box-sizing: border-box; overflow-y: auto; overflow-x: hidden;">'
+            f'<div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E2E8F0; padding-bottom: 10px; margin-bottom: 12px;">'
+            f'<div style="font-size: 13.5px; font-weight: 700; color: #0F172A; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 6px;"><span>🩺</span> Dynamic Diagnostic Inspector</div>'
+            f'<span style="background-color: #EFF6FF; color: #1D4ED8; border: 1px solid #BFDBFE; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 9999px; text-transform: uppercase; letter-spacing: 0.04em;">Live Selection</span>'
+            f'</div>'
+            f'<div style="margin-bottom: 12px; font-size: 15px; font-weight: 700; color: #1E293B;">{selected_condition} &bull; <span style="color: {acuity_palette.get(selected_tier, "#2563EB")};">{selected_tier}</span></div>'
+            f'<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px;">'
+            f'<div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 6px; text-align: center;"><div style="font-size: 10px; font-weight: 700; color: #64748B; text-transform: uppercase;">Patients</div><div style="font-size: 15px; font-weight: 800; color: #0F172A;">{sub_n:,}</div></div>'
+            f'<div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 6px; text-align: center;"><div style="font-size: 10px; font-weight: 700; color: #64748B; text-transform: uppercase;">Share</div><div style="font-size: 15px; font-weight: 800; color: #0F172A;">{sub_pct:.1f}%</div></div>'
+            f'<div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 6px; text-align: center;"><div style="font-size: 10px; font-weight: 700; color: #64748B; text-transform: uppercase;">Mean SBP</div><div style="font-size: 15px; font-weight: 800; color: #0F172A;">{sub_sbp:.0f} <span style="font-size: 9.5px; font-weight: 500; color: #64748B;">mmHg</span></div></div>'
+            f'<div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 6px; text-align: center;"><div style="font-size: 10px; font-weight: 700; color: #64748B; text-transform: uppercase;">Care Gaps</div><div style="font-size: 15px; font-weight: 800; color: #DC2626;">{sub_unmed}</div></div>'
+            f'</div>'
+            f'<div style="font-size: 14.5px; line-height: 1.65; color: #334155; font-family: \'Be Vietnam Pro\', -apple-system, BlinkMacSystemFont, sans-serif; text-align: justify; border-top: 1px solid #E2E8F0; padding-top: 14px;">{formatted_narrative}</div>'
+            f'</div>'
+        )
+        st.markdown(inspector_html, unsafe_allow_html=True)
 
 st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
 
@@ -594,18 +604,16 @@ if not df.empty:
     disc_sub = int(filtered_triage["therapeutic_discordance"].sum()) if "therapeutic_discordance" in filtered_triage.columns else 0
     severe_sub = int((filtered_triage["clinical_risk_tier"] == "Severe Acuity").sum())
 
-    st.markdown(
-        f"""
-        <div style="background-color: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 10px 16px; margin-top: 8px; margin-bottom: 12px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
-            <span style="font-size: 12.5px; font-weight: 700; color: #0F172A;">Worklist Summary:</span>
-            <span class="kpi-badge kpi-badge-blue">👥 {sub_count:,} Patients Filtered</span>
-            <span class="kpi-badge kpi-badge-red">🚨 {severe_sub} Severe Acuity</span>
-            <span class="kpi-badge kpi-badge-amber">💊 {unmed_sub} Unmedicated</span>
-            <span class="kpi-badge kpi-badge-amber">⚠️ {disc_sub} Discordant Rx</span>
-        </div>
-        """,
-        unsafe_allow_html=True
+    summary_chips_html = (
+        f'<div style="background-color: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 10px 16px; margin-top: 8px; margin-bottom: 12px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">'
+        f'<span style="font-size: 12.5px; font-weight: 700; color: #0F172A;">Worklist Summary:</span>'
+        f'<span class="kpi-badge kpi-badge-blue">👥 {sub_count:,} Patients Filtered</span>'
+        f'<span class="kpi-badge kpi-badge-red">🚨 {severe_sub} Severe Acuity</span>'
+        f'<span class="kpi-badge kpi-badge-amber">💊 {unmed_sub} Unmedicated</span>'
+        f'<span class="kpi-badge kpi-badge-amber">⚠️ {disc_sub} Discordant Rx</span>'
+        f'</div>'
     )
+    st.markdown(summary_chips_html, unsafe_allow_html=True)
 
     # Column configuration for st.dataframe
     display_df = filtered_triage[[
