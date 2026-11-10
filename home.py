@@ -80,6 +80,59 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+# ==============================================================================
+# 2B. EXECUTIVE PERSONA NAVIGATION GUIDE
+# ==============================================================================
+with st.expander("🧭 **Executive Stakeholder Guide: Select Your Leadership Persona**", expanded=False):
+    st.caption("Select your role to view a curated review pathway, key visual indicators, and actionable decisions:")
+    tab_cmo, tab_coo, tab_cfo, tab_analyst = st.tabs([
+        "🩺 Chief Medical Officer",
+        "⚙️ Chief Operating Officer",
+        "💰 Chief Financial Officer",
+        "📋 Care Manager / Analyst"
+    ])
+    
+    with tab_cmo:
+        st.markdown(
+            """
+            **Focus**: Clinical Patient Safety, Care Gap Remediation, HEDIS Star Quality
+            * **Step 1**: Go to **Act 1: Clinical Risk & Safety** → Filter the *Bivariate Acuity Matrix* by registry and tier to inspect Stage 2 vitals.
+            * **Step 2**: Scroll down to the *Medication Discordance Heatmap* → Review the 41 asthmatics prescribed Lisinopril contraindications.
+            * **Step 3**: Go to **Act 3: Financial Stakes** → Inspect the *HEDIS Statin Therapy Quality Scorecard* compliance gaps.
+            * **Action Mandate**: Authorize standardized clinical titration protocols and pharmacy safety recalls.
+            """
+        )
+    with tab_coo:
+        st.markdown(
+            """
+            **Focus**: Operational Outreach Reach, Surveillance Recency, Nurse Caseload Sizing
+            * **Step 1**: Go to **Act 2: Operations & Reach** → Review the 145 digital blind spots (uncontactable) and 180-day surveillance decay matrix.
+            * **Step 2**: Go to **Act 4: ROI & Staffing Model** → Review the calibrated 7.0 RN FTE staffing model (1:60 Severe, 1:100 High Acuity).
+            * **Step 3**: Go to **Act 5: Strategic Roadmap** → Review the 90-day phased operational implementation plan.
+            * **Action Mandate**: Re-allocate intake staff for phone/email capture and mobilize the 7.0 RN care management unit.
+            """
+        )
+    with tab_cfo:
+        st.markdown(
+            """
+            **Focus**: Avoidable Inpatient Liability, Downside ACO Risk, ROI & Margin Payback
+            * **Step 1**: Go to **Executive Summary** → Review the $3.18M annual gross inpatient exposure.
+            * **Step 2**: Go to **Act 3: Financial Stakes** → Simulate AHRQ HCUP inpatient admission benchmark costs ($10K to $16K).
+            * **Step 3**: Go to **Act 4: ROI Workbench** → Test the 2D Sensitivity Breakeven Frontier (+$392K net margin, 159% self-funding ratio).
+            * **Action Mandate**: Approve the $665K care coordination budget backed by certified 4.8-month payback certainty.
+            """
+        )
+    with tab_analyst:
+        st.markdown(
+            """
+            **Focus**: Daily Worklist Triage, Individual EHR Chart Auditing, CSV Roster Exports
+            * **Step 1**: Go to **Act 1: Clinical Risk & Safety** → Filter the interactive patient worklist by Severe Acuity and unmedicated status.
+            * **Step 2**: Use the **Sidebar Export Center** → Download the Care Gap Audit Roster (CSV) for clinical queue import.
+            * **Step 3**: Go to **Terminology Lexicon** → Look up specific clinical formulas, HEDIS definitions, and national benchmarks.
+            * **Action Mandate**: Export daily priority patient rosters for ambulatory nurse follow-up.
+            """
+        )
+
 st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
 
 # ==============================================================================

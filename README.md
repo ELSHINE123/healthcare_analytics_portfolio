@@ -111,7 +111,7 @@ Run the full programmatic test suite across all 8 pages:
 ```bash
 python -c "
 from streamlit.testing.v1 import AppTest
-pages = ['app.py', 'home.py', 'pages/0_executive_summary.py', 'pages/1_clinical.py', 'pages/2_operations.py', 'pages/3_financial.py', 'pages/4_roi.py', 'pages/5_recommendations.py']
+pages = ['home.py', 'pages/0_executive_summary.py', 'pages/1_clinical.py', 'pages/2_operations.py', 'pages/3_financial.py', 'pages/4_roi.py', 'pages/5_recommendations.py', 'pages/6_glossary.py']
 for p in pages:
     at = AppTest.from_file(p, default_timeout=30)
     at.run()
@@ -120,6 +120,47 @@ for p in pages:
 print('ALL 8 PAGES PASSED!')
 "
 ```
+
+---
+
+## 📚 Complete Project Documentation & Guides
+
+For deep technical methodologies and persona-specific review workflows, consult the project documentation dossier in `docs/`:
+
+1. **[Technical Architecture & Data Science Documentation](docs/TECHNICAL_DOCUMENTATION.md)**:
+   * Comprehensive data pipeline, mathematical formulas, and actuarial modeling equations.
+   * Clinical guideline cutoffs (ACC/AHA 2017 Blood Pressure, NCEP ATP III Lipids).
+   * Pharmacotherapy care gap classification and Lisinopril-Asthma safety contraindication rules.
+   * Front-end visual card CSS architecture, Plotly container scaling, and test suites.
+
+2. **[Executive Stakeholder User Guide (by Persona)](docs/USER_PERSONA_GUIDE.md)**:
+   * Curated review pathways and key decisions for **Chief Medical Officers (CMO)**, **Chief Operating Officers (COO)**, **Chief Financial Officers (CFO)**, and **Nurse Care Managers / Data Analysts**.
+
+---
+
+## ☁️ Deployment Guide (Streamlit Community Cloud)
+
+This portfolio is production-ready for **Streamlit Community Cloud** deployment with zero container overhead:
+
+### 1. Push to GitHub
+Ensure all code and processed data files are committed to your GitHub repository:
+```bash
+git add .
+git commit -m "feat: complete value-based healthcare analytics suite"
+git push origin master
+```
+
+### 2. Connect to Streamlit Community Cloud
+1. Navigate to **[share.streamlit.io](https://share.streamlit.io)** and log in with your GitHub account.
+2. Click **"New app"** (or **"Create app"**).
+3. Select your repository: `<your-username>/healthcare_analytics_portfolio`.
+4. Set the **Branch** to `master` (or `main`).
+5. Set the **Main file path** to `app.py`.
+6. Click **"Deploy!"**.
+
+### 3. Verify Deployment
+* Streamlit Cloud will install dependencies automatically from `requirements.txt`.
+* The multi-page navigation rail (`app.py`), presentation mode, interactive workbenches, and CSV/PDF export centers will be immediately live on your custom public URL.
 
 ---
 
