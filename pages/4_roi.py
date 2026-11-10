@@ -13,6 +13,10 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
+try:
+    st.set_page_config(layout="wide")
+except Exception:
+    pass
 
 # Ensure project root is in sys.path
 project_root = Path(__file__).resolve().parent.parent

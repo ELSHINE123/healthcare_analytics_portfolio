@@ -268,11 +268,29 @@ button[data-testid="stSidebarCollapseButton"]:hover {
   box-shadow: 0 1px 4px rgba(15, 23, 42, 0.04) !important;
 }
 
+.main, section.main {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.main .block-container,
+div.block-container,
 .block-container {
   padding-top: 0rem !important;
   padding-bottom: 2.5rem !important;
   padding-left: 2.5rem !important;
   padding-right: 2.5rem !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Force full widescreen expansion across all elements when sidebar collapses */
+[data-testid="stSidebar"][aria-expanded="false"] ~ .main,
+[data-testid="stSidebar"][aria-expanded="false"] ~ .main .block-container,
+.stApp:has([data-testid="collapsedControl"]) .main,
+.stApp:has([data-testid="collapsedControl"]) .main .block-container {
+  width: 100% !important;
   max-width: 100% !important;
 }
 
