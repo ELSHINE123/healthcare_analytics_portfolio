@@ -334,8 +334,7 @@ if not df.empty:
             xanchor="right",
             x=0.98,
             title="",
-            font=dict(family="Be Vietnam Pro", size=10.5),
-            itemgap=8
+            font=dict(family="Be Vietnam Pro", size=10.5)
         ),
         font=dict(family="Be Vietnam Pro, sans-serif")
     )
