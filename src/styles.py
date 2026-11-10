@@ -17,6 +17,7 @@ header[data-testid="stHeader"] {
   border-bottom: none !important;
   box-shadow: none !important;
   pointer-events: none !important;
+  height: 0 !important;
   z-index: 999990 !important;
 }
 
@@ -24,20 +25,34 @@ header[data-testid="stHeader"] * {
   pointer-events: auto !important;
 }
 
-/* 1. Global Block Container: Starts Flush at Viewport Top */
+/* 1. Global Block Container: Spans 100% full width of main page, zero top space */
 .block-container {
-  padding-top: 0rem !important; /* Docks title header right into the top bar */
+  padding-top: 0rem !important; /* Zero space at top */
   padding-bottom: 2.5rem !important;
-  max-width: 1280px !important;
+  padding-left: 2.5rem !important;
+  padding-right: 2.5rem !important;
+  max-width: 100% !important; /* Spans full length of main page */
 }
 
-/* 2. Unified Sticky Top Bar Architecture (One Single Bar at Top of Viewport) */
+/* 1b. Hide any empty stElementContainer (such as invisible <style> tags) to ensure zero top gap */
+div[data-testid="stElementContainer"]:empty,
+div[data-testid="stElementContainer"]:has(> div:empty),
+div[data-testid="stElementContainer"]:has(style:only-child) {
+  display: none !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* 2. Unified Sticky Top Bar Architecture (One Single Bar across entire length of main page) */
 div[data-testid="stElementContainer"]:has(.sticky-page-header) {
   position: sticky !important;
   top: 0 !important;
   z-index: 995 !important;
   margin-top: 0 !important;
-  margin-bottom: 20px !important;
+  margin-bottom: 22px !important;
+  padding-top: 0 !important;
+  width: 100% !important;
 }
 
 .sticky-page-header {
@@ -48,18 +63,24 @@ div[data-testid="stElementContainer"]:has(.sticky-page-header) {
   backdrop-filter: blur(16px) !important;
   -webkit-backdrop-filter: blur(16px) !important;
   border-bottom: 1px solid #CBD5E1 !important;
-  border-left: 1px solid #E2E8F0 !important;
-  border-right: 1px solid #E2E8F0 !important;
   border-top: none !important;
-  border-radius: 0 0 10px 10px !important;
-  padding: 8px 140px 9px 18px !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-radius: 0 !important; /* Full bleed edge-to-edge topbar */
+  margin-left: -2.5rem !important;
+  margin-right: -2.5rem !important;
+  width: calc(100% + 5rem) !important; /* Spans 100% full length of main canvas */
+  padding: 10px 140px 11px 28px !important;
   box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05) !important;
+  box-sizing: border-box !important;
 }
 
 .sticky-page-header-inner {
   display: flex !important;
   flex-direction: column !important;
   gap: 2px !important;
+  width: 100% !important;
+  max-width: 1400px !important;
 }
 
 .sticky-title-row {

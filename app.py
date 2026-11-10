@@ -116,11 +116,22 @@ header[data-testid="stHeader"] {
   border-bottom: none !important;
   box-shadow: none !important;
   pointer-events: none !important;
+  height: 0 !important;
   z-index: 999990 !important;
 }
 
 header[data-testid="stHeader"] * {
   pointer-events: auto !important;
+}
+
+/* Hide empty containers (like style tags) at the top of the page */
+div[data-testid="stElementContainer"]:empty,
+div[data-testid="stElementContainer"]:has(> div:empty),
+div[data-testid="stElementContainer"]:has(style:only-child) {
+  display: none !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 /* 4. Distinct Steel-Slate Sidebar (Noticeably Defined, Not Heavy or Dark) */
@@ -260,7 +271,9 @@ button[data-testid="stSidebarCollapseButton"]:hover {
 .block-container {
   padding-top: 0rem !important;
   padding-bottom: 2.5rem !important;
-  max-width: 1250px !important;
+  padding-left: 2.5rem !important;
+  padding-right: 2.5rem !important;
+  max-width: 100% !important;
 }
 
 /* 9. Executive KPI Scorecard Architecture */
