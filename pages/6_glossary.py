@@ -9,6 +9,10 @@ Provides accessible definitions, clinical context, and cross-references for all 
 from pathlib import Path
 import sys
 import streamlit as st
+try:
+    st.set_page_config(layout="wide")
+except Exception:
+    pass
 
 # Ensure project root is in sys.path
 project_root = Path(__file__).resolve().parent.parent

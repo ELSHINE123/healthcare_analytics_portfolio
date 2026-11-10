@@ -26,12 +26,30 @@ header[data-testid="stHeader"] * {
 }
 
 /* 1. Global Block Container: Spans 100% full width of main page, zero top space */
+.main, section.main {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.main .block-container,
+div.block-container,
 .block-container {
   padding-top: 0rem !important; /* Zero space at top */
   padding-bottom: 2.5rem !important;
   padding-left: 2.5rem !important;
   padding-right: 2.5rem !important;
+  width: 100% !important;
   max-width: 100% !important; /* Spans full length of main page */
+  box-sizing: border-box !important;
+}
+
+/* Force full widescreen expansion across all elements when sidebar collapses */
+[data-testid="stSidebar"][aria-expanded="false"] ~ .main,
+[data-testid="stSidebar"][aria-expanded="false"] ~ .main .block-container,
+.stApp:has([data-testid="collapsedControl"]) .main,
+.stApp:has([data-testid="collapsedControl"]) .main .block-container {
+  width: 100% !important;
+  max-width: 100% !important;
 }
 
 /* 1b. Hide any empty stElementContainer (such as invisible <style> tags) to ensure zero top gap */

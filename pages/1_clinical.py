@@ -8,6 +8,10 @@ Answers Questions 1, 6, 4, and 5
 """
 
 import streamlit as st
+try:
+    st.set_page_config(layout="wide")
+except Exception:
+    pass
 import pandas as pd
 import numpy as np
 import re
