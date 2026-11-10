@@ -301,29 +301,50 @@ if not df.empty:
     fig_v1.update_layout(
         title=dict(
             text="<b>Bivariate Clinical Acuity Distribution</b>",
-            x=0.03, y=0.96, xanchor="left", yanchor="top",
+            x=0.01,
+            y=0.98,
+            yref="container",
+            xanchor="left",
+            yanchor="top",
             font=dict(size=14, family="Be Vietnam Pro", color="#0F172A")
         ),
-        margin=dict(l=55, r=20, t=65, b=60),
+        margin=dict(l=55, r=20, t=80, b=55),
         height=510,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        xaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Total Cholesterol (mg/dL) — NCEP ATP III", range=[150, 235]),
-        yaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Systolic BP (mmHg) — 2017 ACC/AHA", range=[102, 148]),
+        xaxis=dict(
+            showgrid=True,
+            gridcolor="#E2E8F0",
+            showline=True,
+            linecolor="#CBD5E1",
+            linewidth=1.2,
+            title="Total Cholesterol (mg/dL) — NCEP ATP III",
+            range=[150, 235]
+        ),
+        yaxis=dict(
+            showgrid=True,
+            gridcolor="#E2E8F0",
+            showline=True,
+            linecolor="#CBD5E1",
+            linewidth=1.2,
+            title="Systolic BP (mmHg) — 2017 ACC/AHA",
+            range=[102, 148]
+        ),
         legend=dict(
             orientation="h",
-            yanchor="bottom",
-            y=1.01,
+            yref="container",
+            yanchor="top",
+            y=0.88,
             xanchor="right",
-            x=0.98,
+            x=0.99,
             title="",
-            font=dict(family="Be Vietnam Pro", size=10.5)
+            font=dict(family="Be Vietnam Pro", size=10)
         ),
         font=dict(family="Be Vietnam Pro, sans-serif")
     )
 
-    # Render Scatter Chart and Interactive Diagnostic Inspector Side-by-Side
-    col_chart, col_narrative = st.columns(2, gap="medium")
+    # Render Expanded Main Visual and Compact Dynamic Inspector Side-by-Side
+    col_chart, col_narrative = st.columns([1.65, 1], gap="medium")
 
     with col_chart:
         st.plotly_chart(fig_v1, width="stretch")
@@ -336,19 +357,19 @@ if not df.empty:
             .replace("\n", " ")
         )
         inspector_html = (
-            f'<div style="background-color: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; padding: 18px 20px; box-shadow: 0 1px 3px rgba(15,23,42,0.04); height: 538px; box-sizing: border-box; overflow-y: auto; overflow-x: hidden;">'
-            f'<div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E2E8F0; padding-bottom: 10px; margin-bottom: 12px;">'
-            f'<div style="font-size: 13.5px; font-weight: 700; color: #0F172A; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 6px;"><span>🩺</span> Dynamic Diagnostic Inspector</div>'
-            f'<span style="background-color: #EFF6FF; color: #1D4ED8; border: 1px solid #BFDBFE; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 9999px; text-transform: uppercase; letter-spacing: 0.04em;">Live Selection</span>'
+            f'<div style="background-color: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; padding: 16px 18px; box-shadow: 0 1px 3px rgba(15,23,42,0.04); height: 538px; box-sizing: border-box; overflow-y: auto; overflow-x: hidden;">'
+            f'<div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E2E8F0; padding-bottom: 8px; margin-bottom: 10px;">'
+            f'<div style="font-size: 12.5px; font-weight: 700; color: #0F172A; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 5px;"><span>🩺</span> Dynamic Diagnostic Inspector</div>'
+            f'<span style="background-color: #EFF6FF; color: #1D4ED8; border: 1px solid #BFDBFE; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 9999px; text-transform: uppercase; letter-spacing: 0.03em;">Live Selection</span>'
             f'</div>'
-            f'<div style="margin-bottom: 12px; font-size: 15px; font-weight: 700; color: #1E293B;">{selected_condition} &bull; <span style="color: {acuity_palette.get(selected_tier, "#2563EB")};">{selected_tier}</span></div>'
-            f'<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px;">'
-            f'<div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 6px; text-align: center;"><div style="font-size: 10px; font-weight: 700; color: #64748B; text-transform: uppercase;">Patients</div><div style="font-size: 15px; font-weight: 800; color: #0F172A;">{sub_n:,}</div></div>'
-            f'<div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 6px; text-align: center;"><div style="font-size: 10px; font-weight: 700; color: #64748B; text-transform: uppercase;">Share</div><div style="font-size: 15px; font-weight: 800; color: #0F172A;">{sub_pct:.1f}%</div></div>'
-            f'<div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 6px; text-align: center;"><div style="font-size: 10px; font-weight: 700; color: #64748B; text-transform: uppercase;">Mean SBP</div><div style="font-size: 15px; font-weight: 800; color: #0F172A;">{sub_sbp:.0f} <span style="font-size: 9.5px; font-weight: 500; color: #64748B;">mmHg</span></div></div>'
-            f'<div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 6px; text-align: center;"><div style="font-size: 10px; font-weight: 700; color: #64748B; text-transform: uppercase;">Care Gaps</div><div style="font-size: 15px; font-weight: 800; color: #DC2626;">{sub_unmed}</div></div>'
+            f'<div style="margin-bottom: 10px; font-size: 13.5px; font-weight: 700; color: #1E293B;">{selected_condition} &bull; <span style="color: {acuity_palette.get(selected_tier, "#2563EB")};">{selected_tier}</span></div>'
+            f'<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 12px;">'
+            f'<div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 6px 4px; text-align: center;"><div style="font-size: 9px; font-weight: 700; color: #64748B; text-transform: uppercase;">Patients</div><div style="font-size: 13.5px; font-weight: 800; color: #0F172A;">{sub_n:,}</div></div>'
+            f'<div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 6px 4px; text-align: center;"><div style="font-size: 9px; font-weight: 700; color: #64748B; text-transform: uppercase;">Share</div><div style="font-size: 13.5px; font-weight: 800; color: #0F172A;">{sub_pct:.1f}%</div></div>'
+            f'<div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 6px 4px; text-align: center;"><div style="font-size: 9px; font-weight: 700; color: #64748B; text-transform: uppercase;">Mean SBP</div><div style="font-size: 13.5px; font-weight: 800; color: #0F172A;">{sub_sbp:.0f} <span style="font-size: 8.5px; font-weight: 500; color: #64748B;">mmHg</span></div></div>'
+            f'<div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 6px 4px; text-align: center;"><div style="font-size: 9px; font-weight: 700; color: #64748B; text-transform: uppercase;">Care Gaps</div><div style="font-size: 13.5px; font-weight: 800; color: #DC2626;">{sub_unmed}</div></div>'
             f'</div>'
-            f'<div style="font-size: 14.5px; line-height: 1.65; color: #334155; font-family: \'Be Vietnam Pro\', -apple-system, BlinkMacSystemFont, sans-serif; text-align: justify; border-top: 1px solid #E2E8F0; padding-top: 14px;">{formatted_narrative}</div>'
+            f'<div style="font-size: 13px; line-height: 1.58; color: #334155; font-family: \'Be Vietnam Pro\', -apple-system, BlinkMacSystemFont, sans-serif; text-align: left; border-top: 1px solid #E2E8F0; padding-top: 10px;">{formatted_narrative}</div>'
             f'</div>'
         )
         st.markdown(inspector_html, unsafe_allow_html=True)
