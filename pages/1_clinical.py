@@ -299,11 +299,11 @@ if not df.empty:
 
     fig_v1.update_layout(
         title=dict(
-            text="<b>Bivariate Clinical Acuity Distribution</b><br><span style='font-size:11.5px; color:#64748B; font-weight:500;'>983 Patients Displayed across SBP & Cholesterol</span>",
-            x=0.5, y=0.97, xanchor="center", yanchor="top"
+            text="<b>Bivariate Clinical Acuity Distribution</b><br><span style='font-size:11.5px; color:#64748B; font-weight:500;'>983 Patients Stratified across SBP & Lipids</span>",
+            x=0.5, y=0.96, xanchor="center", yanchor="top"
         ),
-        margin=dict(l=45, r=25, t=55, b=110),
-        height=510,
+        margin=dict(l=45, r=20, t=65, b=85),
+        height=500,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         xaxis=dict(showgrid=True, gridcolor="#E2E8F0", showline=True, linecolor="#CBD5E1", linewidth=1.2, title="Total Cholesterol (mg/dL) — NCEP ATP III", range=[150, 235]),
@@ -311,37 +311,73 @@ if not df.empty:
         legend=dict(
             orientation="h",
             yanchor="top",
-            y=-0.17,
+            y=-0.16,
             xanchor="center",
             x=0.5,
             title="",
-            font=dict(family="Be Vietnam Pro", size=12)
+            font=dict(family="Be Vietnam Pro", size=11)
         ),
         font=dict(family="Be Vietnam Pro, sans-serif")
     )
 
-    st.plotly_chart(fig_v1, width="stretch")
+    # Side-by-Side Coordinated View: Scatter Plot on Left + Live Diagnostic Inspector on Right
+    plot_col, inspect_col = st.columns([1.45, 1.0], gap="large")
 
-    # Analysis & Diagnostic Interpretation Directly Under Visual 1
-    dynamic_text = get_clinical_narrative(selected_condition, selected_tier, sub_n, sub_pct, sub_sbp, sub_chol, sub_unmed)
-    st.markdown(
-        f"""
-        <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 14px 18px; margin-top: 8px; margin-bottom: 16px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E2E8F0; padding-bottom: 8px; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
-                <div style="font-size: 13px; font-weight: 700; color: #0F172A; text-transform: uppercase; letter-spacing: 0.05em;">
-                    🩺 Clinical Diagnostic Interpretation: {selected_condition} &bull; {selected_tier}
+    with plot_col:
+        st.plotly_chart(fig_v1, width="stretch")
+
+    with inspect_col:
+        dynamic_text = get_clinical_narrative(selected_condition, selected_tier, sub_n, sub_pct, sub_sbp, sub_chol, sub_unmed)
+        gap_color = "#DC2626" if sub_unmed > 0 else "#059669"
+        st.markdown(
+            f"""
+            <div style="background-color: #FFFFFF; border: 1px solid #CBD5E1; border-radius: 12px; padding: 18px 20px; box-shadow: 0 2px 8px rgba(15,23,42,0.05); min-height: 500px; display: flex; flex-direction: column; justify-content: space-between; box-sizing: border-box; margin-top: 8px;">
+                <div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E2E8F0; padding-bottom: 10px; margin-bottom: 12px;">
+                        <span style="font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #2563EB;">
+                            🩺 DYNAMIC DIAGNOSTIC INSPECTOR
+                        </span>
+                        <span style="font-size: 10px; font-weight: 700; background-color: #EFF6FF; color: #1D4ED8; border: 1px solid #BFDBFE; border-radius: 4px; padding: 2px 7px;">
+                            LIVE SELECTION
+                        </span>
+                    </div>
+                    
+                    <div style="font-size: 15px; font-weight: 700; color: #0F172A; margin-bottom: 12px;">
+                        {selected_condition} &bull; {selected_tier}
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px;">
+                        <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 10px;">
+                            <div style="font-size: 9.5px; font-weight: 700; color: #64748B; text-transform: uppercase;">Cohort Size</div>
+                            <div style="font-size: 16px; font-weight: 800; color: #0F172A;">{sub_n:,} <span style="font-size: 11px; font-weight: 600; color: #64748B;">({sub_pct:.1f}%)</span></div>
+                        </div>
+                        <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 10px;">
+                            <div style="font-size: 9.5px; font-weight: 700; color: #64748B; text-transform: uppercase;">Active Care Gaps</div>
+                            <div style="font-size: 16px; font-weight: 800; color: {gap_color};">{sub_unmed} <span style="font-size: 11px; font-weight: 600; color: #64748B;">Pts</span></div>
+                        </div>
+                        <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 10px;">
+                            <div style="font-size: 9.5px; font-weight: 700; color: #64748B; text-transform: uppercase;">Mean SBP</div>
+                            <div style="font-size: 15px; font-weight: 800; color: #0F172A;">{sub_sbp:.1f} <span style="font-size: 10px; font-weight: 600; color: #64748B;">mmHg</span></div>
+                        </div>
+                        <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 10px;">
+                            <div style="font-size: 9.5px; font-weight: 700; color: #64748B; text-transform: uppercase;">Mean Cholesterol</div>
+                            <div style="font-size: 15px; font-weight: 800; color: #0F172A;">{sub_chol:.1f} <span style="font-size: 10px; font-weight: 600; color: #64748B;">mg/dL</span></div>
+                        </div>
+                    </div>
+
+                    <div style="color: #334155; font-size: 13.5px; line-height: 1.6; text-align: justify; text-justify: inter-word;">
+                        {dynamic_text}
+                    </div>
                 </div>
-                <div style="font-size: 12px; color: #475569; font-weight: 600;">
-                    {sub_n:,} Patients ({sub_pct:.1f}%) &bull; Mean SBP: {sub_sbp:.1f} mmHg &bull; Mean Chol: {sub_chol:.1f} mg/dL &bull; Care Gaps: {sub_unmed}
+
+                <div style="margin-top: 14px; padding-top: 10px; border-top: 1px solid #E2E8F0; font-size: 11px; color: #64748B; display: flex; align-items: center; justify-content: space-between;">
+                    <span>⚡ Synchronized with Selection</span>
+                    <span style="font-weight: 600; color: #2563EB;">ACC/AHA &bull; NCEP Standards</span>
                 </div>
             </div>
-            <div style="color: #334155; font-size: 14px; line-height: 1.65;">
-                {dynamic_text}
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+            """,
+            unsafe_allow_html=True
+        )
 
 st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
 
@@ -458,6 +494,7 @@ if not df.empty:
     fig_v3 = px.imshow(
         matrix_clean,
         text_auto=True,
+        aspect="auto",
         labels=dict(x="Prescribed Medication", y="Documented Diagnosis", color="Patients"),
         x=matrix_clean.columns,
         y=matrix_clean.index,
@@ -471,7 +508,11 @@ if not df.empty:
     )
 
     fig_v3.update_layout(
-        margin=dict(l=30, r=30, t=60, b=40),
+        title=dict(
+            text="<b>Clinical Prescribing Alignment: Documented Condition vs. Active Pharmacotherapy</b>",
+            x=0.5, y=0.95, xanchor="center", yanchor="top"
+        ),
+        margin=dict(l=40, r=40, t=75, b=45),
         height=490,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",

@@ -245,8 +245,8 @@ fig_v7a.add_trace(go.Bar(
 max_x = max(cost_df["cost_millions"]) * 1.45 if max(cost_df["cost_millions"]) > 0 else 1.0
 
 fig_v7a.update_layout(
-    title=dict(text="<b>Annual Inpatient Cost Exposure by Acuity Tier</b>", x=0.5, y=0.96, xanchor="center", yanchor="top"),
-    margin=dict(l=125, r=90, t=55, b=40),
+    title=dict(text="<b>Annual Inpatient Cost Exposure by Acuity Tier</b>", x=0.5, y=0.94, xanchor="center", yanchor="top"),
+    margin=dict(l=130, r=90, t=75, b=45),
     height=420,
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
@@ -300,8 +300,8 @@ fig_v7b.add_annotation(
 )
 
 fig_v7b.update_layout(
-    title=dict(text="<b>80/20 Pareto Financial Risk Concentration</b>", x=0.5, y=0.96, xanchor="center", yanchor="top"),
-    margin=dict(l=20, r=20, t=50, b=55),
+    title=dict(text="<b>80/20 Pareto Financial Risk Concentration</b>", x=0.5, y=0.94, xanchor="center", yanchor="top"),
+    margin=dict(l=30, r=30, t=75, b=65),
     legend=dict(orientation="h", yanchor="top", y=0.10, xanchor="center", x=0.5, font=dict(family="Be Vietnam Pro", size=12)),
     height=460,
     paper_bgcolor="rgba(0,0,0,0)",
@@ -517,9 +517,9 @@ for _, row in hedis_df.iterrows():
 fig_v8.update_layout(
     title=dict(
         text="<b>National HEDIS Quality Benchmark Audit & Compliance Performance Scorecard</b>",
-        x=0.5, y=0.96, xanchor="center", yanchor="top"
+        x=0.5, y=0.94, xanchor="center", yanchor="top"
     ),
-    margin=dict(l=220, r=45, t=65, b=40),
+    margin=dict(l=220, r=80, t=75, b=45),
     height=440,
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
