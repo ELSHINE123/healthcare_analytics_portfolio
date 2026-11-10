@@ -181,7 +181,15 @@ def get_clinical_narrative(cond, tier, n, pct, mean_sbp, mean_chol, unmed_count)
 # ==============================================================================
 # 4. CLINICAL ACUITY WORKBENCH (STANDALONE VISUAL)
 # ==============================================================================
-st.header("1. Clinical Acuity Matrix: Blood Pressure vs. Lipid Stratification")
+col_head, col_rst = st.columns([3.5, 1.2])
+with col_head:
+    st.header("1. Clinical Acuity Matrix: Blood Pressure vs. Lipid Stratification")
+with col_rst:
+    st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
+    if st.button("↺ Reset Matrix", key="btn_reset_matrix", help="Reset condition and tier filters to view all patients.", use_container_width=True):
+        st.session_state["clin_condition"] = "All Conditions"
+        st.session_state["clin_tier"] = "All Acuity Tiers"
+        st.rerun()
 
 if not df.empty:
     st.caption("Adjust filters below to update the clinical plot and diagnostic interpretation in real time.")
@@ -189,11 +197,21 @@ if not df.empty:
     
     with ctrl_col1:
         conditions_available = ["All Conditions"] + sorted([c.title() for c in df["condition"].dropna().unique() if c != "Unknown"])
-        selected_condition = st.selectbox("Chronic Disease Registry:", conditions_available)
+        selected_condition = st.selectbox(
+            "Chronic Disease Registry:",
+            conditions_available,
+            index=conditions_available.index(st.session_state.get("clin_condition", "All Conditions")),
+            key="clin_condition"
+        )
 
     with ctrl_col2:
         tiers_available = ["All Acuity Tiers", "Severe Acuity", "High Acuity", "Moderate Acuity", "Low Acuity"]
-        selected_tier = st.selectbox("Clinical Acuity Tier:", tiers_available)
+        selected_tier = st.selectbox(
+            "Clinical Acuity Tier:",
+            tiers_available,
+            index=tiers_available.index(st.session_state.get("clin_tier", "All Acuity Tiers")),
+            key="clin_tier"
+        )
 
     # Apply filtering
     filtered_df = df.copy()
@@ -489,7 +507,17 @@ st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
 # ==============================================================================
 # 7. ACTIONABLE CARE GAP WORKLIST & CLINICAL TRIAGE EXPLORER
 # ==============================================================================
-st.header("4. Actionable Care Gap Worklist & Clinical Triage Explorer")
+col_w_head, col_w_rst = st.columns([3.5, 1.2])
+with col_w_head:
+    st.header("4. Actionable Care Gap Worklist & Clinical Triage Explorer")
+with col_w_rst:
+    st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
+    if st.button("↺ Reset Worklist", key="btn_reset_worklist", help="Clear all worklist filters and search query.", use_container_width=True):
+        st.session_state["triage_reg"] = "All Registries"
+        st.session_state["triage_acuity"] = "All Acuity Tiers"
+        st.session_state["triage_gap"] = "All Patients"
+        st.session_state["triage_search"] = ""
+        st.rerun()
 
 st.markdown(
     """
@@ -522,10 +550,12 @@ if not df.empty:
     f_col1, f_col2, f_col3 = st.columns([1.2, 1.2, 1.4], gap="medium")
     with f_col1:
         reg_options = ["All Registries"] + sorted([c for c in triage_df["condition_clean"].unique() if c != "Unknown"])
-        sel_reg = st.selectbox("Registry Filter:", reg_options, key="triage_reg")
+        cur_reg = st.session_state.get("triage_reg", "All Registries")
+        sel_reg = st.selectbox("Registry Filter:", reg_options, index=reg_options.index(cur_reg) if cur_reg in reg_options else 0, key="triage_reg")
     with f_col2:
         acuity_options = ["All Acuity Tiers", "Severe Acuity", "High Acuity", "Moderate Acuity", "Low Acuity"]
-        sel_acuity = st.selectbox("Acuity Filter:", acuity_options, key="triage_acuity")
+        cur_acuity = st.session_state.get("triage_acuity", "All Acuity Tiers")
+        sel_acuity = st.selectbox("Acuity Filter:", acuity_options, index=acuity_options.index(cur_acuity) if cur_acuity in acuity_options else 0, key="triage_acuity")
     with f_col3:
         gap_options = [
             "All Patients",
@@ -534,7 +564,8 @@ if not df.empty:
             "Therapeutic Discordances (N=111)",
             "Digital Blind Spots (N=145)"
         ]
-        sel_gap = st.selectbox("Clinical Priority / Gap Type:", gap_options, key="triage_gap")
+        cur_gap = st.session_state.get("triage_gap", "All Patients")
+        sel_gap = st.selectbox("Clinical Priority / Gap Type:", gap_options, index=gap_options.index(cur_gap) if cur_gap in gap_options else 0, key="triage_gap")
 
     # Apply filters
     filtered_triage = triage_df.copy()

@@ -121,22 +121,33 @@ st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
 # ==============================================================================
 # 2. INTERACTIVE SEARCH & FILTERING CONTROLS
 # ==============================================================================
-col_search, col_cat = st.columns([1.6, 1.0], gap="medium")
+col_search, col_cat, col_rst = st.columns([1.5, 1.0, 0.5], gap="medium")
 
 with col_search:
     search_query = st.text_input(
         "🔍 Search Term, Acronym, Drug, or Concept",
+        value=st.session_state.get("glossary_search", ""),
+        key="glossary_search",
         placeholder="e.g., HEDIS, Lisinopril, ACO, HCUP, SBP, Star Ratings, FTE...",
         help="Type any acronym or keyword to filter the dictionary in real time."
     ).strip().lower()
 
 with col_cat:
+    cur_cat = st.session_state.get("glossary_category", "All Categories")
     selected_category = st.selectbox(
         "Domain Category Filter",
         options=CATEGORIES,
-        index=0,
+        index=CATEGORIES.index(cur_cat) if cur_cat in CATEGORIES else 0,
+        key="glossary_category",
         help="Filter terms by clinical, economic, or regulatory specialization."
     )
+
+with col_rst:
+    st.markdown("<div style='height: 28px;'></div>", unsafe_allow_html=True)
+    if st.button("↺ Clear", key="btn_clear_glossary", help="Clear search keyword and reset category filter.", use_container_width=True):
+        st.session_state["glossary_search"] = ""
+        st.session_state["glossary_category"] = "All Categories"
+        st.rerun()
 
 # Filter logic
 filtered_terms = []

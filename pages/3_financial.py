@@ -64,7 +64,15 @@ ADMISSION_PROBABILITIES = {
 # ==============================================================================
 # 3. INTERACTIVE SIMULATION WORKBENCH (ACTUARIAL SENSITIVITY CONTROLS)
 # ==============================================================================
-st.header("1. Inpatient Liability Modeling & Actuarial Sensitivity Workbench")
+col_h1, col_r1 = st.columns([3.5, 1.2])
+with col_h1:
+    st.header("1. Inpatient Liability Modeling & Actuarial Sensitivity Workbench")
+with col_r1:
+    st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
+    if st.button("↺ Reset Inpatient", key="btn_reset_fin1", help="Reset service line and HCUP benchmark cost to baseline ($12,500).", use_container_width=True):
+        st.session_state["fin_service"] = "All Disease Registries"
+        st.session_state["fin_admission_cost"] = 12500
+        st.rerun()
 
 st.markdown(
     """
@@ -98,7 +106,8 @@ with ctrl_col1:
     selected_service = st.selectbox(
         "Clinical Service Line Filter",
         options=service_options,
-        index=0,
+        index=service_options.index(st.session_state.get("fin_service", "All Disease Registries")),
+        key="fin_service",
         help="Filter cohort to evaluate disease-specific inpatient financial exposure."
     )
 
@@ -106,7 +115,8 @@ with ctrl_col2:
     admission_cost = st.select_slider(
         "AHRQ HCUP Benchmark Cost per Inpatient Stay ($ USD)",
         options=[8000, 9000, 10000, 11000, 12000, 12500, 13000, 14000, 15000, 16000, 17000, 18000, 19000, 20000],
-        value=12500,
+        value=st.session_state.get("fin_admission_cost", 12500),
+        key="fin_admission_cost",
         format_func=lambda x: f"${x:,}",
         help="National Healthcare Cost and Utilization Project (HCUP) average cost for an acute chronic disease admission."
     )
@@ -318,7 +328,14 @@ st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
 # ==============================================================================
 # 5. HEDIS QUALITY BENCHMARKS & STATIN REMEDIATION SIMULATOR
 # ==============================================================================
-st.header("3. National HEDIS Quality Benchmark Audit & Remediation Simulator")
+col_h2, col_r2 = st.columns([3.5, 1.2])
+with col_h2:
+    st.header("3. National HEDIS Quality Benchmark Audit & Remediation Simulator")
+with col_r2:
+    st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
+    if st.button("↺ Reset Remediation", key="btn_reset_fin2", help="Reset statin remediation rate to 0% audit baseline.", use_container_width=True):
+        st.session_state["fin_remediation_rate"] = 0
+        st.rerun()
 
 st.markdown(
     """
@@ -337,8 +354,9 @@ with sim_col1:
         "Simulate Statin Care Gap Closure Rate (%)",
         min_value=0,
         max_value=100,
-        value=0,
+        value=st.session_state.get("fin_remediation_rate", 0),
         step=5,
+        key="fin_remediation_rate",
         format="%d%%",
         help="Simulate the impact of proactive nurse-led medication titration closing statin prescription gaps."
     )
@@ -537,7 +555,13 @@ st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
 # ==============================================================================
 # 6. INTERACTIVE CMS STAR RATING & QUALITY BONUS CALCULATOR
 # ==============================================================================
-st.subheader("Interactive CMS Star Rating & Quality Revenue Simulation")
+col_h3, col_r3 = st.columns([3.5, 1.2])
+with col_h3:
+    st.subheader("Interactive CMS Star Rating & Quality Revenue Simulation")
+with col_r3:
+    if st.button("↺ Reset Star Target", key="btn_reset_fin3", help="Reset Star Target to certified 4.0 Stars target.", use_container_width=True):
+        st.session_state["fin_star_target"] = 4.0
+        st.rerun()
 
 st.markdown(
     """
@@ -553,7 +577,8 @@ with star_col1:
     star_target = st.select_slider(
         "Simulated CMS Star Rating Performance Target:",
         options=[3.0, 3.5, 4.0, 4.5, 5.0],
-        value=4.0,
+        value=st.session_state.get("fin_star_target", 4.0),
+        key="fin_star_target",
         format_func=lambda x: f"★ {x:.1f} Stars" + (" (Current Baseline)" if x == 3.0 else (" (Target)" if x == 4.0 else "")),
         help="Simulate the top-line quality revenue unlocked by remediating HEDIS statin and hypertension gaps."
     )

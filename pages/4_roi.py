@@ -69,7 +69,15 @@ total_fte_rounded = 7                      # 7.0 Dedicated RN FTEs
 # ==============================================================================
 # 3. INTERACTIVE SENSITIVITY & STAFFING SIMULATION WORKBENCH
 # ==============================================================================
-st.header("1. Preventative Care Caseload & Staffing Simulation Workbench")
+col_head, col_reset = st.columns([3.5, 1.2])
+with col_head:
+    st.header("1. Preventative Care Caseload & Staffing Simulation Workbench")
+with col_reset:
+    st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
+    if st.button("↺ Reset Assumptions", key="btn_reset_roi", help="Reset staffing parameters to certified baseline ($95K salary, 20% reduction target).", use_container_width=True):
+        st.session_state["rn_salary_sim"] = 95000
+        st.session_state["reduction_target_sim"] = 20
+        st.rerun()
 
 st.markdown(
     """
@@ -101,7 +109,8 @@ with sim_col1:
     rn_salary = st.select_slider(
         "Nurse Care Manager Salary (Fully Loaded $ USD)",
         options=[75000, 80000, 85000, 90000, 95000, 100000, 105000, 110000, 115000, 120000, 125000],
-        value=95000,
+        value=st.session_state.get("rn_salary_sim", 95000),
+        key="rn_salary_sim",
         format_func=lambda x: f"${x:,}",
         help="Includes base RN salary, health benefits, pension, payroll taxes, and clinical malpractice coverage."
     )
@@ -111,8 +120,9 @@ with sim_col2:
         "Inpatient Admission Reduction Target (%)",
         min_value=10,
         max_value=35,
-        value=20,
+        value=st.session_state.get("reduction_target_sim", 20),
         step=1,
+        key="reduction_target_sim",
         format="%d%%",
         help="Target reduction in acute hospitalizations among managed High & Severe Acuity patients."
     )

@@ -554,6 +554,29 @@ with st.sidebar:
             help="Export the 553 high/severe acuity patient roster with care gaps."
         )
 
+    if st.button(
+        "↺ Reset All Models to Baseline",
+        key="btn_global_reset",
+        use_container_width=True,
+        help="Reset all interactive financial, staffing, clinical, and search filters across the entire suite to baseline defaults."
+    ):
+        st.session_state["rn_salary_sim"] = 95000
+        st.session_state["reduction_target_sim"] = 20
+        st.session_state["fin_service"] = "All Disease Registries"
+        st.session_state["fin_admission_cost"] = 12500
+        st.session_state["fin_remediation_rate"] = 0
+        st.session_state["fin_star_target"] = 4.0
+        st.session_state["clin_condition"] = "All Conditions"
+        st.session_state["clin_tier"] = "All Acuity Tiers"
+        st.session_state["triage_reg"] = "All Registries"
+        st.session_state["triage_acuity"] = "All Acuity Tiers"
+        st.session_state["triage_gap"] = "All Patients"
+        st.session_state["triage_search"] = ""
+        st.session_state["glossary_search"] = ""
+        st.session_state["glossary_category"] = "All Categories"
+        st.toast("✅ All interactive models and filters reset to baseline assumptions!")
+        st.rerun()
+
     st.markdown("<div style='height: 4px;'></div>", unsafe_allow_html=True)
     with st.expander("📖 Terminology Lookup", expanded=False):
         st.caption("Look up any healthcare acronym or economic term:")
