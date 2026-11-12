@@ -99,53 +99,61 @@ st.markdown(
 # ==============================================================================
 with st.expander("🧭 **Executive Review Pathways**", expanded=False):
     st.caption("Select your leadership focus to view a curated 3-step review path, priority visuals, and actionable decisions:")
-    tab_cmo, tab_coo, tab_cfo, tab_analyst = st.tabs([
-        "🩺 Clinical Leadership (CMO / Quality)",
-        "⚙️ Operations & Reach (COO / Pop Health)",
-        "💰 Finance & Risk (CFO / Managed Care)",
-        "📋 Care Management & Analytics"
-    ])
-    
-    with tab_cmo:
-        st.markdown(
+    role_pathways = [
+        (
+            "🩺 Clinical Leadership (CMO / Quality)",
             """
             **Focus**: Clinical Patient Safety, Care Gap Remediation, HEDIS Star Quality
             * **Step 1**: Go to **Clinical Risk & Safety** → Filter the *Bivariate Acuity Matrix* by registry and tier to inspect Stage 2 vitals.
             * **Step 2**: Scroll down to the *Medication Discordance Heatmap* → Review the 41 asthmatics prescribed Lisinopril contraindications.
             * **Step 3**: Go to **Financial Stakes** → Inspect the *HEDIS Statin Therapy Quality Scorecard* compliance gaps.
             * **Action Mandate**: Authorize standardized clinical titration protocols and pharmacy safety recalls.
-            """
-        )
-    with tab_coo:
-        st.markdown(
+            """,
+        ),
+        (
+            "⚙️ Operations & Reach (COO / Pop Health)",
             """
             **Focus**: Operational Outreach Reach, Surveillance Recency, Nurse Caseload Sizing
             * **Step 1**: Go to **Operations & Reach** → Review the 145 digital blind spots (uncontactable) and 180-day surveillance decay matrix.
             * **Step 2**: Go to **ROI & Staffing Model** → Review the calibrated 7.0 RN FTE staffing model (1:60 Severe, 1:100 High Acuity).
             * **Step 3**: Go to **Strategic Roadmap** → Review the 90-day phased operational implementation plan.
             * **Action Mandate**: Re-allocate intake staff for phone/email capture and mobilize the 7.0 RN care management unit.
-            """
-        )
-    with tab_cfo:
-        st.markdown(
+            """,
+        ),
+        (
+            "💰 Finance & Risk (CFO / Managed Care)",
             """
             **Focus**: Avoidable Inpatient Liability, Downside ACO Risk, ROI & Margin Payback
             * **Step 1**: Go to **Executive Summary** → Review the $3.18M annual gross inpatient exposure.
             * **Step 2**: Go to **Financial Stakes** → Simulate AHRQ HCUP inpatient admission benchmark costs ($10K to $16K).
             * **Step 3**: Go to **ROI Workbench** → Test the 2D Sensitivity Breakeven Frontier (+$392K net margin, 159% self-funding ratio).
             * **Action Mandate**: Approve the $665K care coordination budget backed by certified 4.8-month payback certainty.
-            """
-        )
-    with tab_analyst:
-        st.markdown(
+            """,
+        ),
+        (
+            "📋 Care Management & Analytics",
             """
             **Focus**: Daily Worklist Triage, Individual EHR Chart Auditing, CSV Roster Exports
             * **Step 1**: Go to **Clinical Risk & Safety** → Filter the interactive patient worklist by Severe Acuity and unmedicated status.
             * **Step 2**: Use the **Sidebar Export Center** → Download the Care Gap Audit Roster (CSV) for clinical queue import.
             * **Step 3**: Go to **Terminology Lexicon** → Look up specific clinical formulas, HEDIS definitions, and national benchmarks.
             * **Action Mandate**: Export daily priority patient rosters for ambulatory nurse follow-up.
-            """
-        )
+            """,
+        ),
+    ]
+    import textwrap
+    for role_label, role_body in role_pathways:
+        clean_body = textwrap.dedent(role_body).strip()
+        try:
+            with st.expander(role_label, expanded=False):
+                st.markdown(clean_body)
+        except Exception:
+            st.markdown(
+                f"<details style='border:1px solid #CBD5E1;border-radius:8px;padding:8px 12px;margin-bottom:8px;'>"
+                f"<summary style='font-weight:600;color:#0F172A;cursor:pointer;'>{role_label}</summary>"
+                f"<div style='margin-top:8px;'>\n\n{clean_body}\n\n</div></details>",
+                unsafe_allow_html=True,
+            )
 
 st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
 
