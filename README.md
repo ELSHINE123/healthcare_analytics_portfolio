@@ -1,6 +1,7 @@
 # Metropolitan Health System — Value-Based Healthcare Intelligence Suite
 
 **Author**: Daniel Ademola Dongo  
+**Live App**: [clinical-ehr-intelligence.streamlit.app](https://clinical-ehr-intelligence.streamlit.app/)  
 **Institutional Setting**: Metropolitan Health System (Midwestern Integrated Healthcare Delivery Network & Accountable Care Organization)  
 **Contractual Context**: CMS Two-Sided Shared-Savings Medicare Advantage / NextGen ACO Risk Contracts  
 **Audited Cohort**: 983 Chronic Disease Patients across Heart Disease, Diabetes, Hypertension, and Asthma Registries  

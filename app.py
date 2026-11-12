@@ -677,7 +677,7 @@ with st.sidebar:
                     <a href="https://linkedin.com" target="_blank" style="text-decoration: none; font-size: 10.5px; font-weight: 600; color: #1D4ED8; background: #EFF6FF; border: 1px solid #BFDBFE; padding: 2px 7px; border-radius: 4px;">
                         💼 LinkedIn
                     </a>
-                    <a href="https://github.com" target="_blank" style="text-decoration: none; font-size: 10.5px; font-weight: 600; color: #334155; background: #F1F5F9; border: 1px solid #CBD5E1; padding: 2px 7px; border-radius: 4px;">
+                    <a href="https://github.com/ELSHINE123/healthcare_analytics_portfolio" target="_blank" style="text-decoration: none; font-size: 10.5px; font-weight: 600; color: #334155; background: #F1F5F9; border: 1px solid #CBD5E1; padding: 2px 7px; border-radius: 4px;">
                         💻 GitHub
                     </a>
                 </div>
