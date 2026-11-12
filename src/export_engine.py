@@ -425,7 +425,7 @@ def generate_care_gap_roster_csv(df: pd.DataFrame) -> str:
     action_df["recommended_action_pathway"] = action_df.apply(assign_pathway, axis=1)
 
     export_cols = [
-        "patient_name", "age", "gender", "condition", "medication",
+        "patient_id", "age", "gender", "condition", "medication",
         "clinical_risk_tier", "clinical_risk_score",
         "systolic_bp", "diastolic_bp", "bp_stage",
         "cholesterol", "cholesterol_tier",

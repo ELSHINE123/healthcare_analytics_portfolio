@@ -169,6 +169,20 @@ class TestHealthcareAnalytics(unittest.TestCase):
             self.assertGreater(len(item["definition"]), 10)
             self.assertGreater(len(item["project_context"]), 10)
 
+    # 9. HIPAA Safe Harbor De-Identification Tests (45 CFR § 164.514(b)(2))
+    def test_safe_harbor_deidentification(self):
+        from src.pipeline import apply_safe_harbor_deidentification
+        raw_df = pd.DataFrame([
+            {"patient_name": "Jane Doe", "email": "jane@example.com", "phone_number": "555-1234", "visit_date": "2020-03-15", "age": 94},
+            {"patient_name": "John Smith", "email": "Unknown", "phone_number": "Unknown", "visit_date": "2019-11-02", "age": 62},
+        ])
+        safe_df = apply_safe_harbor_deidentification(raw_df)
+        self.assertEqual(safe_df["patient_id"].tolist(), ["PT-0001", "PT-0002"])
+        self.assertEqual(safe_df["visit_year"].tolist(), [2020, 2019])
+        self.assertEqual(safe_df["age"].tolist(), [90, 62])
+        for forbidden_col in ["patient_name", "email", "phone_number", "visit_date"]:
+            self.assertNotIn(forbidden_col, safe_df.columns)
+
 
 if __name__ == "__main__":
     unittest.main()

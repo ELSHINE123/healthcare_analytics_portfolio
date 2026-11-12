@@ -84,7 +84,9 @@ st.markdown(
             To ensure patient confidentiality and regulatory integrity, all patient records within this application are derived from a 
             <strong>statistically calibrated synthetic cohort (N = 983)</strong> modeled after national epidemiological benchmarks 
             (NHANES, AHRQ HCUP, and ACC/AHA registries). This dataset strictly complies with 
-            <strong>HIPAA Safe Harbor De-Identification standards (45 CFR Section 164.514(b)(2))</strong>. 
+            <strong>HIPAA Safe Harbor De-Identification standards (45 CFR § 164.514(b)(2))</strong>: direct identifiers 
+            (names, telephone numbers, email addresses, and exact visit dates) are stripped and replaced with opaque 
+            pseudonymized record IDs (<code>PT-0001</code>&ndash;<code>PT-0983</code>), binary reachability flags, and year-level timestamps. 
             Zero Protected Health Information (PHI) is collected, stored, or transmitted, ensuring complete compliance for public portfolio demonstration and technical evaluation.
         </p>
     </div>

@@ -16,6 +16,36 @@ from src.financial_engine import BENCHMARKS
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 
 
+def apply_safe_harbor_deidentification(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Enforce HIPAA Safe Harbor de-identification (45 CFR § 164.514(b)(2)):
+    - Replace direct patient identifiers with non-derived opaque IDs (PT-0001..PT-NNNN)
+    - Strip direct contact credentials (email, phone_number) while retaining boolean reachability flags
+    - Generalize full visit_date to visit_year
+    - Cap ages above 89 into a unified 90+ category
+    """
+    df_safe = df.copy()
+
+    # Deterministic sequential record key not derived from PHI (45 CFR § 164.514(c))
+    if "patient_id" not in df_safe.columns:
+        patient_ids = [f"PT-{i:04d}" for i in range(1, len(df_safe) + 1)]
+        df_safe.insert(0, "patient_id", patient_ids)
+
+    # Extract year only from exact dates (45 CFR § 164.514(b)(2)(i)(C))
+    if "visit_date" in df_safe.columns and "visit_year" not in df_safe.columns:
+        parsed_dates = pd.to_datetime(df_safe["visit_date"], errors="coerce")
+        df_safe["visit_year"] = parsed_dates.dt.year.astype("Int64")
+
+    # Aggregate ages >= 90 (45 CFR § 164.514(b)(2)(i)(C))
+    if "age" in df_safe.columns:
+        df_safe.loc[df_safe["age"] > 89, "age"] = 90
+
+    # Strip direct Safe Harbor identifier columns
+    identifiers_to_drop = ["patient_name", "email", "phone_number", "visit_date"]
+    df_safe = df_safe.drop(columns=[c for c in identifiers_to_drop if c in df_safe.columns])
+    return df_safe
+
+
 def run_enrichment_pipeline(
     input_path: Path,
     output_path: Path
@@ -53,8 +83,12 @@ def run_enrichment_pipeline(
     df_enriched["expected_annual_cost_exposure"] = (
         df_enriched["annual_event_probability"] * admission_cost
     ).round(2)
+
+    # 5. Enforce HIPAA Safe Harbor De-Identification
+    logging.info("Applying HIPAA Safe Harbor de-identification (45 CFR § 164.514(b)(2))...")
+    df_enriched = apply_safe_harbor_deidentification(df_enriched)
     
-    # 5. Export Enriched Dataset
+    # 6. Export Enriched Dataset
     output_path.parent.mkdir(parents=True, exist_ok=True)
     df_enriched.to_csv(output_path, index=False)
     logging.info(f"Successfully exported enriched dataset to {output_path} ({df_enriched.shape[0]} rows, {df_enriched.shape[1]} columns)")

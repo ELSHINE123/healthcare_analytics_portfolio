@@ -13,12 +13,17 @@ def audit_contactability(df: pd.DataFrame) -> pd.DataFrame:
     """
     df_out = df.copy()
     
-    email_clean = df_out["email"].astype(str).str.strip().str.lower()
-    phone_clean = df_out["phone_number"].astype(str).str.strip().str.lower()
-    
-    # Missing / Unknown flags
-    df_out["missing_email"] = email_clean.isin(["unknown", "none", "", "nan"])
-    df_out["missing_phone"] = phone_clean.isin(["unknown", "none", "", "nan"])
+    if "email" in df_out.columns and "phone_number" in df_out.columns:
+        email_clean = df_out["email"].astype(str).str.strip().str.lower()
+        phone_clean = df_out["phone_number"].astype(str).str.strip().str.lower()
+
+        # Missing / Unknown flags
+        df_out["missing_email"] = email_clean.isin(["unknown", "none", "", "nan"])
+        df_out["missing_phone"] = phone_clean.isin(["unknown", "none", "", "nan"])
+    else:
+        # Support Safe Harbor de-identified datasets where raw credentials are stripped
+        df_out["missing_email"] = df_out.get("missing_email", pd.Series(True, index=df_out.index)).astype(bool)
+        df_out["missing_phone"] = df_out.get("missing_phone", pd.Series(True, index=df_out.index)).astype(bool)
     
     # Uncontactable completely (neither email nor phone valid)
     df_out["is_uncontactable"] = df_out["missing_email"] & df_out["missing_phone"]

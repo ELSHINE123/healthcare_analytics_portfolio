@@ -256,7 +256,7 @@ if not df.empty:
         hover_data={
             "cholesterol_plot": False,
             "systolic_bp_plot": False,
-            "patient_name": True,
+            "patient_id": True,
             "age": True,
             "condition": True,
             "systolic_bp": True,
@@ -628,9 +628,9 @@ if not df.empty:
         filtered_triage = filtered_triage[filtered_triage["uncontactable"] == True]
 
     # Search bar
-    search_query = st.text_input("🔍 Search Worklist by Patient Name:", placeholder="Type a patient name...", key="triage_search")
+    search_query = st.text_input("🔍 Search Worklist by Patient ID:", placeholder="e.g. PT-0042...", key="triage_search")
     if search_query:
-        filtered_triage = filtered_triage[filtered_triage["patient_name"].str.contains(search_query, case=False, na=False)]
+        filtered_triage = filtered_triage[filtered_triage["patient_id"].astype(str).str.contains(search_query, case=False, na=False)]
 
     # Metrics pill row
     sub_count = len(filtered_triage)
@@ -651,11 +651,11 @@ if not df.empty:
 
     # Column configuration for st.dataframe
     display_df = filtered_triage[[
-        "patient_name", "age", "gender", "condition_clean", "medication_clean",
+        "patient_id", "age", "gender", "condition_clean", "medication_clean",
         "clinical_risk_tier", "clinical_risk_score", "systolic_bp", "cholesterol",
         "Action Pathway"
     ]].rename(columns={
-        "patient_name": "Patient Name",
+        "patient_id": "Patient ID",
         "age": "Age",
         "gender": "Sex",
         "condition_clean": "Condition",
@@ -672,7 +672,7 @@ if not df.empty:
         width="stretch",
         hide_index=True,
         column_config={
-            "Patient Name": st.column_config.TextColumn("Patient Name", width="medium"),
+            "Patient ID": st.column_config.TextColumn("Patient ID", width="small"),
             "Age": st.column_config.NumberColumn("Age", format="%d yrs", width="small"),
             "Sex": st.column_config.TextColumn("Sex", width="small"),
             "Condition": st.column_config.TextColumn("Chronic Disease", width="medium"),
@@ -689,13 +689,13 @@ if not df.empty:
     st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
     with st.expander("📋 Inspect Individual Patient EHR Clinical Snapshot Chart", expanded=False):
         if not filtered_triage.empty:
-            patient_list = filtered_triage["patient_name"].tolist()
+            patient_list = filtered_triage["patient_id"].tolist()
             selected_pt = st.selectbox(
-                "Select Patient from Worklist to Inspect Clinical Chart:",
+                "Select Patient ID from Worklist to Inspect Clinical Chart:",
                 options=patient_list,
                 key="selected_pt_inspector"
             )
-            pt_data = filtered_triage[filtered_triage["patient_name"] == selected_pt].iloc[0]
+            pt_data = filtered_triage[filtered_triage["patient_id"] == selected_pt].iloc[0]
             
             # Formatting badges & colors based on patient acuity and hazards
             acuity_tier = pt_data["clinical_risk_tier"]
@@ -748,7 +748,7 @@ if not df.empty:
             sbp = int(pt_data["systolic_bp"])
             dbp = int(pt_data["diastolic_bp"])
             chol = int(pt_data["cholesterol"])
-            pt_name = str(pt_data["patient_name"]).title()
+            pt_name = str(pt_data["patient_id"])
             pt_sex = str(pt_data["gender"]).title()
             pt_age = int(pt_data["age"])
             risk_score = int(pt_data["clinical_risk_score"])
