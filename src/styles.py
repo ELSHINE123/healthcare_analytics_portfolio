@@ -2,8 +2,8 @@
 """
 Shared Styling & Visual Card Architecture Utilities
 Ensures consistent executive visual card containers, zero-clipping displays,
-compact flush top bar page headers, and responsive typography across all pages 
-of the Healthcare Analytics Suite on both desktop and mobile devices.
+compact flush top bar page headers, full widescreen expansion on sidebar collapse,
+and responsive typography across all pages of the Healthcare Analytics Suite.
 """
 
 import streamlit as st
@@ -18,7 +18,6 @@ header[data-testid="stHeader"] {
   border-bottom: none !important;
   box-shadow: none !important;
   pointer-events: none !important;
-  height: 0 !important;
   z-index: 999990 !important;
 }
 
@@ -26,34 +25,90 @@ header[data-testid="stHeader"] * {
   pointer-events: auto !important;
 }
 
-/* 1. Global Viewport & Container Settings: Zero Top Space & Overflow Protection */
-html, body, .stApp, .main, section.main {
-  overflow-x: hidden !important;
+/* 1. Global Viewport & Container Settings: Zero Top Space & Sticky-Safe Overflow Clip */
+html, body, .stApp, [data-testid="stAppViewContainer"] {
+  overflow-x: clip !important;
   max-width: 100vw !important;
 }
 
-.main, section.main {
+[data-testid="stAppViewContainer"],
+.appview-container {
   width: 100% !important;
   max-width: 100% !important;
 }
 
-/* 1b. Hide any empty stElementContainer (such as invisible <style> tags) to ensure zero top gap */
+/* Force StyledMainContent (sibling of stSidebar) and stMain to flex-grow cleanly */
+[data-testid="stAppViewContainer"] > div:has([data-testid="stMain"]),
+[data-testid="stSidebar"] ~ div,
+[data-testid="stMain"],
+.stMain,
+.main,
+section.main {
+  flex: 1 1 0% !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+}
+
+/* 1b. Hide any empty or style-only containers so top bar sits flush at y=0 */
 div[data-testid="stElementContainer"]:empty,
 div[data-testid="stElementContainer"]:has(> div:empty),
-div[data-testid="stElementContainer"]:has(style:only-child) {
+div[data-testid="stElementContainer"]:has(style:only-child),
+div[data-testid="stElementContainer"]:has(link):not(:has(p, h1, h2, h3, h4, ul, div.sticky-page-header, table, button)),
+[data-testid="stLayoutWrapper"]:has(> [data-testid="stElementContainer"] style:only-child) {
   display: none !important;
   height: 0 !important;
   margin: 0 !important;
   padding: 0 !important;
 }
 
-/* Force full widescreen expansion across all elements when sidebar collapses */
-[data-testid="stSidebar"][aria-expanded="false"] ~ .main,
-[data-testid="stSidebar"][aria-expanded="false"] ~ .main .block-container,
-.stApp:has([data-testid="collapsedControl"]) .main,
-.stApp:has([data-testid="collapsedControl"]) .main .block-container {
+/* Explicitly collapse stSidebar width to 0 across all Streamlit versions (Cloud & Snowflake) */
+section[data-testid="stSidebar"][aria-expanded="false"],
+[data-testid="stSidebar"][aria-expanded="false"],
+.stApp:has([data-testid="collapsedControl"]) section[data-testid="stSidebar"],
+.stApp:has([data-testid="stExpandSidebarButton"]) section[data-testid="stSidebar"] {
+  width: 0px !important;
+  min-width: 0px !important;
+  max-width: 0px !important;
+  flex: 0 0 0px !important;
+  flex-basis: 0px !important;
+  margin: 0px !important;
+  padding: 0px !important;
+  border: none !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+section[data-testid="stSidebar"][aria-expanded="false"] > div,
+[data-testid="stSidebar"][aria-expanded="false"] > div,
+.stApp:has([data-testid="collapsedControl"]) section[data-testid="stSidebar"] > div,
+.stApp:has([data-testid="stExpandSidebarButton"]) section[data-testid="stSidebar"] > div {
+  width: 0px !important;
+  min-width: 0px !important;
+  max-width: 0px !important;
+  padding: 0px !important;
+  overflow: hidden !important;
+}
+
+[data-testid="collapsedControl"],
+[data-testid="stExpandSidebarButton"] {
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+/* Force full widescreen expansion across block-containers in all sidebar states */
+[data-testid="stMainBlockContainer"],
+[data-testid="stAppViewBlockContainer"],
+.main .block-container,
+div.block-container,
+.block-container {
   width: 100% !important;
   max-width: 100% !important;
+  padding-top: 0rem !important;
+  margin-top: 0rem !important;
+  box-sizing: border-box !important;
 }
 
 /* 2. Unified Sticky Top Bar Container */
@@ -88,7 +143,7 @@ div[data-testid="stElementContainer"]:has(.sticky-page-header) {
   flex-direction: column !important;
   gap: 2px !important;
   width: 100% !important;
-  max-width: 1400px !important;
+  max-width: 100% !important;
 }
 
 .sticky-title-row {
@@ -177,6 +232,8 @@ div[data-testid="stPlotlyChart"] .user-select-none.svg-container {
    DESKTOP SCREEN CALIBRATION (>= 769px)
    ============================================================================== */
 @media (min-width: 769px) {
+  [data-testid="stMainBlockContainer"],
+  [data-testid="stAppViewBlockContainer"],
   .main .block-container,
   div.block-container,
   .block-container {
@@ -194,6 +251,13 @@ div[data-testid="stPlotlyChart"] .user-select-none.svg-container {
     margin-right: -2.5rem !important;
     width: calc(100% + 5rem) !important; /* Full-bleed edge-to-edge breakout */
     padding: 10px 140px 11px 2.5rem !important;
+  }
+
+  /* Clear >> expand-sidebar icon when sidebar is collapsed */
+  .stApp:has([data-testid="stExpandSidebarButton"]) .sticky-page-header,
+  .stApp:has([data-testid="collapsedControl"]) .sticky-page-header,
+  [data-testid="stSidebar"][aria-expanded="false"] ~ div .sticky-page-header {
+    padding-left: 4.25rem !important;
   }
 
   .sticky-page-title {
@@ -219,6 +283,8 @@ div[data-testid="stPlotlyChart"] .user-select-none.svg-container {
    TABLET & MOBILE PHONE CALIBRATION (< 769px)
    ============================================================================== */
 @media (max-width: 768px) {
+  [data-testid="stMainBlockContainer"],
+  [data-testid="stAppViewBlockContainer"],
   .main .block-container,
   div.block-container,
   .block-container {
@@ -239,7 +305,7 @@ div[data-testid="stPlotlyChart"] .user-select-none.svg-container {
     margin-left: -0.75rem !important;
     margin-right: -0.75rem !important;
     width: calc(100% + 1.5rem) !important; /* Mobile full-bleed breakout */
-    padding: 8px 48px 8px 44px !important; /* 44px clears mobile sidebar hamburger; 48px clears top right menu */
+    padding: 8px 48px 8px 54px !important; /* 54px clears mobile sidebar toggle; 48px clears top right menu */
   }
 
   .sticky-page-title {
@@ -302,6 +368,8 @@ div[data-testid="stPlotlyChart"] .user-select-none.svg-container {
    COMPACT SMARTPHONE CALIBRATION (< 480px)
    ============================================================================== */
 @media (max-width: 480px) {
+  [data-testid="stMainBlockContainer"],
+  [data-testid="stAppViewBlockContainer"],
   .main .block-container,
   div.block-container,
   .block-container {
@@ -314,7 +382,7 @@ div[data-testid="stPlotlyChart"] .user-select-none.svg-container {
     margin-left: -0.5rem !important;
     margin-right: -0.5rem !important;
     width: calc(100% + 1rem) !important;
-    padding: 7px 42px 7px 40px !important;
+    padding: 7px 42px 7px 52px !important;
   }
 
   .sticky-page-title {

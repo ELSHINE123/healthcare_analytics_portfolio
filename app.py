@@ -29,11 +29,9 @@ st.set_page_config(
 # DEFINED CONTRAST LIGHT RAIL + ELEVATION SHADOW + CRISP WHITE CANVAS
 # ==============================================================================
 st.markdown("""
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap');
+
 /* 1. Global Typography & Refined Scale */
 html, body, .stMarkdown, .stText, h1, h2, h3, h4, h5, h6, p, label {
   font-family: "Be Vietnam Pro", -apple-system, BlinkMacSystemFont, sans-serif !important;
@@ -101,8 +99,8 @@ div[data-testid="collapsedControl"] span {
 }
 
 /* 3. Main Canvas (Micro-Dot Tech Grid) */
-html, body, .stApp, .main, section.main {
-  overflow-x: hidden !important;
+html, body, .stApp, [data-testid="stAppViewContainer"] {
+  overflow-x: clip !important;
   max-width: 100vw !important;
 }
 
@@ -121,7 +119,6 @@ header[data-testid="stHeader"] {
   border-bottom: none !important;
   box-shadow: none !important;
   pointer-events: none !important;
-  height: 0 !important;
   z-index: 999990 !important;
 }
 
@@ -129,27 +126,61 @@ header[data-testid="stHeader"] * {
   pointer-events: auto !important;
 }
 
-/* Hide empty containers (like style tags) at the top of the page */
+/* Hide empty or style-only containers at the top of the page */
 div[data-testid="stElementContainer"]:empty,
 div[data-testid="stElementContainer"]:has(> div:empty),
-div[data-testid="stElementContainer"]:has(style:only-child) {
+div[data-testid="stElementContainer"]:has(style:only-child),
+[data-testid="stLayoutWrapper"]:has(> [data-testid="stElementContainer"] style:only-child) {
   display: none !important;
   height: 0 !important;
   margin: 0 !important;
   padding: 0 !important;
 }
 
-/* 4. Distinct Steel-Slate Sidebar (Noticeably Defined, Not Heavy or Dark) */
-section[data-testid="stSidebar"]:not([aria-expanded="false"]) {
+/* 4. Distinct Steel-Slate Sidebar (Collapses cleanly to 0px across Cloud & Snowflake) */
+section[data-testid="stSidebar"][aria-expanded="true"] {
   width: 268px !important;
   min-width: 268px !important;
-}
-
-section[data-testid="stSidebar"] {
+  max-width: 268px !important;
   background-color: #E2E8F0 !important; /* Defined Cool Slate */
   border-right: 1px solid #CBD5E1 !important; /* Firm boundary line */
   box-shadow: 6px 0 24px -2px rgba(15, 23, 42, 0.09) !important; /* Prominent elevation shadow */
   padding-top: 10px !important;
+}
+
+section[data-testid="stSidebar"][aria-expanded="false"],
+[data-testid="stSidebar"][aria-expanded="false"],
+.stApp:has([data-testid="collapsedControl"]) section[data-testid="stSidebar"],
+.stApp:has([data-testid="stExpandSidebarButton"]) section[data-testid="stSidebar"] {
+  width: 0px !important;
+  min-width: 0px !important;
+  max-width: 0px !important;
+  flex: 0 0 0px !important;
+  flex-basis: 0px !important;
+  margin: 0px !important;
+  padding: 0px !important;
+  border: none !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+section[data-testid="stSidebar"][aria-expanded="false"] > div,
+[data-testid="stSidebar"][aria-expanded="false"] > div,
+.stApp:has([data-testid="collapsedControl"]) section[data-testid="stSidebar"] > div,
+.stApp:has([data-testid="stExpandSidebarButton"]) section[data-testid="stSidebar"] > div {
+  width: 0px !important;
+  min-width: 0px !important;
+  max-width: 0px !important;
+  padding: 0px !important;
+  overflow: hidden !important;
+}
+
+[data-testid="collapsedControl"],
+[data-testid="stExpandSidebarButton"] {
+  visibility: visible !important;
+  pointer-events: auto !important;
 }
 
 /* Ensure smooth, visible scrollbar on the sidebar at all times */
@@ -273,30 +304,31 @@ button[data-testid="stSidebarCollapseButton"]:hover {
   box-shadow: 0 1px 4px rgba(15, 23, 42, 0.04) !important;
 }
 
-.main, section.main {
+[data-testid="stAppViewContainer"] > div:has([data-testid="stMain"]),
+[data-testid="stSidebar"] ~ div,
+[data-testid="stMain"],
+.stMain,
+.main,
+section.main {
+  flex: 1 1 0% !important;
   width: 100% !important;
   max-width: 100% !important;
+  min-width: 0 !important;
 }
 
+[data-testid="stMainBlockContainer"],
+[data-testid="stAppViewBlockContainer"],
 .main .block-container,
 div.block-container,
 .block-container {
   padding-top: 0rem !important;
+  margin-top: 0rem !important;
   padding-bottom: 2.5rem !important;
   padding-left: 2.5rem !important;
   padding-right: 2.5rem !important;
   width: 100% !important;
   max-width: 100% !important;
   box-sizing: border-box !important;
-}
-
-/* Force full widescreen expansion across all elements when sidebar collapses */
-[data-testid="stSidebar"][aria-expanded="false"] ~ .main,
-[data-testid="stSidebar"][aria-expanded="false"] ~ .main .block-container,
-.stApp:has([data-testid="collapsedControl"]) .main,
-.stApp:has([data-testid="collapsedControl"]) .main .block-container {
-  width: 100% !important;
-  max-width: 100% !important;
 }
 
 /* 9. Executive KPI Scorecard Architecture */
@@ -463,12 +495,15 @@ div[data-testid="stPlotlyChart"] .user-select-none.svg-container {
 /* 14. Mobile & Tablet Responsiveness */
 @media (max-width: 768px) {
   /* Dynamic Mobile Sidebar Drawer */
-  section[data-testid="stSidebar"]:not([aria-expanded="false"]) {
+  section[data-testid="stSidebar"][aria-expanded="true"] {
     width: 85vw !important;
+    min-width: 240px !important;
     max-width: 300px !important;
   }
   
   /* Compact Canvas Padding */
+  [data-testid="stMainBlockContainer"],
+  [data-testid="stAppViewBlockContainer"],
   .block-container {
     padding-top: 0rem !important;
     padding-bottom: 2rem !important;
@@ -655,9 +690,11 @@ with st.sidebar:
 if st.session_state.get("presentation_mode", False):
     st.markdown("""
     <style>
+    [data-testid="stMainBlockContainer"],
+    [data-testid="stAppViewBlockContainer"],
     .block-container {
-      max-width: 95% !important;
-      padding-top: 1.2rem !important;
+      max-width: 100% !important;
+      padding-top: 0rem !important;
     }
     h1 {
       font-size: 29px !important;
