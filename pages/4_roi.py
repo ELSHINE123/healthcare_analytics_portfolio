@@ -397,7 +397,7 @@ fig_heatmap.update_layout(
         x=0.5, y=0.98, yref="container", xanchor="center", yanchor="top",
         font=dict(size=14, family="Be Vietnam Pro", color="#0F172A")
     ),
-    margin=dict(l=55, r=75, t=70, b=55),
+    margin=dict(l=55, r=75, t=70, b=75),
     height=480,
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",

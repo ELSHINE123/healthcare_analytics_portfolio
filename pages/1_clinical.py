@@ -311,7 +311,7 @@ if not df.empty:
             yanchor="top",
             font=dict(size=14, family="Be Vietnam Pro", color="#0F172A")
         ),
-        margin=dict(l=55, r=20, t=55, b=85),
+        margin=dict(l=55, r=20, t=55, b=100),
         height=510,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
