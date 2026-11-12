@@ -53,16 +53,17 @@ healthcare_analytics_portfolio/
 │   ├── 5_recommendations.py   # Module 7: 4 Pillars of transformation & 180-day executive roadmap
 │   └── 6_glossary.py          # Module 8: Searchable healthcare acronym & value-based care lexicon
 ├── src/
-│   ├── export_engine.py       # Board memorandum and care gap CSV export generator
+│   ├── pipeline.py            # Production ETL, risk scoring & HIPAA Safe Harbor de-identification
+│   ├── export_engine.py       # ReportLab PDF board memorandum and de-identified CSV roster export
 │   ├── risk_engine.py         # Bivariate acuity scoring and risk tier categorization
 │   ├── therapeutic_engine.py  # HEDIS care gaps and contraindication identification
 │   ├── contact_engine.py      # Contactability reach and surveillance audit engine
 │   ├── financial_engine.py    # Actuarial cost modeling and staffing ROI equations
 │   ├── glossary_data.py       # Centralized domain terminology repository
-│   └── styles.py              # Unified scrollable card architecture & typography
+│   └── styles.py              # Unified flush top bar, mobile breakpoints & card container CSS
 ├── data/
 │   ├── raw/                   # Baseline clinical and demographic datasets
-│   └── processed/             # healthcare_analytics_enriched.csv (983 enriched patient records)
+│   └── processed/             # healthcare_analytics_enriched.csv (983 Safe Harbor de-identified records)
 ├── tests/                     # Unit and integration test suites
 ├── requirements.txt           # Verified project dependencies
 └── .env.example               # Environment variable templates
@@ -107,18 +108,14 @@ Open your browser to `http://localhost:8501`.
 
 ## 🧪 Running Automated Tests
 
-Run the full programmatic test suite across all 8 pages:
+Run the unit test suite (including clinical scoring, ROI math, and HIPAA Safe Harbor de-identification checks):
 ```bash
-python -c "
-from streamlit.testing.v1 import AppTest
-pages = ['home.py', 'pages/0_executive_summary.py', 'pages/1_clinical.py', 'pages/2_operations.py', 'pages/3_financial.py', 'pages/4_roi.py', 'pages/5_recommendations.py', 'pages/6_glossary.py']
-for p in pages:
-    at = AppTest.from_file(p, default_timeout=30)
-    at.run()
-    assert not at.exception, f'Error in {p}: {at.exception}'
-    print(f'PASS {p}')
-print('ALL 8 PAGES PASSED!')
-"
+python -m unittest discover -s tests
+```
+
+Or validate syntax compilation across all Python modules:
+```bash
+python -c "import py_compile, glob; [py_compile.compile(f, doraise=True) for f in glob.glob('**/*.py', recursive=True)]; print('ALL COMPILED')"
 ```
 
 ---
@@ -138,25 +135,27 @@ For deep technical methodologies and persona-specific review workflows, consult 
 
 ---
 
-## ☁️ Deployment Guide (Streamlit Community Cloud)
+## ☁️ Deployment Guide (Streamlit Community Cloud & Snowflake)
 
-This portfolio is production-ready for **Streamlit Community Cloud** deployment with zero container overhead:
+This portfolio is structured for **Streamlit Community Cloud** and **Streamlit in Snowflake (SiS)** with cross-runtime collapsed-sidebar widescreen expansion and mobile breakpoints (`<= 768px`, `<= 480px`):
 
 ### 1. Push to GitHub
 Ensure all code and processed data files are committed to your GitHub repository:
 ```bash
 git add .
 git commit -m "feat: complete value-based healthcare analytics suite"
-git push origin master
+git push origin main
 ```
 
 ### 2. Connect to Streamlit Community Cloud
 1. Navigate to **[share.streamlit.io](https://share.streamlit.io)** and log in with your GitHub account.
 2. Click **"New app"** (or **"Create app"**).
 3. Select your repository: `<your-username>/healthcare_analytics_portfolio`.
-4. Set the **Branch** to `master` (or `main`).
+4. Set the **Branch** to `main` (or `master`).
 5. Set the **Main file path** to `app.py`.
 6. Click **"Deploy!"**.
+
+*(For **Streamlit in Snowflake**, upload the repository contents including `app.py`, `home.py`, `pages/`, `src/`, and `data/processed/healthcare_analytics_enriched.csv`, and configure `app.py` as the entrypoint.)*
 
 ### 3. Verify Deployment
 * Streamlit Cloud will install dependencies automatically from `requirements.txt`.
@@ -164,11 +163,19 @@ git push origin master
 
 ---
 
+## 🔒 Data Governance & HIPAA Safe Harbor Compliance
+
+To ensure regulatory integrity under **45 CFR § 164.514(b)(2)**, all processed clinical tables, interactive triage views, and CSV exports enforce structural Safe Harbor de-identification (`apply_safe_harbor_deidentification` in `src/pipeline.py`):
+* Direct identifiers (`patient_name`, `email`, `phone_number`, and exact `visit_date`) are stripped from the processed dataset and UI exports.
+* Records are keyed by non-derived opaque IDs (`PT-0001`–`PT-0983`), binary outreach reachability flags (`missing_email`, `missing_phone`, `uncontactable`, `contact_status`), year-level timestamps (`visit_year`, `days_since_visit`), and a `90+` age cap.
+
+---
+
 ## 💼 Executive Features
 
-* **Boardroom Presentation Mode**: Toggle in the sidebar expands the canvas to 95% width, scales up typography, elevates contrast, and locks the ROI model into recommended executive baselines for conference room projectors.
-* **One-Click Certified Board Memorandum**: Download a complete, publication-ready executive briefing document (`.md`) directly from the sidebar, Executive Summary, or Strategic Roadmap.
-* **Care Gap Audit Registry**: Export an actionable, audit-ready CSV roster of all 553 high-risk patients with assigned clinical pathways for frontline care management teams.
+* **Boardroom Presentation Mode**: Toggle in the sidebar expands the canvas to 100% widescreen width, scales up typography, and elevates contrast for conference room projectors.
+* **One-Click Certified Board Memorandum (PDF)**: Download a complete, publication-ready vector PDF executive briefing directly from the sidebar (`app.py`).
+* **De-Identified Care Gap Audit Registry (CSV)**: Export an actionable, audit-ready CSV roster of high-risk/care-gap records keyed by `patient_id` (`PT-0001`–`PT-0983`) for frontline care management workflows.
 
 ---
 

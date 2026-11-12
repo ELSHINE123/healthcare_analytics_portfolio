@@ -5,7 +5,7 @@
 **Role**: Principal Systems Architect & Lead Healthcare Data Analyst  
 **Institutional Setting**: Metropolitan Health System (Integrated Healthcare Delivery Network & Accountable Care Organization)  
 **Contractual Context**: CMS Two-Sided Shared-Savings Medicare Advantage / NextGen ACO Risk Contracts  
-**Target Deployment**: Streamlit Community Cloud (Python 3.11+, Streamlit 1.36+)
+**Target Deployment**: Streamlit Community Cloud & Streamlit in Snowflake (Python 3.11+, Streamlit 1.36+)
 
 ---
 
@@ -88,6 +88,13 @@ NCQA guidelines mandate that chronic disease patients complete clinical evaluati
   * **Net Operating Margin**: $\$1,057,000 - \$665,000 = +\$392,000$
   * **Self-Funding Ratio**: $\frac{\$1,057,000}{\$665,000} \approx 159\%$ (Payback period: $4.8\text{ months}$)
 
+### E. HIPAA Safe Harbor De-Identification Protocol (`45 CFR § 164.514(b)(2)`)
+Before persisting processed data or surfacing row-level records in interactive triage and CSV exports, `apply_safe_harbor_deidentification()` (`src/pipeline.py`) enforces structural de-identification across all 983 patient rows:
+1. **Opaque Record Key (`45 CFR § 164.514(c)`)**: Replaces `patient_name` with non-derived sequential identifiers (`PT-0001` through `PT-0983`) across `data/processed/healthcare_analytics_enriched.csv`, the Clinical Worklist & Snapshot Chart Inspector (`pages/1_clinical.py`), and `generate_care_gap_roster_csv()` (`src/export_engine.py`).
+2. **Contact Credential Stripping**: Drops `email` and `phone_number` strings while preserving `missing_email`, `missing_phone`, `uncontactable`, and `contact_status` outreach indicators computed by `src/contact_engine.py` (with graceful boolean fallback when raw credential columns are absent).
+3. **Date Generalization**: Converts exact `visit_date` values into year-only `visit_year` while retaining relative elapsed intervals (`days_since_visit`).
+4. **Age 90+ Aggregation**: Enforces `age > 89 -> 90` capping (`max age = 70` in current cohort).
+
 ---
 
 ## 3. Codebase Directory Structure & Component Inventory
@@ -95,26 +102,29 @@ NCQA guidelines mandate that chronic disease patients complete clinical evaluati
 ```text
 healthcare_analytics_portfolio/
 ├── app.py                       # Master entrypoint, st.navigation routing, boardroom mode
-├── home.py                      # Institutional overview, ACO background, interactive persona guide
+├── home.py                      # Institutional overview, ACO background, Safe Harbor notice, persona guide
 ├── pages/
 │   ├── 0_executive_summary.py   # High-level C-suite briefing, KPI strip, acuity donuts, export center
-│   ├── 1_clinical.py            # Bivariate acuity scatter plot, side-by-side diagnostic inspector, discordance heatmap
+│   ├── 1_clinical.py            # Bivariate acuity scatter plot, diagnostic inspector (PT-XXXX), discordance heatmap
 │   ├── 2_operations.py          # Omnichannel contactability reach, 180-day surveillance matrix, data provenance
 │   ├── 3_financial.py           # AHRQ HCUP inpatient simulation, statin gap revenue, HEDIS penalty scorecard
 │   ├── 4_roi.py                 # Preventative care sensitivity heatmap, 7.0 RN FTE staffing model, economic coverage
 │   ├── 5_recommendations.py     # 4 Pillars of transformation, 180-day execution roadmap, boardroom directives
 │   └── 6_glossary.py            # Searchable healthcare glossary with certified clinical/actuarial definitions
 ├── src/
-│   ├── styles.py                # Visual card container CSS, non-clipping Plotly layouts, compact executive typography
-│   ├── export_engine.py         # Markdown board memorandum and care gap CSV roster generator
-│   └── glossary_data.py         # Structured dictionary of 40+ healthcare acronyms and formulas
+│   ├── pipeline.py              # Production ETL orchestration & HIPAA Safe Harbor de-identification
+│   ├── risk_engine.py           # Bivariate clinical risk scoring and acuity tier categorization
+│   ├── therapeutic_engine.py    # HEDIS medication gap and safety contraindication detection
+│   ├── contact_engine.py        # Contactability reachability audit (supports raw & Safe Harbor schemas)
+│   ├── financial_engine.py      # Actuarial inpatient liability, RN caseload, and ROI matrix modeling
+│   ├── styles.py                # Unified sticky topbar, collapsed-sidebar expansion, mobile breakpoints & card CSS
+│   ├── export_engine.py         # ReportLab PDF board memorandum and de-identified CSV roster generator
+│   └── glossary_data.py         # Structured dictionary of healthcare acronyms and formulas
 ├── data/
 │   └── processed/
-│       └── healthcare_analytics_enriched.csv # 983 enriched, audited clinical patient records
+│       └── healthcare_analytics_enriched.csv # 983 Safe Harbor de-identified clinical records (PT-0001..PT-0983)
 ├── tests/
-│   ├── test_clinical_risk.py    # Unit tests validating risk scoring and acuity tier assignments
-│   ├── test_financial_roi.py    # Unit tests validating HCUP benchmarks, FTE sizing, and ROI math
-│   └── test_operations.py       # Unit tests validating surveillance decay and reachability logic
+│   └── test_analytics.py        # Unit tests covering scoring, therapeutic gaps, contactability, ROI & Safe Harbor
 ├── .streamlit/
 │   └── config.toml              # Streamlit server and theme configurations
 ├── requirements.txt             # Locked Python package dependencies
@@ -128,32 +138,25 @@ healthcare_analytics_portfolio/
 
 ## 4. Front-End & Visual Architecture
 
-### A. Non-Clipping Executive Visual Container CSS (`src/styles.py`)
+### A. Unified Sticky Top Bar & Cross-Runtime Widescreen Expansion (`app.py` & `src/styles.py`)
+* **Single Flush Top Bar (`y = 0`)**: The native Streamlit `<header data-testid="stHeader">` is dissolved into a transparent click-through overlay (`pointer-events: none` on the wrapper, `pointer-events: auto` on controls), while Google Fonts are loaded via `@import` inside `<style>` so invisible style containers do not introduce a top gap.
+* **Cross-Runtime Sidebar Collapse Expansion**: Targets both modern Streamlit selectors (`[data-testid="stMain"]`, `[data-testid="stMainBlockContainer"]`, flex parent `StyledMainContent`) and legacy Streamlit/Snowflake selectors (`.main`, `[data-testid="stAppViewBlockContainer"]`), explicitly forcing `width: 0; min-width: 0; max-width: 0; flex: 0 0 0` on collapsed sidebar states (`[aria-expanded="false"]`, `:has([data-testid="collapsedControl"])`, `:has([data-testid="stExpandSidebarButton"])`).
+* **Sticky Positioning Integrity**: Root horizontal overflow is constrained via `overflow-x: clip` rather than `overflow-x: hidden` so ancestor containers never trap or disable `position: sticky` snapping. When collapsed, `.sticky-page-header` adds `4.25rem` left padding on desktop (`54px`/`52px` on mobile) to clear the `>>` reopen toggle.
+
+### B. Non-Clipping Visual Cards & Mobile Breakpoints (`src/styles.py`)
 All interactive visual cards render with uniform elevation:
 * **Background**: `#FFFFFF` with `1px solid #E2E8F0` border and `12px` border radius.
-* **Overflow Handling**: Strict `overflow: visible !important;` prevents internal scrollbars and ensures SVG labels, axis titles, and colorbars are 100% visible.
+* **Overflow Handling**: Strict `overflow: visible !important;` prevents internal scrollbars on desktop and ensures SVG labels, axis titles, and colorbars are 100% visible; mobile breakpoints (`<= 768px`, `<= 480px`) enable `-webkit-overflow-scrolling: touch` on charts/tables and adjust container padding (`0.75rem` / `0.5rem`) and header font sizing (`15px` / `13.5px`).
 * **Aspect Ratio**: Heatmaps (`px.imshow`) enforce `aspect="auto"` to stretch dynamically to 100% of the parent card width, eliminating squashed square cells and angled axis labels.
-* **Side-by-Side Symmetrical Acuity Grid**:
-  * Scatter plot visual and diagnostic inspector card maintain exact pixel height parity (`538px`).
-  * The main visual is allocated a wide `2.1 : 1` column ratio (`~67.7%` visual width), providing ample dispersion space for 983 data points.
-  * The Plotly legend is anchored in container space (`yref="container", y=0.88`), cleanly separated from the title (`y=0.98`) to prevent text overlap.
-
-### B. Compact Typography Scale
-* `h1`: Compacted to $22\text{px}$ bold with $0\text{px}$ top margin to maximize navigable space.
-* `caption`: $13\text{px}$ slate (`#64748B`) with tight spacing.
-* Top container padding: Reduced from Streamlit's default $6\text{rem}$ down to $1.4\text{rem}$, immediately recovering over $100\text{px}$ of vertical space.
 
 ---
 
 ## 5. Verification & Testing Framework
 
-The suite incorporates two tiers of automated validation:
-1. **Algorithmic Unit Tests** (`python -m unittest discover -s healthcare_analytics_portfolio/tests`):
-   * Validates risk score bounds ($0 \le \text{Score} \le 100$).
-   * Tests acuity tier classification against ACC/AHA cutoffs.
-   * Asserts actuarial calculations: baseline hospitalizations ($254.8$), FTE ratios ($6.89$), and margin payback.
-2. **Headless Integration UI Tests (`streamlit.testing.v1.AppTest`)**:
-   * Programmatically executes all 8 application pages in headless mode.
-   * Verifies dynamic selectboxes (e.g. `Diabetes` + `Severe Acuity`) and resets.
-   * Asserts zero runtime exceptions (`assert len(at.exception) == 0`).
+The suite incorporates two tiers of validation:
+1. **Algorithmic & Compliance Unit Tests** (`python -m unittest discover -s tests` — **9 tests** in `tests/test_analytics.py`):
+   * Validates risk score bounds ($0 \le \text{Score} \le 100$) and acuity tier classification against ACC/AHA cutoffs.
+   * Tests therapeutic discordance, asthma/Lisinopril contraindication flagging, contactability channel categorization, actuarial ROI payback, and `test_safe_harbor_deidentification` (`patient_id`, `visit_year`, age `<= 90`, and stripped identifier columns).
+2. **Playwright Headless DOM & Viewport Verification**:
+   * Verifies expanded/collapsed desktop (`1440×900`) and mobile (`375×812`) rendering, `stSidebar` collapse to `0px`, full `1440px` main canvas expansion, sticky header snapping at `y = 0` after scrolling, and multi-page navigation across modules with zero runtime exceptions.
 
